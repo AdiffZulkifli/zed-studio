@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu Manager — Lorong Coffee Admin</title>
+  <link rel="stylesheet" href="../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+  <style>
+    /* ── GRADIENT PICKER ── */
+    .gradient-picker { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 6px; }
+    .gradient-swatch {
+      width: 100%; aspect-ratio: 1;
+      border-radius: 8px; cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+      position: relative;
+    }
+    .gradient-swatch:hover { transform: scale(1.08); }
+    .gradient-swatch.selected { border-color: var(--yellow); }
+    .gradient-swatch.selected::after {
+      content: '✓';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 0.9rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    /* ── CARD PREVIEW ── */
+    .card-preview {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; overflow: hidden;
+      width: 200px; flex-shrink: 0;
+    }
+    .card-preview__image {
+      height: 120px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .card-preview__image img {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; inset: 0;
+    }
+    .card-preview__badge {
+      position: absolute; top: 8px; right: 8px;
+      background: var(--yellow); color: var(--green);
+      font-size: 0.6rem; font-weight: 700; padding: 2px 8px;
+      border-radius: 50px; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .card-preview__body { padding: 0.75rem 1rem; }
+    .card-preview__name { font-weight: 700; font-size: 0.9rem; color: white; margin-bottom: 4px; }
+    .card-preview__price { font-size: 0.85rem; color: var(--yellow); font-weight: 700; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub">Admin Panel</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link"><span class="admin-nav-link__icon">📊</span> Dashboard</a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link active"><span class="admin-nav-link__icon">☕</span> Menu Items</a>
+      <a href="stores.html" class="admin-nav-link"><span class="admin-nav-link__icon">🏪</span> Store Locations</a>
+      <a href="admins.html" class="admin-nav-link"><span class="admin-nav-link__icon">👤</span> Branch Admins</a>
+      <div class="admin-nav-label">Analytics</div>
+      <a href="analytics.html" class="admin-nav-link"><span class="admin-nav-link__icon">📈</span> Sales Analytics</a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../index.html" class="admin-nav-link" target="_blank"><span class="admin-nav-link__icon">🌐</span> View Website</a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title">Menu Manager</div>
+          <div class="admin-topbar__breadcrumb">Add, edit, and manage all drinks</div>
+        </div>
+      </div>
+      <div class="admin-topbar__right">
+        <button class="btn-admin btn-primary" onclick="openAddModal()">+ Add Item</button>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- FILTER BAR -->
+      <div class="admin-panel" style="margin-bottom:1.5rem;">
+        <div class="admin-panel__body" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:1rem 1.5rem;">
+          <div class="admin-search" style="flex:1;min-width:200px;">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="Search menu items…" oninput="renderTable()"/>
+          </div>
+          <select class="form-select" id="categoryFilter" style="width:160px;" onchange="renderTable()">
+            <option value="all">All Categories</option>
+            <option value="coffee">Coffee</option>
+            <option value="cold">Cold Brews</option>
+            <option value="noncoffee">Non-Coffee</option>
+            <option value="seasonal">Seasonal</option>
+          </select>
+          <select class="form-select" id="availFilter" style="width:160px;" onchange="renderTable()">
+            <option value="all">All Status</option>
+            <option value="available">Available</option>
+            <option value="soldout">Sold Out</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="admin-panel">
+        <div class="admin-panel__header">
+          <div class="admin-panel__title">☕ Menu Items <span id="itemCount" style="font-size:0.85rem;color:rgba(255,255,255,0.4);font-family:var(--font-mono);"></span></div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table" id="menuTable">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Badge</th>
+                <th>Available</th>
+                <th>Featured</th>
+                <th>Views</th>
+                <th>Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="menuTableBody">
+              <tr><td colspan="9" style="text-align:center;color:rgba(255,255,255,0.3);padding:3rem;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal-overlay" id="itemModal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal__header">
+      <div class="modal__title" id="modalTitle">Add Menu Item</div>
+      <button class="modal__close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal__body">
+      <input type="hidden" id="editId"/>
+
+      <!-- Two-column layout with live preview -->
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:1.5rem;">
+        <!-- LEFT: Card Preview -->
+        <div>
+          <div class="form-label" style="margin-bottom:8px;">Preview</div>
+          <div class="card-preview">
+            <div class="card-preview__image" id="previewImage" style="background:linear-gradient(135deg,#2D6A4F,#40916C);">
+              <span id="previewEmoji" style="position:relative;z-index:1;">☕</span>
+              <span class="card-preview__badge" id="previewBadge" style="display:none;"></span>
+            </div>
+            <div class="card-preview__body">
+              <div class="card-preview__name" id="previewName">Item Name</div>
+              <div class="card-preview__price" id="previewPrice">RM —</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Basic fields -->
+        <div style="flex:1;">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="fieldName">Item Name *</label>
+              <input class="form-input" type="text" id="fieldName" placeholder="e.g. Lorong Latte" oninput="updatePreview()"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fieldPrice">Price (RM) *</label>
+              <input class="form-input" type="number" id="fieldPrice" placeholder="12" min="1" max="999" oninput="updatePreview()"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="fieldCategory">Category *</label>
+              <select class="form-select" id="fieldCategory">
+                <option value="coffee">Coffee</option>
+                <option value="cold">Cold Brews</option>
+                <option value="noncoffee">Non-Coffee</option>
+                <option value="seasonal">Seasonal</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fieldEmoji">Emoji Icon</label>
+              <input class="form-input" type="text" id="fieldEmoji" placeholder="☕" maxlength="4" oninput="updatePreview()"/>
+              <div class="form-hint">One emoji only. Shows when no image is uploaded.</div>
+            </div>
+          </div>
+          <!-- Badge dropdown -->
+          <div class="form-group">
+            <label class="form-label" for="fieldBadge">Badge Label</label>
+            <select class="form-select" id="fieldBadge" onchange="updatePreview()">
+              <option value="">— None —</option>
+              <option value="Best Seller">⭐ Best Seller</option>
+              <option value="Recommended">💚 Recommended</option>
+              <option value="New">🆕 New</option>
+              <option value="Classic">🏅 Classic</option>
+              <option value="Limited">⏳ Limited</option>
+              <option value="Seasonal">🌟 Seasonal</option>
+              <option value="Iced">🧊 Iced</option>
+              <option value="Bold">🖤 Bold</option>
+              <option value="Creamy">🍦 Creamy</option>
+              <option value="Coffee-Free">🍵 Coffee-Free</option>
+              <option value="Kids Fave">🥛 Kids Fave</option>
+              <option value="Indulgent">🍫 Indulgent</option>
+              <option value="Refreshing">❄️ Refreshing</option>
+              <option value="Local Special">🌿 Local Special</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image URL -->
+      <div class="form-group">
+        <label class="form-label" for="fieldImageUrl">Image URL <span style="color:rgba(255,255,255,0.3);font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+        <input class="form-input" type="url" id="fieldImageUrl" placeholder="https://example.com/drink-photo.jpg" oninput="updatePreview()"/>
+        <div class="form-hint">Paste a direct image URL. Leave blank to use the emoji + gradient card instead.</div>
+      </div>
+
+      <!-- Gradient picker -->
+      <div class="form-group" id="gradientGroup">
+        <label class="form-label">Card Gradient <span style="color:rgba(255,255,255,0.3);font-weight:400;text-transform:none;letter-spacing:0;">(background when no image)</span></label>
+        <div class="gradient-picker" id="gradientPicker"></div>
+        <input type="hidden" id="fieldGradient"/>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label class="form-label" for="fieldDesc">Description *</label>
+        <textarea class="form-textarea" id="fieldDesc" placeholder="Describe the drink in 1–2 sentences…"></textarea>
+      </div>
+
+      <!-- Toggles -->
+      <div style="display:flex;gap:2rem;flex-wrap:wrap;">
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="fieldAvailable" checked/>
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">Available</span>
+        </div>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="fieldFeatured"/>
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">Featured on Homepage</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn-admin btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-admin btn-primary" onclick="saveItem()">💾 Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script>
+  initData();
+  if (!requireMainAdmin('login.html')) {}
+
+  const CATEGORY_LABELS = { coffee:'Coffee', cold:'Cold Brews', noncoffee:'Non-Coffee', seasonal:'Seasonal' };
+
+  const GRADIENTS = [
+    { label:'Emerald Forest',     value:'linear-gradient(135deg,#2D6A4F,#40916C)' },
+    { label:'Deep Teal',          value:'linear-gradient(135deg,#1B4332,#52B788)' },
+    { label:'Spiced Amber',       value:'linear-gradient(135deg,#6B4226,#A0522D)' },
+    { label:'Jade Matcha',        value:'linear-gradient(135deg,#2D8B55,#74C69D)' },
+    { label:'Mystic Purple',      value:'linear-gradient(135deg,#4A1942,#9B2C8F)' },
+    { label:'Autumn Fire',        value:'linear-gradient(135deg,#B5451B,#E76F51)' },
+    { label:'Midnight Espresso',  value:'linear-gradient(135deg,#1A3322,#2D6A4F)' },
+    { label:'Golden Honey',       value:'linear-gradient(135deg,#5C4500,#F5C800)' },
+    { label:'Warm Caramel',       value:'linear-gradient(135deg,#7B3F00,#C97D4E)' },
+    { label:'Dark Chocolate',     value:'linear-gradient(135deg,#3D1F00,#8B4513)' },
+    { label:'Arctic Blue',        value:'linear-gradient(135deg,#0D3B2E,#1B7A5C)' },
+    { label:'Vanilla Cream',      value:'linear-gradient(135deg,#8B5E3C,#D4A276)' },
+  ];
+
+  // ── GRADIENT PICKER BUILD ──────────────────────────────────
+  function buildGradientPicker(selectedValue) {
+    const container = document.getElementById('gradientPicker');
+    container.innerHTML = GRADIENTS.map((g, i) => `
+      <div class="gradient-swatch ${g.value === selectedValue ? 'selected' : ''}"
+           style="background:${g.value};"
+           title="${g.label}"
+           onclick="selectGradient(${i})">
+      </div>
+    `).join('');
+  }
+
+  function selectGradient(idx) {
+    document.getElementById('fieldGradient').value = GRADIENTS[idx].value;
+    document.querySelectorAll('.gradient-swatch').forEach((s, i) => {
+      s.classList.toggle('selected', i === idx);
+    });
+    updatePreview();
+  }
+
+  // ── LIVE PREVIEW ───────────────────────────────────────────
+  function updatePreview() {
+    const name    = document.getElementById('fieldName').value || 'Item Name';
+    const price   = document.getElementById('fieldPrice').value;
+    const emoji   = document.getElementById('fieldEmoji').value || '☕';
+    const badge   = document.getElementById('fieldBadge').value;
+    const gradient= document.getElementById('fieldGradient').value || GRADIENTS[0].value;
+    const imageUrl= document.getElementById('fieldImageUrl').value.trim();
+
+    document.getElementById('previewName').textContent = name;
+    document.getElementById('previewPrice').textContent = price ? `RM ${price}` : 'RM —';
+    document.getElementById('previewEmoji').textContent = emoji;
+
+    const imgEl = document.getElementById('previewImage');
+    imgEl.style.background = gradient;
+
+    // Show or hide image in preview
+    const existingImg = imgEl.querySelector('img');
+    if (existingImg) existingImg.remove();
+    if (imageUrl) {
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+      img.onerror = () => img.remove();
+      imgEl.insertBefore(img, imgEl.firstChild);
+    }
+
+    // Badge
+    const badgeEl = document.getElementById('previewBadge');
+    if (badge) {
+      badgeEl.textContent = badge;
+      badgeEl.style.display = '';
+    } else {
+      badgeEl.style.display = 'none';
+    }
+
+    // Hide gradient picker when image is provided
+    document.getElementById('gradientGroup').style.opacity = imageUrl ? '0.4' : '1';
+  }
+
+  // ── RENDER TABLE ───────────────────────────────────────────
+  async function renderTable() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const cat    = document.getElementById('categoryFilter').value;
+    const avail  = document.getElementById('availFilter').value;
+    let items    = await getMenu();
+    if (cat !== 'all') items = items.filter(i => i.category === cat);
+    if (avail === 'available') items = items.filter(i => i.available);
+    if (avail === 'soldout')   items = items.filter(i => !i.available);
+    if (search) items = items.filter(i =>
+      i.name.toLowerCase().includes(search) || i.description.toLowerCase().includes(search)
+    );
+
+    document.getElementById('itemCount').textContent = `(${items.length})`;
+    const tbody = document.getElementById('menuTableBody');
+    if (!items.length) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:rgba(255,255,255,0.3);padding:3rem;">No items found.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = items.map(item => `
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:40px;height:40px;border-radius:8px;background:${item.gradient || '#2D6A4F'};
+              display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;overflow:hidden;">
+              ${item.imageUrl
+                ? `<img src="${item.imageUrl}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">`
+                : item.emoji || '☕'}
+            </div>
+            <div>
+              <div class="admin-table__name">${item.name}</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.3);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.description}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="badge badge-grey">${CATEGORY_LABELS[item.category] || item.category}</span></td>
+        <td style="font-weight:700;color:var(--yellow);">RM ${item.price}</td>
+        <td><span class="badge badge-yellow">${item.badge || '—'}</span></td>
+        <td>
+          <label class="toggle">
+            <input type="checkbox" ${item.available ? 'checked' : ''} onchange="quickToggle('${item.id}','available',this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+        <td>
+          <label class="toggle">
+            <input type="checkbox" ${item.featured ? 'checked' : ''} onchange="quickToggle('${item.id}','featured',this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+        <td style="color:rgba(255,255,255,0.4);">${item.views || 0}</td>
+        <td class="last-updated">${formatRelativeTime(item.updatedAt)}</td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-admin btn-ghost btn-sm" onclick="openEditModal('${item.id}')">✏️</button>
+            <button class="btn-admin btn-danger btn-sm" onclick="deleteItem('${item.id}','${item.name.replace(/'/g,"\\'")}')">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  async function quickToggle(id, field, value) {
+    const update = {}; update[field] = value;
+    await updateMenuItem(id, update);
+    toast(field === 'available'
+      ? (value ? '✅ Item marked as Available' : '⛔ Item marked as Sold Out')
+      : (value ? '⭐ Featured on homepage' : '🔕 Removed from homepage')
+    );
+    await renderTable();
+  }
+
+  // ── MODAL ──────────────────────────────────────────────────
+  function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Add Menu Item';
+    document.getElementById('editId').value = '';
+    document.getElementById('fieldName').value = '';
+    document.getElementById('fieldPrice').value = '';
+    document.getElementById('fieldCategory').value = 'coffee';
+    document.getElementById('fieldBadge').value = '';
+    document.getElementById('fieldEmoji').value = '☕';
+    document.getElementById('fieldImageUrl').value = '';
+    document.getElementById('fieldGradient').value = GRADIENTS[0].value;
+    document.getElementById('fieldDesc').value = '';
+    document.getElementById('fieldAvailable').checked = true;
+    document.getElementById('fieldFeatured').checked = false;
+    buildGradientPicker(GRADIENTS[0].value);
+    updatePreview();
+    document.getElementById('itemModal').classList.add('open');
+  }
+
+  async function openEditModal(id) {
+    const item = await getMenuById(id);
+    if (!item) return;
+    document.getElementById('modalTitle').textContent = 'Edit Menu Item';
+    document.getElementById('editId').value = item.id;
+    document.getElementById('fieldName').value = item.name;
+    document.getElementById('fieldPrice').value = item.price;
+    document.getElementById('fieldCategory').value = item.category;
+    document.getElementById('fieldBadge').value = item.badge || '';
+    document.getElementById('fieldEmoji').value = item.emoji || '☕';
+    document.getElementById('fieldImageUrl').value = item.imageUrl || '';
+    document.getElementById('fieldGradient').value = item.gradient || GRADIENTS[0].value;
+    document.getElementById('fieldDesc').value = item.description;
+    document.getElementById('fieldAvailable').checked = item.available;
+    document.getElementById('fieldFeatured').checked = item.featured;
+    buildGradientPicker(item.gradient || GRADIENTS[0].value);
+    updatePreview();
+    document.getElementById('itemModal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('itemModal').classList.remove('open');
+  }
+
+  async function saveItem() {
+    const name  = document.getElementById('fieldName').value.trim();
+    const price = parseFloat(document.getElementById('fieldPrice').value);
+    const desc  = document.getElementById('fieldDesc').value.trim();
+    if (!name || !price || !desc) {
+      toast('⚠️ Please fill in Name, Price, and Description.', 'error'); return;
+    }
+    const data = {
+      name, price, description: desc,
+      category:  document.getElementById('fieldCategory').value,
+      badge:     document.getElementById('fieldBadge').value,
+      emoji:     document.getElementById('fieldEmoji').value.trim() || '☕',
+      imageUrl:  document.getElementById('fieldImageUrl').value.trim(),
+      gradient:  document.getElementById('fieldGradient').value || GRADIENTS[0].value,
+      available: document.getElementById('fieldAvailable').checked,
+      featured:  document.getElementById('fieldFeatured').checked,
+    };
+    const editId = document.getElementById('editId').value;
+    if (editId) { await updateMenuItem(editId, data); toast('✅ Item updated'); }
+    else        { await addMenuItem(data);            toast('✅ Item added to menu'); }
+    closeModal();
+    await renderTable();
+  }
+
+  async function deleteItem(id, name) {
+    if (confirm(`Delete "${name}"? This cannot be undone.`)) {
+      await deleteMenuItem(id); await renderTable(); toast(`🗑️ "${name}" deleted`);
+    }
+  }
+
+  function toast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast${type === 'error' ? ' error' : ''}`;
+    t.textContent = msg; c.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+  }
+
+  function handleLogout() { adminSignOut(); window.location.href = 'login.html'; }
+
+  document.getElementById('itemModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  renderTable();
+</script>
+</body>
+</html>

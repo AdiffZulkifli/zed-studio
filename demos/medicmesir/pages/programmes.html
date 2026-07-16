@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programmes — MedicMesir</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script src="../js/data.js"></script>
+  <style>
+    body { opacity: 0; animation: fadeIn 0.5s ease 0.1s forwards; }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.4rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1.5px solid #DDE3EA;
+      background: transparent;
+      color: var(--text);
+      transition: all var(--transition);
+      font-family: var(--font-body);
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    /* BIG PROGRAMME CARDS */
+    .prog-big-cards { display: flex; flex-direction: column; gap: 2rem; }
+
+    .prog-big {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .prog-big:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .prog-big-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      min-height: 280px;
+    }
+
+    .prog-big-body { padding: 2.8rem 3rem; }
+    .prog-big-body .eyebrow { display: block; margin-bottom: 0.75rem; }
+    .prog-big-body h2 { font-size: 1.9rem; margin-bottom: 1rem; }
+    .prog-big-body p { color: #566575; margin-bottom: 1.8rem; font-size: 0.95rem; line-height: 1.75; }
+
+    .prog-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .prog-tag {
+      padding: 0.3rem 0.9rem;
+      font-size: 0.78rem;
+      background: var(--gold-pale);
+      color: var(--gold);
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .prog-big-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--ivory);
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+    }
+
+    .prog-meta-item { text-align: center; }
+    .prog-meta-item .value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--navy); line-height: 1; }
+    .prog-meta-item .label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem; }
+
+    /* Requirements */
+    .req-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .req-list li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.88rem; color: var(--text); }
+    .req-list li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* FAQ */
+    .faq-list { max-width: 800px; margin: 0 auto; }
+
+    .faq-item {
+      border-bottom: 1px solid #EDF0F3;
+      padding: 1.5rem 0;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--navy);
+    }
+
+    .faq-question::after { content: '+'; font-size: 1.4rem; color: var(--gold); transition: transform var(--transition); }
+    .faq-item.open .faq-question::after { content: '−'; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      font-size: 0.92rem;
+      color: #566575;
+      line-height: 1.75;
+      transition: max-height 0.4s ease, padding-top 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer { max-height: 300px; padding-top: 1rem; }
+
+    @media (max-width: 768px) {
+      .prog-big { grid-template-columns: 1fr; }
+      .prog-big-visual { min-height: 180px; }
+      .prog-big-body { padding: 1.8rem; }
+      .prog-big-meta { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+          <div class="nav-logo-icon">M</div>
+          <span class="nav-logo-text">Medic<span>Mesir</span></span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="universities.html">Universities</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="contact.html" class="btn btn-primary">Free Consultation</a>
+        </div>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <span class="eyebrow">What We Offer</span>
+      <h1>Our Programmes</h1>
+      <p>Explore our range of internationally recognised medical and health sciences degrees — all with 100% placement support back in Malaysia.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="filter-bar fade-up">
+        <button class="filter-btn active">All Programmes</button>
+        <button class="filter-btn">Medicine</button>
+        <button class="filter-btn">Dentistry</button>
+        <button class="filter-btn">Pharmacy</button>
+        <button class="filter-btn">Allied Health</button>
+      </div>
+
+      <div class="prog-big-cards" id="dynamic-programmes">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--gold">
+    <div class="container">
+      <div style="text-align: center; max-width: 550px; margin: 0 auto 4rem;" class="fade-up">
+        <span class="eyebrow">Common Questions</span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-list fade-up">
+        <div class="faq-item">
+          <div class="faq-question">Is studying medicine abroad recognised in Malaysia?</div>
+          <div class="faq-answer">Yes — all universities recommended by MedicMesir are fully recognised by the Malaysian Medical Council (MMC), Malaysian Dental Council (MDC), or Pharmacy Board of Malaysia (BPM). We only recommend universities with this recognition.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What are the costs involved in studying medicine abroad?</div>
+          <div class="faq-answer">Costs vary by country and university. Egypt and Indonesia are generally the most affordable, while Russia and Jordan are mid-range. Our counsellors will provide a full cost breakdown during your consultation, including tuition, accommodation, and living expenses.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Can I apply with SPM results only?</div>
+          <div class="faq-answer">Yes, many of our partner universities accept direct SPM entry, provided you meet their minimum requirements (typically 5Bs in science subjects). Some universities may require a Foundation programme first.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What happens after I graduate? Will I get a job in Malaysia?</div>
+          <div class="faq-answer">All MM graduates to date have received placement in Malaysia for housemanship. MedicMesir provides post-graduation support including housemanship guidance, document verification, and MMC registration assistance. Our 100% placement record speaks for itself.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How long does the application process take?</div>
+          <div class="faq-answer">From consultation to receiving your offer letter, the process typically takes 4–8 weeks depending on the university and intake period. We handle most of the paperwork to make it as smooth as possible for you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <div class="container" style="position:relative; z-index:2;">
+      <span class="eyebrow">Take the First Step</span>
+      <h2>Not Sure Which Programme?</h2>
+      <p>Our counsellors will help you choose the right path based on your results, goals, and budget — at no cost to you.</p>
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn btn-outline btn-lg btn-arrow">Get Free Advice</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <div class="nav-logo-icon">M</div>
+            <span class="nav-logo-text" style="font-size:1.3rem;">Medic<span>Mesir</span></span>
+          </div>
+          <p>Malaysia's most trusted medical education consultant since 2007.</p>
+          <div class="footer-social">
+            <div class="social-btn">f</div>
+            <div class="social-btn">in</div>
+            <div class="social-btn">▶</div>
+            <div class="social-btn">📷</div>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Programmes</h4>
+          <ul class="footer-links">
+            <li><a href="programmes.html">MBBS</a></li>
+            <li><a href="programmes.html">BDS</a></li>
+            <li><a href="programmes.html">B.Pharm</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="universities.html">Universities</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <span id="footer-address">9A Jalan Equine, Seri Kembangan, Selangor</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <span id="footer-phone">+60 12-345 6789</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 MedicMesir Sdn Bhd. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load Footer
+      const s = getSettings();
+      if (s.address) document.getElementById('footer-address').textContent = s.address;
+      if (s.phone) document.getElementById('footer-phone').textContent = s.phone;
+
+      // Render Programmes
+      let currentFilter = 'All Programmes';
+      const container = document.getElementById('dynamic-programmes');
+      const allProgs = getProgrammes({ status: 'active' });
+
+      function render(filter) {
+        let list = allProgs;
+        if (filter !== 'All Programmes') {
+          list = allProgs.filter(p => p.category === filter);
+        }
+
+        if (list.length === 0) {
+          container.innerHTML = '<div style="text-align:center; padding:3rem; color:var(--muted); font-size:1.1rem; width:100%;">No programmes found for this category.</div>';
+          return;
+        }
+
+        container.innerHTML = list.map((p, i) => {
+          // Add reqs if available
+          let reqsHtml = '';
+          if (p.requirements && p.requirements.length > 0) {
+             reqsHtml = `
+              <h4 style="margin-bottom: 0.75rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--navy);">Entry Requirements</h4>
+              <ul class="req-list" style="margin-bottom: 2rem;">
+                ${p.requirements.map(r => `<li>${r}</li>`).join('')}
+              </ul>`;
+          }
+
+          let tagsHtml = '';
+          if (p.tags && p.tags.length > 0) {
+              tagsHtml = `<div class="prog-tags">${p.tags.map(t => `<span class="prog-tag">${t}</span>`).join('')}</div>`;
+          }
+
+          return `
+          <div class="prog-big fade-up stagger-${i%3}">
+            <div class="prog-big-visual" style="background: ${p.gradient}; color: white;">${p.emoji}</div>
+            <div class="prog-big-body">
+              <span class="eyebrow">${p.eyebrow || p.category}</span>
+              <h2>${p.title}</h2>
+              <p>${p.description}</p>
+
+              <div class="prog-big-meta">
+                <div class="prog-meta-item">
+                  <div class="value">${p.duration.replace(/[^0-9\-]/g,'') || p.duration.split(' ')[0]}</div>
+                  <div class="label">Years Duration</div>
+                </div>
+                <div class="prog-meta-item">
+                  <div class="value">${p.countries}</div>
+                  <div class="label">Countries</div>
+                </div>
+                <div class="prog-meta-item">
+                  <div class="value">${p.recognition}</div>
+                  <div class="label">Recognised By</div>
+                </div>
+              </div>
+
+              ${tagsHtml}
+              ${reqsHtml}
+
+              <a href="contact.html?programme=${encodeURIComponent(p.title)}" class="btn btn-primary btn-arrow">Apply for this Programme</a>
+            </div>
+          </div>
+          `;
+        }).join('');
+
+        // Retrigger animations
+        setTimeout(() => {
+          document.querySelectorAll('.fade-up').forEach(el => {
+            el.style.animation = 'none';
+            void el.offsetWidth;
+            el.style.animation = null;
+            el.classList.add('visible');
+          });
+        }, 50);
+      }
+
+      // Initial Render
+      render(currentFilter);
+
+      // Filter logic
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          render(btn.textContent.trim());
+        });
+      });
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+          item.classList.toggle('open');
+        });
+      });
+    });
+  </script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

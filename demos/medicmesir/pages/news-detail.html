@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News Article — MedicMesir</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script src="../js/data.js"></script>
+  <style>
+    body { opacity: 0; animation: fadeIn 0.5s ease 0.1s forwards; }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .article-header {
+      padding: 6rem 0 3rem;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .article-header .eyebrow {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: var(--gold);
+      background: var(--gold-pale);
+      padding: 0.4rem 1.2rem;
+      border-radius: 30px;
+    }
+
+    .article-header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .article-meta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .article-visual {
+      max-width: 1000px;
+      margin: 0 auto 4rem;
+      height: 450px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .article-content {
+      max-width: 760px;
+      margin: 0 auto 5rem;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .article-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .article-content h3 {
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin: 2.5rem 0 1rem;
+    }
+
+    .article-content ul, .article-content ol {
+      margin: 1.5rem 0 1.5rem 2rem;
+      padding-left: 1rem;
+    }
+
+    .article-content li {
+      margin-bottom: 0.75rem;
+    }
+
+    .error-state {
+      text-align: center;
+      padding: 10rem 0;
+    }
+
+    .error-state h1 { font-size: 4rem; color: var(--navy); margin-bottom: 1rem; }
+    .error-state p { color: var(--muted); margin-bottom: 2rem; }
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+          <div class="nav-logo-icon">M</div>
+          <span class="nav-logo-text">Medic<span>Mesir</span></span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="programmes.html">Programmes</a></li>
+          <li><a href="universities.html">Universities</a></li>
+          <li><a href="news.html" class="nav-active">News</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="contact.html" class="btn btn-primary">Free Consultation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="article-container">
+    <!-- Rendered via JS -->
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <div class="nav-logo-icon">M</div>
+            <span class="nav-logo-text" style="font-size:1.3rem;">Medic<span>Mesir</span></span>
+          </div>
+          <p>Malaysia's most trusted medical education consultant since 2007.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Programmes</h4>
+          <ul class="footer-links">
+            <li><a href="programmes.html">MBBS</a></li>
+            <li><a href="programmes.html">BDS</a></li>
+            <li><a href="programmes.html">B.Pharm</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="universities.html">Universities</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <span id="footer-address">9A Jalan Equine, Seri Kembangan, Selangor</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <span id="footer-phone">+60 12-345 6789</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 MedicMesir Sdn Bhd. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const s = getSettings();
+      if (s.address) document.getElementById('footer-address').textContent = s.address;
+      if (s.phone) document.getElementById('footer-phone').textContent = s.phone;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const articleId = urlParams.get('id');
+      const container = document.getElementById('article-container');
+
+      if (!articleId) {
+        showError();
+        return;
+      }
+
+      const allNews = getNews();
+      const article = allNews.find(n => n.id === articleId);
+
+      if (!article) {
+        showError();
+        return;
+      }
+
+      // Format content (basic markdown-like parse for paragraphs and headers)
+      let formattedContent = article.content
+        .split('\n\n')
+        .map(p => {
+          if(p.startsWith('## ')) return `<h3>${p.replace('## ', '')}</h3>`;
+          if(p.startsWith('- ')) {
+            const listItems = p.split('\n').map(li => `<li>${li.replace('- ', '')}</li>`).join('');
+            return `<ul>${listItems}</ul>`;
+          }
+          return `<p>${p}</p>`;
+        })
+        .join('');
+
+      container.innerHTML = `
+        <div class="container">
+          <div class="article-header fade-up">
+            <span class="eyebrow">${article.category}</span>
+            <h1>${article.title}</h1>
+            <div class="article-meta">
+              <span>${new Date(article.date).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric'})}</span>
+              <span>|</span>
+              <span>${article.author || 'Admin'}</span>
+              <span>|</span>
+              <span>${article.views || 0} Views</span>
+            </div>
+          </div>
+
+          <div class="article-visual fade-up stagger-1" style="background: ${article.gradient}; color: white;">
+            ${article.emoji}
+          </div>
+
+          <div class="article-content fade-up stagger-2">
+            ${formattedContent}
+          </div>
+
+          <div style="text-align:center; padding-bottom:5rem;" class="fade-up stagger-2">
+             <a href="news.html" class="btn btn-outline btn-arrow">← Back to News</a>
+          </div>
+        </div>
+      `;
+      
+      // Increment views count silently
+      article.views = (article.views || 0) + 1;
+      _set('mm_news', allNews);
+    });
+
+    function showError() {
+      document.getElementById('article-container').innerHTML = `
+        <div class="container error-state fade-up">
+          <h1>404</h1>
+          <p>The article you are looking for does not exist or has been removed.</p>
+          <a href="news.html" class="btn btn-primary">Back to News</a>
+        </div>
+      `;
+    }
+  </script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

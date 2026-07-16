@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Programmes — Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../js/data.js"></script>
+  <script src="../js/admin-auth.js"></script>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <div class="admin-sidebar-header">
+      <div class="admin-sidebar-logo">M</div>
+      <div class="admin-sidebar-title">Medic<span>Mesir</span></div>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-label">Main Menu</div>
+      <a href="dashboard.html" class="admin-nav-link"><i style="font-style:normal">🏠</i> Dashboard</a>
+      <div class="admin-nav-label">Content</div>
+      <a href="programmes.html" class="admin-nav-link active"><i style="font-style:normal">📚</i> Programmes</a>
+      <a href="universities.html" class="admin-nav-link"><i style="font-style:normal">🏛️</i> Universities</a>
+      <a href="offices.html" class="admin-nav-link"><i style="font-style:normal">🏢</i> Offices</a>
+      <div class="admin-nav-label">Marketing</div>
+      <a href="news.html" class="admin-nav-link"><i style="font-style:normal">📰</i> News & Blog</a>
+      <a href="promotions.html" class="admin-nav-link"><i style="font-style:normal">🎉</i> Promotions</a>
+      <div class="admin-nav-label">System</div>
+      <a href="settings.html" class="admin-nav-link"><i style="font-style:normal">⚙️</i> Settings</a>
+    </nav>
+    <div class="admin-sidebar-footer"><button id="logout-btn" class="btn-logout"><i style="font-style:normal">🚪</i> Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.5rem;">
+          <div class="hamburger-admin" id="mobile-menu-btn"><span></span><span></span><span></span></div>
+          <h1 style="margin:0;">Programmes</h1>
+        </div>
+        <p>Manage the medical programmes and degrees offered.</p>
+      </div>
+      <div>
+        <button class="btn-admin btn-admin-primary" onclick="openModal()">+ Add Programme</button>
+      </div>
+    </div>
+
+    <div class="admin-card" style="padding:0;">
+      <div class="admin-table-wrapper" style="margin:0; border-top:none;">
+        <table class="admin-table" id="dataTable">
+          <thead>
+            <tr>
+              <th>Programme</th>
+              <th>Category</th>
+              <th>Duration</th>
+              <th>Status</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="formModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add Programme</h3>
+        <button class="btn-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="dataForm">
+          <input type="hidden" id="prog_id" />
+          
+          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" id="prog_title" class="form-control" required placeholder="e.g. Bachelor of Medicine (MBBS)" />
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="prog_category" class="form-control" required>
+                <option value="Medicine">Medicine</option>
+                <option value="Dentistry">Dentistry</option>
+                <option value="Pharmacy">Pharmacy</option>
+                <option value="Allied Health">Allied Health</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="display:grid; grid-template-columns:80px 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Emoji</label>
+              <input type="text" id="prog_emoji" class="form-control" required placeholder="🩺" />
+            </div>
+            <div class="form-group">
+              <label>Background Gradient</label>
+              <input type="text" id="prog_gradient" class="form-control" required placeholder="linear-gradient(135deg,#0D1B2A,#1E3050)" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="prog_desc" class="form-control" style="min-height:80px" required></textarea>
+          </div>
+
+          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Duration</label>
+              <input type="text" id="prog_duration" class="form-control" required placeholder="5 Years" />
+            </div>
+            <div class="form-group">
+              <label>Countries</label>
+              <input type="text" id="prog_countries" class="form-control" required placeholder="8+" />
+            </div>
+            <div class="form-group">
+              <label>Recognition</label>
+              <input type="text" id="prog_recog" class="form-control" required placeholder="MMC" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Tags (Comma separated)</label>
+            <input type="text" id="prog_tags" class="form-control" placeholder="Egypt, Russia, Indonesia" />
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+            <input type="checkbox" id="prog_featured" style="width:18px; height:18px;" />
+            <label style="margin:0;">Featured (Show on Homepage)</label>
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+            <input type="checkbox" id="prog_status" checked style="width:18px; height:18px;" />
+            <label style="margin:0;">Active (Visible to public)</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-admin btn-admin-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn-admin btn-admin-primary" onclick="saveData()">Save Programme</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+
+    const tb = document.querySelector('#dataTable tbody');
+    let allData = [];
+
+    function renderTable() {
+      allData = getProgrammes(); // from data.js
+      tb.innerHTML = '';
+      if(allData.length === 0) {
+        tb.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;">No programmes found.</td></tr>';
+        return;
+      }
+
+      allData.forEach(p => {
+        const tr = document.createElement('tr');
+        const badge = p.status === 'active' ? '<span class="badge active">Active</span>' : '<span class="badge hidden">Hidden</span>';
+        const feat  = p.featured ? '⭐ ' : '';
+        
+        tr.innerHTML = `
+          <td>
+            <div class="td-flex">
+              <div class="td-icon" style="background:${p.gradient}; color:white; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.2rem;">${p.emoji}</div>
+              <div>
+                <div class="td-title">${feat}${p.title}</div>
+                <div class="td-subtitle">Updated ${timeAgo(p.updatedAt)}</div>
+              </div>
+            </div>
+          </td>
+          <td>${p.category}</td>
+          <td>${p.duration}</td>
+          <td>${badge}</td>
+          <td style="text-align:right">
+            <div class="table-actions" style="justify-content:flex-end">
+              <button class="btn-action" onclick="editRow('${p.id}')">✏️</button>
+              <button class="btn-action delete" onclick="deleteRow('${p.id}')">🗑️</button>
+            </div>
+          </td>
+        `;
+        tb.appendChild(tr);
+      });
+    }
+
+    function openModal() {
+      document.getElementById('dataForm').reset();
+      document.getElementById('prog_id').value = '';
+      document.getElementById('modalTitle').textContent = 'Add Programme';
+      document.getElementById('formModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('formModal').classList.remove('open');
+    }
+
+    function editRow(id) {
+      const p = allData.find(x => x.id === id);
+      if(!p) return;
+      document.getElementById('prog_id').value = p.id;
+      document.getElementById('prog_title').value = p.title;
+      document.getElementById('prog_category').value = p.category;
+      document.getElementById('prog_emoji').value = p.emoji;
+      document.getElementById('prog_gradient').value = p.gradient;
+      document.getElementById('prog_desc').value = p.description;
+      document.getElementById('prog_duration').value = p.duration;
+      document.getElementById('prog_countries').value = p.countries;
+      document.getElementById('prog_recog').value = p.recognition;
+      document.getElementById('prog_tags').value = Array.isArray(p.tags) ? p.tags.join(', ') : p.tags;
+      document.getElementById('prog_featured').checked = p.featured;
+      document.getElementById('prog_status').checked = p.status === 'active';
+      
+      document.getElementById('modalTitle').textContent = 'Edit Programme';
+      document.getElementById('formModal').classList.add('open');
+    }
+
+    function deleteRow(id) {
+      if(confirm('Are you sure you want to delete this programme?')) {
+        deleteProgramme(id);
+        showAdminToast('Programme deleted');
+        renderTable();
+      }
+    }
+
+    function saveData() {
+      const form = document.getElementById('dataForm');
+      if(!form.checkValidity()) {
+        form.reportValidity(); return;
+      }
+
+      const tagsRaw = document.getElementById('prog_tags').value;
+      const tags = tagsRaw.split(',').map(s=>s.trim()).filter(Boolean);
+
+      const payload = {
+        title: document.getElementById('prog_title').value,
+        category: document.getElementById('prog_category').value,
+        emoji: document.getElementById('prog_emoji').value,
+        gradient: document.getElementById('prog_gradient').value,
+        description: document.getElementById('prog_desc').value,
+        duration: document.getElementById('prog_duration').value,
+        countries: document.getElementById('prog_countries').value,
+        recognition: document.getElementById('prog_recog').value,
+        tags: tags,
+        featured: document.getElementById('prog_featured').checked,
+        status: document.getElementById('prog_status').checked ? 'active' : 'hidden',
+        requirements: ['SPM: Refer to full guide', 'STPM / Foundation accepted'] // simplified for demo modal
+      };
+
+      const id = document.getElementById('prog_id').value;
+      if (id) {
+        updateProgramme(id, payload);
+        showAdminToast('Programme updated successfully');
+      } else {
+        createProgramme(payload);
+        showAdminToast('Programme created successfully');
+      }
+
+      closeModal();
+      renderTable();
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

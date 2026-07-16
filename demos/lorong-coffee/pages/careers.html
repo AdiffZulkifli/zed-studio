@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Careers — Lorong Coffee</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="icon" type="image/jpeg" href="../images/logo.jpg"/>
+  <style>
+    .page-hero { background:var(--green); padding:10rem 2rem 5rem; text-align:center; }
+    .page-hero__title { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--cream); }
+    .page-hero__title em { color:var(--yellow); font-style:italic; }
+    .page-hero__sub { color:rgba(255,255,255,0.6); margin-top:1rem; font-size:1.1rem; max-width:540px; margin-inline:auto; line-height:1.7; }
+
+    .careers-section { background:var(--cream); padding:6rem 2rem; }
+    .perks-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:5rem; }
+    .perk-card { background:var(--green); border-radius:var(--radius-lg); padding:2rem; text-align:center; }
+    .perk-card__icon { font-size:2.5rem; margin-bottom:0.75rem; display:block; }
+    .perk-card__title { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--yellow); margin-bottom:0.5rem; }
+    .perk-card__text { font-size:0.88rem; color:rgba(255,255,255,0.6); line-height:1.65; }
+
+    .jobs-list { display:flex; flex-direction:column; gap:1rem; }
+    .job-card {
+      background:var(--white); border-radius:var(--radius); padding:1.5rem 2rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
+      box-shadow:var(--shadow); border:2px solid transparent;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .job-card:hover { border-color:var(--yellow); transform:translateX(4px); }
+    .job-card__left { display:flex; align-items:center; gap:1rem; }
+    .job-card__icon { width:50px; height:50px; background:var(--yellow-light); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+    .job-card__title { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--green); }
+    .job-card__meta { font-size:0.83rem; color:var(--text-muted); }
+    .job-card__tags { display:flex; gap:0.5rem; flex-wrap:wrap; }
+    .tag {
+      background:var(--cream-dark); color:var(--green);
+      padding:4px 12px; border-radius:50px; font-size:0.75rem; font-weight:600;
+    }
+    .tag.full-time { background:rgba(27,67,50,0.1); }
+    .tag.part-time { background:rgba(245,200,0,0.2); }
+    @media(max-width:900px) { .perks-grid{grid-template-columns:1fr;} .job-card{flex-direction:column; align-items:flex-start;} }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <a href="../index.html" class="navbar__logo">
+    <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+    <span>Lorong Coffee</span>
+  </a>
+  <ul class="navbar__links">
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="rewards.html">Rewards</a></li>
+    <li><a href="stores.html">Find a Store</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="stores.html" class="navbar__cta">Order Now</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="menu.html">Menu</a>
+  <a href="careers.html">Careers</a>
+  <a href="stores.html">Find a Store</a>
+</div>
+
+<div class="page-hero">
+  <div class="section-label" style="justify-content:center;color:rgba(255,255,255,0.5);">Work With Us</div>
+  <h1 class="page-hero__title">Brew Your <em>Career</em> With Us</h1>
+  <p class="page-hero__sub">Join a passionate team that loves great coffee, great people, and building something meaningful in Sarawak.</p>
+</div>
+
+<section class="careers-section">
+  <div class="container">
+    <div class="section-label">Why Lorong?</div>
+    <h2 class="section-title">Life at <em>Lorong Coffee</em></h2>
+    <br/>
+    <div class="perks-grid">
+      <div class="perk-card reveal">
+        <span class="perk-card__icon">☕</span>
+        <div class="perk-card__title">Free Coffee, Every Day</div>
+        <p class="perk-card__text">Enjoy unlimited complimentary drinks during your shift. Because great work runs on great coffee.</p>
+      </div>
+      <div class="perk-card reveal">
+        <span class="perk-card__icon">📚</span>
+        <div class="perk-card__title">Barista Training</div>
+        <p class="perk-card__text">We invest in your skills — from espresso fundamentals to latte art and coffee science. Learn from the best.</p>
+      </div>
+      <div class="perk-card reveal">
+        <span class="perk-card__icon">🚀</span>
+        <div class="perk-card__title">Career Growth</div>
+        <p class="perk-card__text">We promote from within. Today's barista can be tomorrow's outlet manager — if you have the drive, we'll back you.</p>
+      </div>
+      <div class="perk-card reveal">
+        <span class="perk-card__icon">🤝</span>
+        <div class="perk-card__title">Team Culture</div>
+        <p class="perk-card__text">We're a close-knit crew. Monthly team events, open communication, and a genuine support system for everyone.</p>
+      </div>
+      <div class="perk-card reveal">
+        <span class="perk-card__icon">💰</span>
+        <div class="perk-card__title">Competitive Pay</div>
+        <p class="perk-card__text">Above market-rate base pay, performance incentives, and clear salary progression as you grow with us.</p>
+      </div>
+      <div class="perk-card reveal">
+        <span class="perk-card__icon">🌱</span>
+        <div class="perk-card__title">Be Part of Something Big</div>
+        <p class="perk-card__text">Help us build Sarawak's favourite coffee brand from the ground up. Your work actually matters here.</p>
+      </div>
+    </div>
+
+    <div class="section-label">Open Positions</div>
+    <h2 class="section-title">Current <em>Openings</em></h2>
+    <br/>
+    <div class="jobs-list">
+      <div class="job-card reveal">
+        <div class="job-card__left">
+          <div class="job-card__icon">☕</div>
+          <div>
+            <div class="job-card__title">Barista</div>
+            <div class="job-card__meta">Bintulu Main · Parkcity Mall · Kidurong</div>
+          </div>
+        </div>
+        <div class="job-card__tags">
+          <span class="tag full-time">Full-time</span>
+          <span class="tag part-time">Part-time</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary" style="padding:10px 22px; font-size:0.85rem;">Apply Now →</a>
+      </div>
+      <div class="job-card reveal">
+        <div class="job-card__left">
+          <div class="job-card__icon">🏪</div>
+          <div>
+            <div class="job-card__title">Outlet Supervisor</div>
+            <div class="job-card__meta">Bintulu Main</div>
+          </div>
+        </div>
+        <div class="job-card__tags">
+          <span class="tag full-time">Full-time</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary" style="padding:10px 22px; font-size:0.85rem;">Apply Now →</a>
+      </div>
+      <div class="job-card reveal">
+        <div class="job-card__left">
+          <div class="job-card__icon">📱</div>
+          <div>
+            <div class="job-card__title">Social Media & Marketing Executive</div>
+            <div class="job-card__meta">HQ Bintulu · Hybrid</div>
+          </div>
+        </div>
+        <div class="job-card__tags">
+          <span class="tag full-time">Full-time</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary" style="padding:10px 22px; font-size:0.85rem;">Apply Now →</a>
+      </div>
+      <div class="job-card reveal">
+        <div class="job-card__left">
+          <div class="job-card__icon">🧹</div>
+          <div>
+            <div class="job-card__title">Kitchen & Operations Crew</div>
+            <div class="job-card__meta">All Outlets</div>
+          </div>
+        </div>
+        <div class="job-card__tags">
+          <span class="tag full-time">Full-time</span>
+          <span class="tag part-time">Part-time</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary" style="padding:10px 22px; font-size:0.85rem;">Apply Now →</a>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:3rem; padding:2rem; background:var(--cream-dark); border-radius:var(--radius-lg);">
+      <p style="color:var(--text-muted); margin-bottom:1rem;">Don't see the right role? We're always looking for passionate people.</p>
+      <a href="contact.html" class="btn btn-green">Send Us Your CV →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer__grid">
+    <div>
+      <a href="../index.html" class="footer__brand-logo">
+        <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+        <span>Lorong Coffee</span>
+      </a>
+      <p class="footer__about">Sarawak's favourite specialty coffee. Handcrafted brews, warm vibes.</p>
+      <div class="footer__social">
+        <a href="#" title="Instagram">📸</a><a href="#" title="Facebook">👍</a><a href="#" title="TikTok">🎵</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer__heading">Explore</div>
+      <ul class="footer__links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="menu.html">Full Menu</a></li>
+        <li><a href="rewards.html">Rewards</a></li>
+        <li><a href="stores.html">Find a Store</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Company</div>
+      <ul class="footer__links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Hours</div>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;">Mon – Sun<br/>8:00 AM – 10:00 PM</p>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2025 Lorong Coffee Sdn Bhd.</span>
+    <span>Made with ☕ in Bintulu, Sarawak</span>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

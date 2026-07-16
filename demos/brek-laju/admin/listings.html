@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Menu – Brek Laju Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="dashboard.html" class="sidebar-logo">BREK<span>LAJU</span></a>
+      <div class="sidebar-label">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Utama</div>
+      <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+      <div class="nav-section-title">Pengurusan</div>
+      <a href="listings.html" class="nav-item active">🍗 Item Menu</a>
+      <a href="branches.html" class="nav-item">📍 Cawangan</a>
+      <a href="promotions.html" class="nav-item">📢 Promosi</a>
+      <div class="nav-section-title">Sistem</div>
+      <a href="analytics.html" class="nav-item">📈 Analitik</a>
+      <a href="settings.html" class="nav-item">⚙️ Tetapan</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" target="_blank" class="view-site-link" style="margin-bottom:10px;display:flex;">🌐 Lihat Laman Web</a>
+      <button class="btn-logout" onclick="adminLogout();window.location.href='index.html'">🚪 Log Keluar</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <button class="sidebar-toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <span class="admin-header-title">🍗 Pengurusan Item Menu</span>
+        <div class="admin-header-sub">Tambah, edit, dan urus item menu anda</div>
+      </div>
+      <div class="admin-header-right">
+        <span class="header-badge" id="itemCount">– item</span>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <!-- TOOLBAR -->
+      <div class="section-header">
+        <div class="search-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchInput" placeholder="Cari item..." />
+          </div>
+          <select class="filter-select" id="catFilter">
+            <option value="all">Semua Kategori</option>
+          </select>
+          <select class="filter-select" id="statusFilter">
+            <option value="all">Semua Status</option>
+            <option value="available">Tersedia</option>
+            <option value="soldout">Habis</option>
+            <option value="hidden">Tersembunyi</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="addBtn">＋ Tambah Item</button>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table id="listingsTable">
+            <thead>
+              <tr>
+                <th>Imej</th>
+                <th>Nama Item</th>
+                <th>Kategori</th>
+                <th>Harga</th>
+                <th>Status</th>
+                <th>Terkemuka</th>
+                <th>Dikemaskini</th>
+                <th>Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="listingsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Tambah Item Baru</span>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId" />
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nama Item *</label>
+          <input type="text" id="fName" class="form-control" placeholder="cth. Ayam Goreng Original" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kategori *</label>
+          <select id="fCategory" class="form-control"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Penerangan</label>
+        <textarea id="fDescription" class="form-control" placeholder="Penerangan ringkas item..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Harga (RM) *</label>
+          <input type="number" id="fPrice" class="form-control" step="0.10" min="0" placeholder="0.00" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Unit Harga</label>
+          <input type="text" id="fPriceUnit" class="form-control" placeholder="cth. / ketul" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL Imej</label>
+        <input type="url" id="fImageUrl" class="form-control" placeholder="https://..." />
+        <div id="imgPreviewWrap">
+          <div class="img-preview-placeholder" id="imgPlaceholder">🖼️ Tiada imej — masukkan URL di atas</div>
+          <img id="imgPreview" class="img-preview" style="display:none;" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Lencana</label>
+          <input type="text" id="fBadge" class="form-control" placeholder="cth. Terlaris" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Jenis Lencana</label>
+          <select id="fBadgeType" class="form-control">
+            <option value="none">Tiada</option>
+            <option value="default">Standard (Kuning)</option>
+            <option value="hot">Hot 🔥 (Merah)</option>
+            <option value="new">Baru! (Hijau)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Tahap Kepedasan (0–3)</label>
+          <select id="fSpiceLevel" class="form-control">
+            <option value="0">0 – Tidak Pedas</option>
+            <option value="1">1 – Sedikit Pedas 🌶️</option>
+            <option value="2">2 – Sederhana Pedas 🌶️🌶️</option>
+            <option value="3">3 – Pedas Gila! 🌶️🌶️🌶️</option>
+          </select>
+        </div>
+        <div class="form-group" style="display:flex;flex-direction:column;justify-content:flex-end;">
+          <div class="toggle-wrap" style="margin-bottom:12px;">
+            <label class="toggle">
+              <input type="checkbox" id="fIsAvailable" checked />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Tersedia (tidak habis)</span>
+          </div>
+          <div class="toggle-wrap" style="margin-bottom:12px;">
+            <label class="toggle">
+              <input type="checkbox" id="fIsFeatured" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Paparkan di Halaman Utama</span>
+          </div>
+          <div class="toggle-wrap">
+            <label class="toggle">
+              <input type="checkbox" id="fIsHidden" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Sembunyikan dari Pelanggan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="modalCancel">Batal</button>
+      <button class="btn btn-primary" id="modalSave">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">Padam Item?</div>
+    <div class="confirm-desc">Tindakan ini tidak boleh dibatalkan. Item akan dipadam secara kekal.</div>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" id="confirmCancel">Batal</button>
+      <button class="btn btn-danger" id="confirmDelete">Ya, Padam</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../js/db.js"></script>
+<script>
+  requireAdmin('index.html');
+  trackPageView('admin-listings');
+
+  let deleteTargetId = null;
+  let editMode = false;
+
+  // Populate category filter + form select
+  const catFilter = document.getElementById('catFilter');
+  const fCategory = document.getElementById('fCategory');
+  CATEGORIES.forEach(c => {
+    catFilter.innerHTML += `<option value="${c.id}">${c.label}</option>`;
+    fCategory.innerHTML += `<option value="${c.id}">${c.label}</option>`;
+  });
+
+  // Image preview
+  document.getElementById('fImageUrl').addEventListener('input', function() {
+    const url = this.value.trim();
+    const img = document.getElementById('imgPreview');
+    const ph = document.getElementById('imgPlaceholder');
+    if (url) {
+      img.src = url; img.style.display = 'block'; ph.style.display = 'none';
+      img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex'; };
+    } else {
+      img.style.display = 'none'; ph.style.display = 'flex';
+    }
+  });
+
+  // Render table
+  function renderTable() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const cat = document.getElementById('catFilter').value;
+    const status = document.getElementById('statusFilter').value;
+    let items = getListings({ includeHidden: true });
+    if (search) items = items.filter(i => i.name.toLowerCase().includes(search) || i.description.toLowerCase().includes(search));
+    if (cat !== 'all') items = items.filter(i => i.category === cat);
+    if (status === 'available') items = items.filter(i => i.isAvailable && !i.isHidden);
+    if (status === 'soldout') items = items.filter(i => !i.isAvailable);
+    if (status === 'hidden') items = items.filter(i => i.isHidden);
+
+    document.getElementById('itemCount').textContent = items.length + ' item';
+    const tbody = document.getElementById('listingsTbody');
+    if (items.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🍗</div><div class="empty-title">Tiada item dijumpai</div><div class="empty-desc">Cuba tukar penapis atau tambah item baru.</div></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = items.map(item => {
+      const catLabel = CATEGORIES.find(c => c.id === item.category)?.label || item.category;
+      let statusBadge = '';
+      if (item.isHidden) statusBadge = '<span class="badge badge-hidden">Tersembunyi</span>';
+      else if (!item.isAvailable) statusBadge = '<span class="badge badge-soldout">Habis</span>';
+      else statusBadge = '<span class="badge badge-available"><span class="dot-pulse"></span> Tersedia</span>';
+      return `
+        <tr>
+          <td>
+            ${item.imageUrl ? `<img src="${item.imageUrl}" class="td-img" alt="${item.name}" onerror="this.style.opacity=0.3">` : `<div class="td-img-placeholder">🍗</div>`}
+          </td>
+          <td>
+            <div class="td-name">${item.name}</div>
+            <div class="td-sub">${item.description.substring(0,50)}${item.description.length>50?'…':''}</div>
+          </td>
+          <td><span style="font-size:0.82rem;">${catLabel}</span></td>
+          <td><strong>RM ${item.price.toFixed(2)}</strong><br><span style="font-size:0.75rem;color:var(--text-muted);">${item.priceUnit||''}</span></td>
+          <td>${statusBadge}</td>
+          <td>
+            <label class="toggle" title="Terkemuka di halaman utama">
+              <input type="checkbox" ${item.isFeatured?'checked':''} onchange="toggleFeatured('${item.id}', this.checked)" />
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+          <td><span style="font-size:0.78rem;color:var(--text-muted);">${fmtDate(item.updatedAt)}</span></td>
+          <td>
+            <div class="td-actions">
+              <button class="btn btn-sm btn-secondary" onclick="openEdit('${item.id}')">✏️</button>
+              <button class="btn btn-sm ${item.isAvailable?'btn-danger':'btn-success'}" onclick="toggleAvailable('${item.id}', ${!item.isAvailable})" title="${item.isAvailable?'Tandakan Habis':'Tandakan Tersedia'}">
+                ${item.isAvailable?'Habis':'Tersedia'}
+              </button>
+              <button class="btn btn-sm btn-danger" onclick="confirmDel('${item.id}')">🗑️</button>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  // Filters
+  ['searchInput','catFilter','statusFilter'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderTable);
+    document.getElementById(id).addEventListener('change', renderTable);
+  });
+
+  // Modal
+  function openModal(title) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('formModal').classList.add('open');
+  }
+  function closeModal() { document.getElementById('formModal').classList.remove('open'); }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalCancel').addEventListener('click', closeModal);
+  document.getElementById('formModal').addEventListener('click', e => { if (e.target === document.getElementById('formModal')) closeModal(); });
+
+  function clearForm() {
+    ['fName','fDescription','fPrice','fPriceUnit','fImageUrl','fBadge'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fCategory').value = 'ayam';
+    document.getElementById('fBadgeType').value = 'none';
+    document.getElementById('fSpiceLevel').value = '0';
+    document.getElementById('fIsAvailable').checked = true;
+    document.getElementById('fIsFeatured').checked = false;
+    document.getElementById('fIsHidden').checked = false;
+    document.getElementById('editId').value = '';
+    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('imgPlaceholder').style.display = 'flex';
+  }
+
+  document.getElementById('addBtn').addEventListener('click', () => {
+    editMode = false; clearForm(); openModal('＋ Tambah Item Baru');
+  });
+
+  function openEdit(id) {
+    editMode = true;
+    const item = getListing(id);
+    if (!item) return;
+    document.getElementById('editId').value = id;
+    document.getElementById('fName').value = item.name;
+    document.getElementById('fDescription').value = item.description;
+    document.getElementById('fPrice').value = item.price;
+    document.getElementById('fPriceUnit').value = item.priceUnit || '';
+    document.getElementById('fCategory').value = item.category;
+    document.getElementById('fImageUrl').value = item.imageUrl || '';
+    document.getElementById('fBadge').value = item.badge || '';
+    document.getElementById('fBadgeType').value = item.badgeType || 'none';
+    document.getElementById('fSpiceLevel').value = String(item.spiceLevel || 0);
+    document.getElementById('fIsAvailable').checked = item.isAvailable;
+    document.getElementById('fIsFeatured').checked = item.isFeatured;
+    document.getElementById('fIsHidden').checked = item.isHidden;
+    const img = document.getElementById('imgPreview');
+    if (item.imageUrl) {
+      img.src = item.imageUrl; img.style.display = 'block';
+      document.getElementById('imgPlaceholder').style.display = 'none';
+    }
+    openModal('✏️ Edit Item: ' + item.name);
+  }
+
+  document.getElementById('modalSave').addEventListener('click', () => {
+    const name = document.getElementById('fName').value.trim();
+    const price = parseFloat(document.getElementById('fPrice').value);
+    if (!name) { showToast('Sila masukkan nama item.', 'error'); return; }
+    if (isNaN(price) || price < 0) { showToast('Sila masukkan harga yang sah.', 'error'); return; }
+
+    const data = {
+      name, price, description: document.getElementById('fDescription').value.trim(),
+      priceUnit: document.getElementById('fPriceUnit').value.trim(),
+      category: document.getElementById('fCategory').value,
+      imageUrl: document.getElementById('fImageUrl').value.trim(),
+      badge: document.getElementById('fBadge').value.trim(),
+      badgeType: document.getElementById('fBadgeType').value,
+      spiceLevel: parseInt(document.getElementById('fSpiceLevel').value),
+      isAvailable: document.getElementById('fIsAvailable').checked,
+      isFeatured: document.getElementById('fIsFeatured').checked,
+      isHidden: document.getElementById('fIsHidden').checked
+    };
+
+    if (editMode) {
+      updateListing(document.getElementById('editId').value, data);
+      showToast('✅ Item berjaya dikemaskini!', 'success');
+    } else {
+      createListing(data);
+      showToast('✅ Item baru berjaya ditambah!', 'success');
+    }
+    closeModal(); renderTable();
+  });
+
+  // Toggle available
+  function toggleAvailable(id, val) {
+    updateListing(id, { isAvailable: val });
+    showToast(val ? '✅ Item ditandakan Tersedia' : '🚫 Item ditandakan Habis', 'success');
+    renderTable();
+  }
+
+  // Toggle featured
+  function toggleFeatured(id, val) {
+    updateListing(id, { isFeatured: val });
+    renderTable();
+  }
+
+  // Delete
+  function confirmDel(id) {
+    deleteTargetId = id;
+    document.getElementById('confirmModal').classList.add('open');
+  }
+  document.getElementById('confirmCancel').addEventListener('click', () => {
+    document.getElementById('confirmModal').classList.remove('open');
+  });
+  document.getElementById('confirmDelete').addEventListener('click', () => {
+    if (deleteTargetId) { deleteListing(deleteTargetId); showToast('🗑️ Item dipadam.', 'success'); }
+    document.getElementById('confirmModal').classList.remove('open');
+    deleteTargetId = null; renderTable();
+  });
+  document.getElementById('confirmModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('confirmModal')) document.getElementById('confirmModal').classList.remove('open');
+  });
+
+  // Toast
+  function showToast(msg, type = 'success') {
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span> ${msg}`;
+    document.getElementById('toastContainer').appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+
+  // Open add modal if hash is #add
+  if (window.location.hash === '#add') {
+    clearForm(); openModal('＋ Tambah Item Baru');
+  }
+
+  renderTable();
+</script>
+</body>
+</html>

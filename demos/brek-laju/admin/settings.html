@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tetapan – Brek Laju Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><a href="dashboard.html" class="sidebar-logo">BREK<span>LAJU</span></a><div class="sidebar-label">Admin Panel</div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Utama</div>
+      <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+      <div class="nav-section-title">Pengurusan</div>
+      <a href="listings.html" class="nav-item">🍗 Item Menu</a>
+      <a href="branches.html" class="nav-item">📍 Cawangan</a>
+      <a href="promotions.html" class="nav-item">📢 Promosi</a>
+      <div class="nav-section-title">Sistem</div>
+      <a href="analytics.html" class="nav-item">📈 Analitik</a>
+      <a href="settings.html" class="nav-item active">⚙️ Tetapan</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" target="_blank" class="view-site-link" style="margin-bottom:10px;display:flex;">🌐 Lihat Laman Web</a>
+      <button class="btn-logout" onclick="adminLogout();window.location.href='index.html'">🚪 Log Keluar</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <button class="sidebar-toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <span class="admin-header-title">⚙️ Tetapan Laman Web</span>
+        <div class="admin-header-sub">Kemaskini maklumat perniagaan dan paparan laman web</div>
+      </div>
+      <div class="admin-header-right">
+        <span id="lastSaved" style="font-size:0.78rem;color:var(--text-muted);font-weight:700;"></span>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="dashboard-row">
+
+        <!-- BRANDING -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">🏷️ Maklumat Jenama</span></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Nama Perniagaan</label>
+              <input type="text" id="s_siteName" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tagline</label>
+              <input type="text" id="s_tagline" class="form-control" placeholder="cth. Rangup. Laju. Sedap." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tajuk Hero (Baris 1)</label>
+              <input type="text" id="s_heroTitle" class="form-control" placeholder="cth. RASA LAJU," />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Teks Hero (Subtajuk)</label>
+              <textarea id="s_heroSubtitle" class="form-control" rows="3" placeholder="Penerangan singkat perniagaan..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">📞 Maklumat Hubungi</span></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Nombor Telefon</label>
+              <input type="text" id="s_contactPhone" class="form-control" placeholder="03-XXXX XXXX" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-mel</label>
+              <input type="email" id="s_contactEmail" class="form-control" placeholder="hello@perniagaan.my" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Alamat Pejabat / HQ</label>
+              <input type="text" id="s_contactAddress" class="form-control" placeholder="Cyberjaya, Selangor" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SOCIAL -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">📱 Media Sosial</span></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">URL Facebook</label>
+              <input type="url" id="s_socialFacebook" class="form-control" placeholder="https://facebook.com/..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">URL Instagram</label>
+              <input type="url" id="s_socialInstagram" class="form-control" placeholder="https://instagram.com/..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">URL TikTok</label>
+              <input type="url" id="s_socialTiktok" class="form-control" placeholder="https://tiktok.com/@..." />
+            </div>
+          </div>
+        </div>
+
+        <!-- SECURITY -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">🔐 Keselamatan Admin</span></div>
+          <div class="card-body">
+            <div style="background:rgba(255,211,42,0.06);border:1px solid rgba(255,211,42,0.2);border-radius:var(--radius-sm);padding:12px;margin-bottom:16px;font-size:0.8rem;color:var(--text-muted);">
+              ⚠️ <strong style="color:var(--yellow);">Demo Mode:</strong> Kata laluan disimpan dalam localStorage. Untuk produksi, gunakan Supabase Auth.
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kata Laluan Admin Baru</label>
+              <input type="password" id="s_newPassword" class="form-control" placeholder="Biarkan kosong jika tiada perubahan..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sahkan Kata Laluan Baru</label>
+              <input type="password" id="s_confirmPassword" class="form-control" placeholder="Ulangi kata laluan baru..." />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SAVE BUTTON -->
+      <div style="display:flex;justify-content:flex-end;gap:16px;margin-top:24px;align-items:center;">
+        <span id="saveStatus" style="font-size:0.85rem;color:var(--text-muted);font-weight:700;"></span>
+        <button class="btn btn-secondary" id="resetBtn">↩️ Reset ke Lalai</button>
+        <button class="btn btn-primary" id="saveBtn" style="padding:12px 32px;">💾 Simpan Semua Perubahan</button>
+      </div>
+
+      <!-- DANGER ZONE -->
+      <div style="margin-top:48px;">
+        <div class="section-title-lg" style="color:var(--red-light);margin-bottom:16px;">⚠️ Zon Berbahaya</div>
+        <div class="card" style="border-color:rgba(232,25,44,0.25);">
+          <div class="card-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+              <div>
+                <div style="font-weight:800;margin-bottom:4px;">Reset Semua Data</div>
+                <div style="font-size:0.83rem;color:var(--text-muted);">Padam semua data dan pulihkan kepada data contoh asal. Tidak boleh dibatalkan.</div>
+              </div>
+              <button class="btn btn-danger" id="resetDataBtn">🗑️ Reset Semua Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="resetConfirm">
+  <div class="confirm-box">
+    <div class="confirm-icon">⚠️</div>
+    <div class="confirm-title">Reset Semua Data?</div>
+    <div class="confirm-desc">Ini akan MEMADAM semua item, cawangan, promosi, dan tetapan anda dan mengembalikan kepada data contoh asal. Tindakan <strong>tidak boleh dibatalkan</strong>.</div>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" id="resetConfirmCancel">Batal</button>
+      <button class="btn btn-danger" id="resetConfirmOk">Ya, Reset Sekarang</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../js/db.js"></script>
+<script>
+  requireAdmin('index.html');
+  trackPageView('admin-settings');
+
+  const fields = ['siteName','tagline','heroTitle','heroSubtitle','contactPhone','contactEmail','contactAddress','socialFacebook','socialInstagram','socialTiktok'];
+
+  function loadSettings() {
+    const s = getSettings();
+    fields.forEach(f => {
+      const el = document.getElementById('s_' + f);
+      if (el) el.value = s[f] || '';
+    });
+    document.getElementById('lastSaved').textContent = s.updatedAt ? '💾 Disimpan: ' + fmtDate(s.updatedAt) : '';
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const data = {};
+    fields.forEach(f => { const el = document.getElementById('s_' + f); if (el) data[f] = el.value.trim(); });
+
+    // Password change
+    const np = document.getElementById('s_newPassword').value;
+    const cp = document.getElementById('s_confirmPassword').value;
+    if (np) {
+      if (np !== cp) { showToast('Kata laluan tidak sepadan!', 'error'); return; }
+      if (np.length < 6) { showToast('Kata laluan mesti sekurang-kurangnya 6 aksara.', 'error'); return; }
+      data.adminPassword = np;
+      document.getElementById('s_newPassword').value = '';
+      document.getElementById('s_confirmPassword').value = '';
+    }
+
+    updateSettings(data);
+    loadSettings();
+    showToast('✅ Tetapan berjaya disimpan!', 'success');
+    document.getElementById('saveStatus').textContent = '✅ Disimpan pada ' + new Date().toLocaleTimeString('ms-MY');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => { loadSettings(); showToast('↩️ Nilai dipulihkan semula.', 'success'); });
+
+  document.getElementById('resetDataBtn').addEventListener('click', () => document.getElementById('resetConfirm').classList.add('open'));
+  document.getElementById('resetConfirmCancel').addEventListener('click', () => document.getElementById('resetConfirm').classList.remove('open'));
+  document.getElementById('resetConfirmOk').addEventListener('click', () => {
+    resetDB(); document.getElementById('resetConfirm').classList.remove('open');
+    showToast('✅ Semua data telah direset kepada asal!', 'success');
+    setTimeout(() => window.location.href = 'dashboard.html', 1500);
+  });
+  document.getElementById('resetConfirm').addEventListener('click', e => { if (e.target === document.getElementById('resetConfirm')) document.getElementById('resetConfirm').classList.remove('open'); });
+
+  function showToast(msg, type = 'success') {
+    const t = document.createElement('div'); t.className = `toast ${type}`;
+    t.innerHTML = `<span>${type==='success'?'✅':'❌'}</span> ${msg}`;
+    document.getElementById('toastContainer').appendChild(t); setTimeout(() => t.remove(), 4000);
+  }
+
+  loadSettings();
+</script>
+</body>
+</html>

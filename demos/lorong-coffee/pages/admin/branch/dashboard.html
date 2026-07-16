@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Branch Dashboard — Lorong Coffee</title>
+  <link rel="stylesheet" href="../../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../../images/logo.jpg"/>
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub" id="branchSubtitle">Branch Admin</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link active"><span class="admin-nav-link__icon">📊</span> Dashboard</a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link"><span class="admin-nav-link__icon">☕</span> Menu Status</a>
+      <a href="customers.html" class="admin-nav-link"><span class="admin-nav-link__icon">👥</span> Customers</a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../../index.html" class="admin-nav-link" target="_blank"><span class="admin-nav-link__icon">🌐</span> View Website</a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title" id="pageTitle">Branch Dashboard</div>
+          <div class="admin-topbar__breadcrumb" id="pageSub">Overview &amp; quick actions</div>
+        </div>
+      </div>
+      <div class="admin-topbar__right">
+        <div class="admin-topbar__time" id="clockDisplay"></div>
+        <div class="admin-topbar__user">
+          <div class="admin-topbar__avatar" id="userAvatar">B</div>
+          <span class="admin-topbar__username" id="topbarUsername">Branch</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card__icon">🧾</div>
+          <div class="stat-card__value" id="statPurchases">—</div>
+          <div class="stat-card__label">Total Purchases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">👥</div>
+          <div class="stat-card__value" id="statCustomers">—</div>
+          <div class="stat-card__label">Unique Customers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🎁</div>
+          <div class="stat-card__value" id="statRedemptions">—</div>
+          <div class="stat-card__label">Rewards Redeemed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🔴</div>
+          <div class="stat-card__value" id="statUnavailable">—</div>
+          <div class="stat-card__label">Items Unavailable</div>
+        </div>
+      </div>
+
+      <div class="quick-actions" style="grid-template-columns:repeat(2,1fr);">
+        <a href="customers.html" class="quick-card">
+          <div class="quick-card__icon">👥</div>
+          <div>
+            <div class="quick-card__title">Record Purchase</div>
+            <div class="quick-card__sub">Look up customer by phone</div>
+          </div>
+        </a>
+        <a href="menu.html" class="quick-card">
+          <div class="quick-card__icon">☕</div>
+          <div>
+            <div class="quick-card__title">Menu Status</div>
+            <div class="quick-card__sub">Mark items as sold out or unavailable</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="two-col">
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <div class="admin-panel__title">🏆 Top Items This Branch</div>
+          </div>
+          <div class="admin-panel__body" id="topItemsList">
+            <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">Loading…</p>
+          </div>
+        </div>
+
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <div class="admin-panel__title">🔴 Unavailable Items</div>
+            <a href="menu.html" class="btn-admin btn-ghost btn-sm">Manage →</a>
+          </div>
+          <div class="admin-panel__body" id="unavailableList">
+            <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">Loading…</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../../js/supabase-client.js"></script>
+<script src="../../../js/data.js"></script>
+<script src="../../../js/auth.js"></script>
+<script>
+  initData();
+  const session = requireBranchAdmin('../login.html');
+  if (!session) { /* stops */ }
+
+  document.getElementById('topbarUsername').textContent = session.displayName;
+  document.getElementById('userAvatar').textContent = (session.displayName || 'B')[0].toUpperCase();
+
+  const branchId = session.branchId;
+
+  function updateClock() {
+    document.getElementById('clockDisplay').textContent =
+      new Date().toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' });
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  async function loadAll() {
+    if (branchId) {
+      const store = await getStoreById(branchId);
+      if (store) {
+        const branchName = store.name.replace('Lorong Coffee — ', '');
+        document.getElementById('branchSubtitle').textContent = branchName;
+        document.getElementById('pageTitle').textContent = branchName;
+        document.getElementById('pageSub').textContent = store.address;
+      }
+    }
+
+    const [topItems, menuItems, uniqueCustomers, redemptions] = await Promise.all([
+      getBranchPurchaseStats(branchId),
+      getBranchMenuItems(branchId),
+      getBranchCustomerCount(branchId),
+      getTotalRedemptions(branchId)
+    ]);
+
+    const totalPurchases = topItems.reduce((sum, i) => sum + i.count, 0);
+    const unavailable = menuItems.filter(i => i.branchStatus !== 'available');
+
+    document.getElementById('statPurchases').textContent = totalPurchases;
+    document.getElementById('statCustomers').textContent = uniqueCustomers;
+    document.getElementById('statRedemptions').textContent = redemptions;
+    document.getElementById('statUnavailable').textContent = unavailable.length;
+
+    renderTopItems(topItems.slice(0, 5));
+    renderUnavailable(unavailable);
+  }
+
+  function renderTopItems(items) {
+    const el = document.getElementById('topItemsList');
+    if (!items.length) {
+      el.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">No purchases recorded yet.</p>';
+      return;
+    }
+    const max = items[0].count;
+    el.innerHTML = items.map((item, i) => `
+      <div class="top-item">
+        <div class="top-item__rank">#${i+1}</div>
+        <div class="top-item__emoji">${item.emoji || '☕'}</div>
+        <div class="top-item__info">
+          <div class="top-item__name">${item.name || 'Unknown'}</div>
+          <div class="top-item__views">${item.count} purchase${item.count !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="top-item__bar-wrap">
+          <div class="top-item__bar" style="width:${Math.round((item.count/max)*100)}%"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderUnavailable(items) {
+    const el = document.getElementById('unavailableList');
+    if (!items.length) {
+      el.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">All items are currently available.</p>';
+      return;
+    }
+    el.innerHTML = items.map(item => `
+      <div style="display:flex;align-items:center;gap:10px;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <span style="font-size:1.3rem;">${item.emoji || '☕'}</span>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;color:var(--white);">${item.name}</div>
+        </div>
+        <span class="badge ${item.branchStatus === 'sold_out' ? 'badge-yellow' : 'badge-red'}">
+          ${item.branchStatus === 'sold_out' ? 'Sold Out' : 'Not Carried'}
+        </span>
+      </div>
+    `).join('');
+  }
+
+  function handleLogout() { adminSignOut(); window.location.href = '../login.html'; }
+
+  loadAll();
+</script>
+</body>
+</html>

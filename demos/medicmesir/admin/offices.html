@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Offices — Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../js/data.js"></script>
+  <script src="../js/admin-auth.js"></script>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <div class="admin-sidebar-header">
+      <div class="admin-sidebar-logo">M</div>
+      <div class="admin-sidebar-title">Medic<span>Mesir</span></div>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-label">Main Menu</div>
+      <a href="dashboard.html" class="admin-nav-link"><i style="font-style:normal">🏠</i> Dashboard</a>
+      <div class="admin-nav-label">Content</div>
+      <a href="programmes.html" class="admin-nav-link"><i style="font-style:normal">📚</i> Programmes</a>
+      <a href="universities.html" class="admin-nav-link"><i style="font-style:normal">🏛️</i> Universities</a>
+      <a href="offices.html" class="admin-nav-link active"><i style="font-style:normal">🏢</i> Offices</a>
+      <div class="admin-nav-label">Marketing</div>
+      <a href="news.html" class="admin-nav-link"><i style="font-style:normal">📰</i> News & Blog</a>
+      <a href="promotions.html" class="admin-nav-link"><i style="font-style:normal">🎉</i> Promotions</a>
+      <div class="admin-nav-label">System</div>
+      <a href="settings.html" class="admin-nav-link"><i style="font-style:normal">⚙️</i> Settings</a>
+    </nav>
+    <div class="admin-sidebar-footer"><button id="logout-btn" class="btn-logout"><i style="font-style:normal">🚪</i> Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.5rem;">
+          <div class="hamburger-admin" id="mobile-menu-btn"><span></span><span></span><span></span></div>
+          <h1 style="margin:0;">Offices & Branches</h1>
+        </div>
+        <p>Manage physical locations and counselling centres.</p>
+      </div>
+      <div>
+        <button class="btn-admin btn-admin-primary" onclick="openModal()">+ Add Office</button>
+      </div>
+    </div>
+
+    <div class="admin-card" style="padding:0;">
+      <div class="admin-table-wrapper" style="margin:0; border-top:none;">
+        <table class="admin-table" id="dataTable">
+          <thead>
+            <tr>
+              <th>Office Name</th>
+              <th>Contact Details</th>
+              <th>Headquarters</th>
+              <th>Status</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="formModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add Office</h3>
+        <button class="btn-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="dataForm">
+          <input type="hidden" id="off_id" />
+          
+          <div class="form-row" style="display:grid; grid-template-columns:80px 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Emoji</label>
+              <input type="text" id="off_emoji" class="form-control" required placeholder="🏢" />
+            </div>
+            <div class="form-group">
+              <label>Office Name</label>
+              <input type="text" id="off_name" class="form-control" required placeholder="Seri Kembangan (HQ)" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Full Address</label>
+            <textarea id="off_address" class="form-control" style="min-height:60px" required placeholder="9A Jalan Equine..."></textarea>
+          </div>
+
+          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="text" id="off_phone" class="form-control" required placeholder="+60 12-345 6789" />
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="off_email" class="form-control" required placeholder="info@medicmesir.com" />
+            </div>
+          </div>
+          
+          <hr style="border:none; border-top:1px solid #eee; margin:1rem 0;" />
+          <h4 style="margin:0 0 1rem 0; font-family:var(--font-body); color:var(--navy);">Opening Hours</h4>
+
+          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Weekdays</label>
+              <input type="text" id="off_h_wk" class="form-control" placeholder="9:00 AM – 6:00 PM" />
+            </div>
+            <div class="form-group">
+              <label>Saturday</label>
+              <input type="text" id="off_h_sat" class="form-control" placeholder="9:00 AM – 1:00 PM" />
+            </div>
+            <div class="form-group">
+              <label>Sunday</label>
+              <input type="text" id="off_h_sun" class="form-control" placeholder="Closed" />
+            </div>
+          </div>
+
+          <div class="form-row" style="display:flex; gap:2rem; margin-top:1rem;">
+            <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin:0;">
+              <input type="checkbox" id="off_hq" style="width:18px; height:18px;" />
+              <label style="margin:0;">This is the Main Headquarters</label>
+            </div>
+            <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin:0;">
+              <input type="checkbox" id="off_status" checked style="width:18px; height:18px;" />
+              <label style="margin:0;">Office is Open (Active)</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-admin btn-admin-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn-admin btn-admin-primary" onclick="saveData()">Save Office</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+
+    const tb = document.querySelector('#dataTable tbody');
+    let allData = [];
+
+    function renderTable() {
+      allData = getOffices(); // from data.js
+      tb.innerHTML = '';
+      if(allData.length === 0) {
+        tb.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;">No offices found.</td></tr>';
+        return;
+      }
+
+      allData.forEach(o => {
+        const tr = document.createElement('tr');
+        const badge = o.status === 'open' ? '<span class="badge open">Open</span>' : '<span class="badge closed">Closed</span>';
+        const hqBadge = o.isHQ ? '<span class="badge draft">HQ</span>' : '';
+        
+        tr.innerHTML = `
+          <td>
+            <div class="td-flex">
+              <div class="td-icon" style="font-size:1.5rem;">${o.emoji}</div>
+              <div>
+                <div class="td-title">${o.name}</div>
+                <div class="td-subtitle" style="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${o.address}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div>${o.phone}</div>
+            <div class="td-subtitle">${o.email}</div>
+          </td>
+          <td>${hqBadge}</td>
+          <td>${badge}</td>
+          <td style="text-align:right">
+            <div class="table-actions" style="justify-content:flex-end">
+              <button class="btn-action" onclick="editRow('${o.id}')">✏️</button>
+              <button class="btn-action delete" onclick="deleteRow('${o.id}')">🗑️</button>
+            </div>
+          </td>
+        `;
+        tb.appendChild(tr);
+      });
+    }
+
+    function openModal() {
+      document.getElementById('dataForm').reset();
+      document.getElementById('off_id').value = '';
+      document.getElementById('modalTitle').textContent = 'Add Office';
+      document.getElementById('formModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('formModal').classList.remove('open');
+    }
+
+    function editRow(id) {
+      const o = allData.find(x => x.id === id);
+      if(!o) return;
+      document.getElementById('off_id').value = o.id;
+      document.getElementById('off_emoji').value = o.emoji;
+      document.getElementById('off_name').value = o.name;
+      document.getElementById('off_address').value = o.address;
+      document.getElementById('off_phone').value = o.phone;
+      document.getElementById('off_email').value = o.email;
+      document.getElementById('off_h_wk').value = o.hours?.weekdays || '';
+      document.getElementById('off_h_sat').value = o.hours?.saturday || '';
+      document.getElementById('off_h_sun').value = o.hours?.sunday || '';
+      document.getElementById('off_hq').checked = o.isHQ;
+      document.getElementById('off_status').checked = o.status === 'open';
+      
+      document.getElementById('modalTitle').textContent = 'Edit Office';
+      document.getElementById('formModal').classList.add('open');
+    }
+
+    function deleteRow(id) {
+      if(confirm('Are you sure you want to delete this office?')) {
+        deleteOffice(id);
+        showAdminToast('Office deleted');
+        renderTable();
+      }
+    }
+
+    function saveData() {
+      const form = document.getElementById('dataForm');
+      if(!form.checkValidity()) {
+        form.reportValidity(); return;
+      }
+
+      const payload = {
+        name: document.getElementById('off_name').value,
+        emoji: document.getElementById('off_emoji').value,
+        address: document.getElementById('off_address').value,
+        phone: document.getElementById('off_phone').value,
+        email: document.getElementById('off_email').value,
+        hours: {
+            weekdays: document.getElementById('off_h_wk').value,
+            saturday: document.getElementById('off_h_sat').value,
+            sunday: document.getElementById('off_h_sun').value
+        },
+        isHQ: document.getElementById('off_hq').checked,
+        status: document.getElementById('off_status').checked ? 'open' : 'closed'
+      };
+
+      const id = document.getElementById('off_id').value;
+      if (id) {
+        updateOffice(id, payload);
+        showAdminToast('Office updated successfully');
+      } else {
+        createOffice(payload);
+        showAdminToast('Office created successfully');
+      }
+
+      closeModal();
+      renderTable();
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Rewards — Lorong Coffee</title>
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+  <style>
+    body { background:var(--cream); }
+    .dash-page { max-width:680px; margin:0 auto; padding:2rem 1.5rem 5rem; }
+
+    .reward-card {
+      background:var(--green); border-radius:24px; padding:2.5rem;
+      color:var(--cream); margin-bottom:1.75rem; position:relative; overflow:hidden;
+    }
+    .reward-card::before {
+      content:''; position:absolute; top:-80px; right:-80px;
+      width:250px; height:250px; border-radius:50%;
+      background:radial-gradient(circle, rgba(245,200,0,0.18), transparent 70%);
+      pointer-events:none;
+    }
+    .reward-card__greeting { font-size:0.82rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem; }
+    .reward-card__name { font-family:var(--font-display); font-size:1.8rem; font-weight:900; color:var(--yellow); margin-bottom:1.5rem; }
+
+    .cup-counter { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.25rem; }
+    .cup { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; border:2px solid rgba(255,255,255,0.15); transition:transform 0.2s; }
+    .cup.filled { background:rgba(245,200,0,0.2); border-color:var(--yellow); }
+    .cup.empty { background:rgba(255,255,255,0.06); }
+
+    .reward-bar-wrap { background:rgba(255,255,255,0.1); border-radius:50px; height:10px; margin:0.6rem 0 0.4rem; overflow:hidden; }
+    .reward-bar-fill { height:100%; background:var(--yellow); border-radius:50px; transition:width 0.8s ease; }
+    .reward-progress-labels { display:flex; justify-content:space-between; font-size:0.78rem; color:rgba(255,255,255,0.4); }
+
+    .reward-ready-banner {
+      background:linear-gradient(135deg, rgba(245,200,0,0.2), rgba(245,200,0,0.05));
+      border:2px solid var(--yellow); border-radius:16px; padding:1.5rem;
+      text-align:center; margin-bottom:1.75rem;
+    }
+    .reward-ready-banner__icon { font-size:2.5rem; margin-bottom:0.5rem; }
+    .reward-ready-banner__title { font-family:var(--font-display); font-size:1.3rem; font-weight:900; color:var(--yellow); }
+    .reward-ready-banner__sub { font-size:0.88rem; color:rgba(255,255,255,0.6); margin-top:0.4rem; line-height:1.5; }
+
+    .panel { background:white; border-radius:20px; padding:1.75rem; margin-bottom:1.25rem; box-shadow:0 2px 16px rgba(0,0,0,0.06); }
+    .panel__title { font-family:var(--font-display); font-size:1.05rem; font-weight:700; color:var(--green); margin-bottom:1.25rem; }
+
+    .history-item { display:flex; align-items:center; gap:12px; padding:0.7rem 0; border-bottom:1px solid #f0e8d8; }
+    .history-item:last-child { border-bottom:none; }
+    .history-item__emoji { font-size:1.5rem; flex-shrink:0; }
+    .history-item__info { flex:1; }
+    .history-item__name { font-weight:600; font-size:0.9rem; color:var(--dark); }
+    .history-item__meta { font-size:0.75rem; color:var(--text-muted); margin-top:1px; }
+    .history-item__badge { font-size:0.7rem; font-weight:700; padding:3px 8px; border-radius:50px; }
+    .badge-free { background:#e8f5e9; color:#2e7d32; }
+    .badge-purchase { background:#fff3e0; color:#e65100; }
+
+    .stat-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+    .stat-mini { text-align:center; padding:1rem; background:var(--cream); border-radius:12px; }
+    .stat-mini__val { font-family:var(--font-display); font-size:1.6rem; font-weight:900; color:var(--green); }
+    .stat-mini__label { font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-top:3px; }
+
+    .dash-navbar { display:flex; align-items:center; justify-content:space-between; padding:1.5rem 0 1rem; margin-bottom:0.5rem; }
+    .dash-navbar__brand { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--green); display:flex; align-items:center; gap:8px; }
+    .dash-navbar__brand img { width:32px; height:32px; border-radius:50%; border:2px solid var(--yellow); }
+    .signout-btn { background:none; border:1px solid #ddd; border-radius:8px; padding:6px 14px; font-size:0.8rem; color:var(--text-muted); cursor:pointer; transition:all 0.2s; }
+    .signout-btn:hover { border-color:var(--green); color:var(--green); }
+  </style>
+</head>
+<body>
+
+<div class="dash-page">
+  <div class="dash-navbar">
+    <a href="../../index.html" class="dash-navbar__brand">
+      <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+      Lorong Coffee
+    </a>
+    <button class="signout-btn" onclick="handleSignOut()">Sign Out</button>
+  </div>
+
+  <!-- Reward Ready Banner (shown when is_redeemable) -->
+  <div class="reward-ready-banner" id="rewardReadyBanner" style="display:none;">
+    <div class="reward-ready-banner__icon">🎉</div>
+    <div class="reward-ready-banner__title">Your Free Drink is Ready!</div>
+    <div class="reward-ready-banner__sub">
+      Visit any Lorong Coffee branch and give your phone number to the staff.<br/>
+      They'll redeem your free drink and reset your counter.
+    </div>
+  </div>
+
+  <!-- Main Reward Card -->
+  <div class="reward-card" id="rewardCard">
+    <div class="reward-card__greeting">Welcome back</div>
+    <div class="reward-card__name" id="custName">Loading…</div>
+
+    <div class="cup-counter" id="cupCounter"></div>
+
+    <div class="reward-bar-wrap">
+      <div class="reward-bar-fill" id="rewardBarFill" style="width:0%;"></div>
+    </div>
+    <div class="reward-progress-labels">
+      <span id="progressLabel">0 / 10 cups</span>
+      <span id="progressRight">10 cups = 1 free drink</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="panel">
+    <div class="panel__title">Your Stats</div>
+    <div class="stat-row">
+      <div class="stat-mini">
+        <div class="stat-mini__val" id="statCount">—</div>
+        <div class="stat-mini__label">Total Cups</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini__val" id="statRedeemed">—</div>
+        <div class="stat-mini__label">Rewards Earned</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini__val" id="statProgress">—</div>
+        <div class="stat-mini__label">Current Progress</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Purchase History -->
+  <div class="panel">
+    <div class="panel__title">Purchase History</div>
+    <div id="historyList">
+      <p style="color:var(--text-muted);font-size:0.88rem;">Loading…</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:2rem;">
+    <a href="../stores.html" style="color:var(--green);font-size:0.88rem;text-decoration:none;font-weight:600;">
+      📍 Find a Lorong Coffee near you →
+    </a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script>
+  const session = requireCustomerAuth('login.html');
+  if (!session) { /* stops */ }
+
+  async function loadDashboard() {
+    document.getElementById('custName').textContent = session.name;
+
+    const { profile, reward } = await getCustomerData(session.userId);
+    const history = await getCustomerHistory(session.userId, 15);
+
+    const count = reward?.purchase_count || 0;
+    const isRedeemable = reward?.is_redeemable || false;
+    const totalRedeemed = reward?.total_redeemed || 0;
+    const totalCups = (totalRedeemed * 10) + count;
+
+    // Cup counter visual
+    const counter = document.getElementById('cupCounter');
+    counter.innerHTML = Array.from({ length: 10 }, (_, i) => `
+      <div class="cup ${i < count ? 'filled' : 'empty'}" title="${i < count ? 'Purchased' : 'Remaining'}">
+        ${i < count ? '☕' : '○'}
+      </div>
+    `).join('');
+
+    // Progress bar
+    document.getElementById('rewardBarFill').style.width = `${isRedeemable ? 100 : (count / 10) * 100}%`;
+    document.getElementById('progressLabel').textContent = `${count} / 10 cups`;
+    document.getElementById('progressRight').textContent = isRedeemable ? '🎉 Reward ready!' : `${10 - count} more to go`;
+
+    // Stats
+    document.getElementById('statCount').textContent = totalCups;
+    document.getElementById('statRedeemed').textContent = totalRedeemed;
+    document.getElementById('statProgress').textContent = `${count}/10`;
+
+    // Reward ready banner
+    document.getElementById('rewardReadyBanner').style.display = isRedeemable ? 'block' : 'none';
+
+    // History
+    renderHistory(history);
+  }
+
+  function renderHistory(items) {
+    const el = document.getElementById('historyList');
+    if (!items.length) {
+      el.innerHTML = '<p style="color:var(--text-muted);font-size:0.88rem;">No purchases recorded yet. Visit a branch and give your phone number to get started!</p>';
+      return;
+    }
+    el.innerHTML = items.map(item => {
+      const name = item.lc_menu?.name || 'Unknown Item';
+      const emoji = item.lc_menu?.emoji || '☕';
+      const branch = item.lc_stores?.name?.replace('Lorong Coffee — ', '') || 'Lorong Coffee';
+      const date = new Date(item.created_at).toLocaleString('en-MY', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+      return `
+        <div class="history-item">
+          <div class="history-item__emoji">${emoji}</div>
+          <div class="history-item__info">
+            <div class="history-item__name">${name}</div>
+            <div class="history-item__meta">${branch} · ${date}</div>
+          </div>
+          <span class="history-item__badge ${item.is_redemption ? 'badge-free' : 'badge-purchase'}">
+            ${item.is_redemption ? '🎁 Free' : '+1 cup'}
+          </span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function handleSignOut() {
+    await customerSignOut();
+    window.location.href = 'login.html';
+  }
+
+  loadDashboard();
+</script>
+</body>
+</html>

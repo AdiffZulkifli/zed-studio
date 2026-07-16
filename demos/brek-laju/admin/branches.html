@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cawangan – Brek Laju Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="dashboard.html" class="sidebar-logo">BREK<span>LAJU</span></a>
+      <div class="sidebar-label">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Utama</div>
+      <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+      <div class="nav-section-title">Pengurusan</div>
+      <a href="listings.html" class="nav-item">🍗 Item Menu</a>
+      <a href="branches.html" class="nav-item active">📍 Cawangan</a>
+      <a href="promotions.html" class="nav-item">📢 Promosi</a>
+      <div class="nav-section-title">Sistem</div>
+      <a href="analytics.html" class="nav-item">📈 Analitik</a>
+      <a href="settings.html" class="nav-item">⚙️ Tetapan</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" target="_blank" class="view-site-link" style="margin-bottom:10px;display:flex;">🌐 Lihat Laman Web</a>
+      <button class="btn-logout" onclick="adminLogout();window.location.href='index.html'">🚪 Log Keluar</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <button class="sidebar-toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <span class="admin-header-title">📍 Pengurusan Cawangan</span>
+        <div class="admin-header-sub">Urus status buka/tutup, maklumat, dan lokasi cawangan</div>
+      </div>
+      <div class="admin-header-right">
+        <span class="header-badge" id="branchCount">– cawangan</span>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <!-- TOOLBAR -->
+      <div class="section-header">
+        <div class="search-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchInput" placeholder="Cari cawangan..." />
+          </div>
+          <select class="filter-select" id="stateFilter">
+            <option value="all">Semua Negeri</option>
+          </select>
+          <select class="filter-select" id="statusFilter">
+            <option value="all">Semua Status</option>
+            <option value="open">Buka</option>
+            <option value="closed">Tutup</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="addBtn">＋ Tambah Cawangan</button>
+      </div>
+
+      <!-- GRID -->
+      <div class="branch-grid" id="branchGrid"></div>
+    </div>
+  </main>
+</div>
+
+<!-- FORM MODAL -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Tambah Cawangan Baru</span>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId" />
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nama Cawangan *</label>
+          <input type="text" id="fName" class="form-control" placeholder="cth. Brek Laju Cyberjaya" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Negeri *</label>
+          <select id="fState" class="form-control"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Alamat Penuh *</label>
+        <textarea id="fAddress" class="form-control" placeholder="No. 12, Jalan Teknokrat 7, Cyberjaya..." rows="2"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Waktu Operasi</label>
+          <input type="text" id="fHours" class="form-control" placeholder="10:00 pagi – 10:00 malam" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nombor Telefon</label>
+          <input type="text" id="fPhone" class="form-control" placeholder="03-XXXX XXXX" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL Google Maps</label>
+        <input type="url" id="fMapsUrl" class="form-control" placeholder="https://maps.google.com/..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL Imej Cawangan</label>
+        <input type="url" id="fImageUrl" class="form-control" placeholder="https://..." />
+        <div id="imgPreviewWrap">
+          <div class="img-preview-placeholder" id="imgPlaceholder">🖼️ Tiada imej — masukkan URL di atas</div>
+          <img id="imgPreview" class="img-preview" style="display:none;" />
+        </div>
+      </div>
+      <div class="toggle-wrap">
+        <label class="toggle">
+          <input type="checkbox" id="fIsOpen" checked />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label" id="openLabel">Status: BUKA</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="modalCancel">Batal</button>
+      <button class="btn btn-primary" id="modalSave">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">Padam Cawangan?</div>
+    <div class="confirm-desc">Tindakan ini tidak boleh dibatalkan. Cawangan akan dipadam secara kekal.</div>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" id="confirmCancel">Batal</button>
+      <button class="btn btn-danger" id="confirmDelete">Ya, Padam</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../js/db.js"></script>
+<script>
+  requireAdmin('index.html');
+  trackPageView('admin-branches');
+
+  let deleteTargetId = null;
+  let editMode = false;
+
+  // Populate state filter
+  const stateFilter = document.getElementById('stateFilter');
+  const fState = document.getElementById('fState');
+  STATES.forEach(s => {
+    stateFilter.innerHTML += `<option value="${s.id}">${s.label}</option>`;
+    fState.innerHTML += `<option value="${s.id}">${s.label}</option>`;
+  });
+
+  // Open label update
+  document.getElementById('fIsOpen').addEventListener('change', function() {
+    document.getElementById('openLabel').textContent = 'Status: ' + (this.checked ? 'BUKA' : 'TUTUP');
+  });
+
+  // Image preview
+  document.getElementById('fImageUrl').addEventListener('input', function() {
+    const url = this.value.trim();
+    const img = document.getElementById('imgPreview');
+    const ph = document.getElementById('imgPlaceholder');
+    if (url) { img.src = url; img.style.display = 'block'; ph.style.display = 'none'; img.onerror = () => { img.style.display='none'; ph.style.display='flex'; }; }
+    else { img.style.display = 'none'; ph.style.display = 'flex'; }
+  });
+
+  // Render
+  function renderGrid() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const state = document.getElementById('stateFilter').value;
+    const status = document.getElementById('statusFilter').value;
+    let items = getBranches();
+    if (search) items = items.filter(b => b.name.toLowerCase().includes(search) || b.address.toLowerCase().includes(search));
+    if (state !== 'all') items = items.filter(b => b.state === state);
+    if (status === 'open') items = items.filter(b => b.isOpen);
+    if (status === 'closed') items = items.filter(b => !b.isOpen);
+
+    document.getElementById('branchCount').textContent = items.length + ' cawangan';
+    const grid = document.getElementById('branchGrid');
+    if (items.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1"><div class="empty-state"><div class="empty-icon">📍</div><div class="empty-title">Tiada cawangan dijumpai</div><div class="empty-desc">Tambah cawangan baru menggunakan butang di atas.</div></div></div>`;
+      return;
+    }
+    grid.innerHTML = items.map(b => {
+      const stateLabel = STATES.find(s => s.id === b.state)?.label || b.state;
+      return `
+        <div class="branch-admin-card">
+          <div class="bac-img">
+            ${b.imageUrl ? `<img src="${b.imageUrl}" alt="${b.name}" onerror="this.style.opacity=0.3">` : `<div class="bac-img-placeholder">🏪</div>`}
+            <span class="bac-status-badge ${b.isOpen ? 'badge-open' : 'badge-closed'}">
+              ${b.isOpen ? '🟢 Buka' : '⚫ Tutup'}
+            </span>
+          </div>
+          <div class="bac-body">
+            <div class="bac-name">${b.name}</div>
+            <div class="bac-state">${stateLabel}</div>
+            <div class="bac-address">${b.address}</div>
+            <div class="bac-footer">
+              <div class="toggle-wrap">
+                <label class="toggle" title="Toggle Buka/Tutup">
+                  <input type="checkbox" ${b.isOpen?'checked':''} onchange="toggleOpen('${b.id}', this.checked)" />
+                  <span class="toggle-slider"></span>
+                </label>
+                <span style="font-size:0.79rem;font-weight:700;color:var(--text-muted);">${b.isOpen?'BUKA':'TUTUP'}</span>
+              </div>
+              <div class="bac-actions">
+                <button class="btn btn-sm btn-secondary" onclick="openEdit('${b.id}')">✏️ Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="confirmDel('${b.id}')">🗑️</button>
+              </div>
+            </div>
+            <div style="margin-top:10px;font-size:0.71rem;color:var(--text-dim);">Dikemaskini: ${fmtDate(b.updatedAt)}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  ['searchInput','stateFilter','statusFilter'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderGrid);
+    document.getElementById(id).addEventListener('change', renderGrid);
+  });
+
+  function toggleOpen(id, val) {
+    updateBranch(id, { isOpen: val });
+    showToast(val ? '🟢 Cawangan ditandakan BUKA' : '⚫ Cawangan ditandakan TUTUP', 'success');
+    renderGrid();
+  }
+
+  // Modal
+  function openModal(title) { document.getElementById('modalTitle').textContent = title; document.getElementById('formModal').classList.add('open'); }
+  function closeModal() { document.getElementById('formModal').classList.remove('open'); }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalCancel').addEventListener('click', closeModal);
+  document.getElementById('formModal').addEventListener('click', e => { if (e.target === document.getElementById('formModal')) closeModal(); });
+
+  function clearForm() {
+    ['fName','fAddress','fHours','fPhone','fMapsUrl','fImageUrl'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fState').value = 'selangor';
+    document.getElementById('fIsOpen').checked = true;
+    document.getElementById('openLabel').textContent = 'Status: BUKA';
+    document.getElementById('editId').value = '';
+    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('imgPlaceholder').style.display = 'flex';
+  }
+
+  document.getElementById('addBtn').addEventListener('click', () => { editMode = false; clearForm(); openModal('＋ Tambah Cawangan Baru'); });
+
+  function openEdit(id) {
+    editMode = true;
+    const b = getBranch(id); if (!b) return;
+    document.getElementById('editId').value = id;
+    document.getElementById('fName').value = b.name;
+    document.getElementById('fState').value = b.state;
+    document.getElementById('fAddress').value = b.address;
+    document.getElementById('fHours').value = b.hours;
+    document.getElementById('fPhone').value = b.phone;
+    document.getElementById('fMapsUrl').value = b.mapsUrl || '';
+    document.getElementById('fImageUrl').value = b.imageUrl || '';
+    document.getElementById('fIsOpen').checked = b.isOpen;
+    document.getElementById('openLabel').textContent = 'Status: ' + (b.isOpen ? 'BUKA' : 'TUTUP');
+    const img = document.getElementById('imgPreview');
+    if (b.imageUrl) { img.src = b.imageUrl; img.style.display = 'block'; document.getElementById('imgPlaceholder').style.display = 'none'; }
+    openModal('✏️ Edit Cawangan: ' + b.name);
+  }
+
+  document.getElementById('modalSave').addEventListener('click', () => {
+    const name = document.getElementById('fName').value.trim();
+    const address = document.getElementById('fAddress').value.trim();
+    if (!name || !address) { showToast('Sila isi nama dan alamat cawangan.', 'error'); return; }
+    const data = {
+      name, address, state: document.getElementById('fState').value,
+      hours: document.getElementById('fHours').value.trim(),
+      phone: document.getElementById('fPhone').value.trim(),
+      mapsUrl: document.getElementById('fMapsUrl').value.trim() || 'https://maps.google.com',
+      imageUrl: document.getElementById('fImageUrl').value.trim(),
+      isOpen: document.getElementById('fIsOpen').checked
+    };
+    if (editMode) { updateBranch(document.getElementById('editId').value, data); showToast('✅ Cawangan berjaya dikemaskini!', 'success'); }
+    else { createBranch(data); showToast('✅ Cawangan baru berjaya ditambah!', 'success'); }
+    closeModal(); renderGrid();
+  });
+
+  // Delete
+  function confirmDel(id) { deleteTargetId = id; document.getElementById('confirmModal').classList.add('open'); }
+  document.getElementById('confirmCancel').addEventListener('click', () => document.getElementById('confirmModal').classList.remove('open'));
+  document.getElementById('confirmDelete').addEventListener('click', () => {
+    if (deleteTargetId) { deleteBranch(deleteTargetId); showToast('🗑️ Cawangan dipadam.', 'success'); }
+    document.getElementById('confirmModal').classList.remove('open'); deleteTargetId = null; renderGrid();
+  });
+  document.getElementById('confirmModal').addEventListener('click', e => { if (e.target === document.getElementById('confirmModal')) document.getElementById('confirmModal').classList.remove('open'); });
+
+  function showToast(msg, type = 'success') {
+    const t = document.createElement('div'); t.className = `toast ${type}`;
+    t.innerHTML = `<span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span> ${msg}`;
+    document.getElementById('toastContainer').appendChild(t); setTimeout(() => t.remove(), 3500);
+  }
+
+  if (window.location.hash === '#add') { clearForm(); openModal('＋ Tambah Cawangan Baru'); }
+
+  renderGrid();
+</script>
+</body>
+</html>

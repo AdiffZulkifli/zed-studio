@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lorong Coffee — Specialty Coffee, Sarawak's Best</title>
+  <meta name="description" content="Lorong Coffee brings specialty coffee to Sarawak. Quality brews, welcoming vibes, and flavours crafted for everyone."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" type="image/jpeg" href="images/logo.jpg"/>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="navbar__logo">
+    <img src="images/logo.jpg" alt="Lorong Coffee Logo"/>
+    <span>Lorong Coffee</span>
+  </a>
+  <ul class="navbar__links">
+    <li><a href="pages/menu.html">Menu</a></li>
+    <li><a href="pages/rewards.html">Rewards</a></li>
+    <li><a href="pages/stores.html">Find a Store</a></li>
+    <li><a href="pages/about.html">About</a></li>
+    <li><a href="pages/stores.html" class="navbar__cta">Order Now</a></li>
+  </ul>
+  <div class="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav">
+  <a href="pages/menu.html">Menu</a>
+  <a href="pages/rewards.html">Rewards</a>
+  <a href="pages/stores.html">Find a Store</a>
+  <a href="pages/about.html">About</a>
+</div>
+
+<!-- ══ PROMO BANNER ════════════════════════════════════════════ -->
+<div id="promo-banner" class="promo-banner" style="display:none;"></div>
+
+<!-- ══ HERO ════════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content container">
+    <div class="hero__left">
+      <div class="hero__badge">☕ Now Open in Bintulu, Sarawak</div>
+      <h1 class="hero__title">
+        Coffee<br/>
+        <em>Worth Every</em><br/>
+        Sip
+      </h1>
+      <p class="hero__subtitle">
+        Handcrafted specialty coffee that doesn't break the bank. 
+        Born in Sarawak, brewed for everyone — because great coffee 
+        should be a daily joy, not a luxury.
+      </p>
+      <div class="hero__actions">
+        <a href="#menu" class="btn btn-primary">☕ Explore Menu</a>
+        <a href="#about" class="btn btn-outline">Our Story →</a>
+      </div>
+      <!-- Live store status chips -->
+      <div id="store-status-chips" class="store-chips-row" style="margin-top:1.5rem;"></div>
+    </div>
+    <div class="hero__image-side">
+      <div class="hero__cup-wrapper">
+        <img src="images/store.png" alt="Lorong Coffee — iced drink at our store" class="hero__cup-img"/>
+        <div class="hero__stats">
+          <div class="hero__stats-num" data-counter="5000" data-suffix="+">0+</div>
+          <div class="hero__stats-label">Cups Served</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TICKER ══════════════════════════════════════════════════ -->
+<div class="ticker">
+  <div class="ticker__track">
+    <span class="ticker__item">Specialty Coffee</span>
+    <span class="ticker__item">Lorong Coffee Bintulu</span>
+    <span class="ticker__item">Premium Brews</span>
+    <span class="ticker__item">Affordable Luxury</span>
+    <span class="ticker__item">Sarawak's Finest</span>
+    <span class="ticker__item">Iced &amp; Hot Drinks</span>
+    <span class="ticker__item">Local Vibes</span>
+    <span class="ticker__item">Daily Essential</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker__item">Specialty Coffee</span>
+    <span class="ticker__item">Lorong Coffee Bintulu</span>
+    <span class="ticker__item">Premium Brews</span>
+    <span class="ticker__item">Affordable Luxury</span>
+    <span class="ticker__item">Sarawak's Finest</span>
+    <span class="ticker__item">Iced &amp; Hot Drinks</span>
+    <span class="ticker__item">Local Vibes</span>
+    <span class="ticker__item">Daily Essential</span>
+  </div>
+</div>
+
+<!-- ══ FEATURES STRIP ══════════════════════════════════════════ -->
+<section class="features">
+  <div class="features__grid">
+    <div class="feature-item reveal">
+      <span class="feature-item__icon">🌱</span>
+      <div class="feature-item__title">Ethically Sourced</div>
+      <p class="feature-item__text">Premium beans, responsibly grown and freshly roasted</p>
+    </div>
+    <div class="feature-item reveal">
+      <span class="feature-item__icon">✋</span>
+      <div class="feature-item__title">Handcrafted Daily</div>
+      <p class="feature-item__text">Every cup made with care by our skilled baristas</p>
+    </div>
+    <div class="feature-item reveal">
+      <span class="feature-item__icon">💚</span>
+      <div class="feature-item__title">Affordable Quality</div>
+      <p class="feature-item__text">Specialty coffee priced for everyday enjoyment</p>
+    </div>
+    <div class="feature-item reveal">
+      <span class="feature-item__icon">🏪</span>
+      <div class="feature-item__title">Dine-in &amp; Takeaway</div>
+      <p class="feature-item__text">Cosy space to stay or grab-and-go on the move</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ═══════════════════════════════════════════════════ -->
+<section class="section about" id="about">
+  <div class="container">
+    <div class="about__grid">
+      <div class="about__image-wrap reveal">
+        <img src="images/store.png" alt="Inside Lorong Coffee store" class="about__img"/>
+        <div class="about__img-badge">
+          <span>Est.</span>
+          2022
+        </div>
+      </div>
+      <div class="about__text reveal">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">Where Every <em>Lane</em> Leads to Good Coffee</h2>
+        <p>
+          "Lorong" — the Malay word for lane or alley — captures the spirit of 
+          our café perfectly. We're that hidden gem down a familiar street, a cosy 
+          corner where good coffee and warm company come together.
+        </p>
+        <p>
+          We started Lorong Coffee with one belief: specialty coffee should belong 
+          to everyone. No overpriced lattes, no intimidating menus — just honest, 
+          quality brews crafted with passion in the heart of Sarawak.
+        </p>
+        <p>
+          From our signature iced drinks to rich hot brews, every cup is a 
+          testament to our love for the craft and our community.
+        </p>
+        <div class="about__pillars">
+          <div class="pillar">
+            <div class="pillar__icon">☕</div>
+            <div class="pillar__title">Quality First</div>
+            <p class="pillar__text">We never compromise on ingredients or technique</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar__icon">🤝</div>
+            <div class="pillar__title">Community Roots</div>
+            <p class="pillar__text">Born in Bintulu, brewing for all of Sarawak</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar__icon">🌱</div>
+            <div class="pillar__title">Sustainable Sips</div>
+            <p class="pillar__text">Eco-conscious practices from bean to cup</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar__icon">✨</div>
+            <div class="pillar__title">Warm Atmosphere</div>
+            <p class="pillar__text">A space that feels like home, every single visit</p>
+          </div>
+        </div>
+        <br/>
+        <a href="pages/about.html" class="btn btn-green">Read More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MENU ════════════════════════════════════════════════════ -->
+<section class="section menu" id="menu">
+  <div class="container">
+    <div class="section-label">What We Brew</div>
+    <h2 class="section-title" style="color:var(--cream)">Our <em style="color:var(--yellow)">Signature</em> Drinks</h2>
+    <p style="color:rgba(255,255,255,0.6); margin-bottom:2.5rem; max-width:520px;">
+      From bold espresso to refreshing cold brews and non-coffee alternatives — 
+      there's a perfect cup for every mood.
+    </p>
+    <div class="menu-tabs">
+      <button class="menu-tab active" data-category="all">All Drinks</button>
+      <button class="menu-tab" data-category="coffee">Coffee</button>
+      <button class="menu-tab" data-category="cold">Cold Brews</button>
+      <button class="menu-tab" data-category="noncoffee">Non-Coffee</button>
+      <button class="menu-tab" data-category="seasonal">Seasonal</button>
+    </div>
+    <!-- Dynamic menu grid rendered by home-dynamic.js -->
+    <div class="menu-grid" id="menu-grid"></div>
+    <div style="text-align:center; margin-top:3rem;">
+      <button class="btn btn-primary" onclick="showBranchPicker()">View Full Menu →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ════════════════════════════════════════════ -->
+<section class="section testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-label">Happy Customers</div>
+    <h2 class="section-title">What Our <em>Regulars</em> Say</h2>
+    <br/>
+    <div class="testimonials__grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <div class="testimonial-card__text">
+          "The Lorong Latte is my daily ritual. The baristas here genuinely 
+          care about every cup they make. Best coffee in Bintulu, hands down."
+        </div>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">SA</div>
+          <div>
+            <div class="testimonial-card__name">Siti Aminah</div>
+            <div class="testimonial-card__role">Regular Customer, Bintulu</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <div class="testimonial-card__text">
+          "The ambience feels so welcoming — yellow walls, comfy seats, and 
+          a friendly crew. I bring my laptop here every weekend to work and sip."
+        </div>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">RB</div>
+          <div>
+            <div class="testimonial-card__name">Razif Borhan</div>
+            <div class="testimonial-card__role">Freelancer &amp; Café Enthusiast</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-card__stars">★★★★★</div>
+        <div class="testimonial-card__text">
+          "Their Butterfly Pea Cold Brew literally changes colour in front of 
+          you. My kids love it. Great drinks, great prices — we keep coming back!"
+        </div>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">HJ</div>
+          <div>
+            <div class="testimonial-card__name">Hazwani Jali</div>
+            <div class="testimonial-card__role">Mum of 3, Bintulu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FIND A STORE ════════════════════════════════════════════ -->
+<section class="section find-store" id="find-store">
+  <div class="container">
+    <div class="section-label">Locations</div>
+    <h2 class="section-title">Find a <em>Lorong</em> Near You</h2>
+    <br/>
+    <div class="store-grid">
+      <!-- Dynamic store cards rendered by home-dynamic.js -->
+      <div class="store-cards" id="home-store-cards"></div>
+      <div class="map-placeholder reveal" id="home-map-placeholder">
+        <div class="map-placeholder__pin">📍</div>
+        <p><strong id="home-map-name"></strong></p>
+        <p id="home-map-addr" style="font-size:0.8rem; opacity:0.7;"></p>
+        <a id="home-map-link" href="pages/stores.html" target="_blank" class="btn btn-primary" style="margin-top:0.5rem; font-size:0.85rem; padding:10px 20px;">Open Map →</a>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem;">
+      <a href="pages/stores.html" class="btn btn-green">View All Locations →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BANNER ══════════════════════════════════════════════ -->
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-banner__label">Stay Connected</div>
+    <h2 class="cta-banner__title">
+      Your Next <em>Favourite Cup</em><br/>
+      Is Waiting
+    </h2>
+    <p class="cta-banner__subtitle">
+      Follow us on Instagram for daily specials, new drops, and behind-the-scenes brews.
+    </p>
+    <div class="cta-banner__apps">
+      <a href="https://instagram.com" class="app-btn" target="_blank">
+        <span class="app-btn__icon">📸</span>
+        <div class="app-btn__text">
+          <small>Follow us on</small>
+          <strong>Instagram</strong>
+        </div>
+      </a>
+      <a href="https://facebook.com" class="app-btn" target="_blank">
+        <span class="app-btn__icon">👍</span>
+        <div class="app-btn__text">
+          <small>Like us on</small>
+          <strong>Facebook</strong>
+        </div>
+      </a>
+      <a href="https://tiktok.com" class="app-btn" target="_blank">
+        <span class="app-btn__icon">🎵</span>
+        <div class="app-btn__text">
+          <small>Watch us on</small>
+          <strong>TikTok</strong>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer__grid">
+    <div>
+      <a href="index.html" class="footer__brand-logo">
+        <img src="images/logo.jpg" alt="Lorong Coffee"/>
+        <span>Lorong Coffee</span>
+      </a>
+      <p class="footer__about">
+        Sarawak's favourite specialty coffee brand. Handcrafted brews, 
+        warm vibes, and a community that runs on good coffee.
+      </p>
+      <div class="footer__social">
+        <a href="#" title="Instagram">📸</a>
+        <a href="#" title="Facebook">👍</a>
+        <a href="#" title="TikTok">🎵</a>
+        <a href="#" title="Twitter">🐦</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer__heading">Explore</div>
+      <ul class="footer__links">
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="pages/menu.html">Full Menu</a></li>
+        <li><a href="pages/rewards.html">Rewards</a></li>
+        <li><a href="pages/stores.html">Find a Store</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Company</div>
+      <ul class="footer__links">
+        <li><a href="pages/about.html">About Us</a></li>
+        <li><a href="pages/careers.html">Careers</a></li>
+        <li><a href="pages/franchise.html">Franchise</a></li>
+        <li><a href="pages/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Legal</div>
+      <ul class="footer__links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms &amp; Conditions</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+      <br/>
+      <div class="footer__heading">Opening Hours</div>
+      <p style="font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.7;">
+        Mon – Sun<br/>8:00 AM – 10:00 PM
+      </p>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2025 Lorong Coffee Sdn Bhd. All rights reserved.</span>
+    <span>Made with ☕ in Bintulu, Sarawak</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js?v=2"></script>
+<script src="js/data.js?v=2"></script>
+<script src="js/home-dynamic.js?v=3"></script>
+<script src="js/main.js?v=2"></script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

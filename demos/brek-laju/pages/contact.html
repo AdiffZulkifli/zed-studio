@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hubungi Kami – Brek Laju</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/contact.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <nav class="navbar scrolled" id="navbar">
+    <a href="../index.html" class="nav-logo">BREK<span>LAJU</span></a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Utama</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Tentang Kami</a></li>
+      <li><a href="outlets.html">Cawangan</a></li>
+      <li><a href="contact.html" class="active">Hubungi</a></li>
+      <li><a href="menu.html" class="nav-cta">Pesan Sekarang</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-badge">💬 Hubungi Kami</div>
+    <h1>KAMI SEDIA <span>MEMBANTU</span></h1>
+    <p>Ada soalan, aduan, atau nak join keluarga Brek Laju? Hubungi kami sekarang!</p>
+  </section>
+
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Info Cards -->
+        <div class="contact-info">
+          <h2>Cara Hubungi</h2>
+          <p>Kami sentiasa ada untuk anda. Pilih cara yang paling sesuai.</p>
+
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="cc-icon">📞</div>
+              <div class="cc-text">
+                <h4>Telefon</h4>
+                <p id="cPhone">03-1234 5678</p>
+                <span>Isnin – Jumaat, 9am – 6pm</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="cc-icon">✉️</div>
+              <div class="cc-text">
+                <h4>E-mel</h4>
+                <p id="cEmail">hello@breklaju.my</p>
+                <span>Balas dalam 1–2 hari bekerja</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="cc-icon">📍</div>
+              <div class="cc-text">
+                <h4>Ibu Pejabat</h4>
+                <p id="cAddress">No. 12, Jalan Teknokrat 7</p>
+                <span id="cAddressSub">Cyberjaya, Selangor</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="cc-icon">💬</div>
+              <div class="cc-text">
+                <h4>WhatsApp</h4>
+                <p>+60 11-1234 5678</p>
+                <span>Respons pantas 7 hari seminggu</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-section">
+            <h4>Ikuti Kami</h4>
+            <div class="social-big">
+              <a href="#" id="socFb" class="social-big-btn fb">Facebook</a>
+              <a href="#" id="socIg" class="social-big-btn ig">Instagram</a>
+              <a href="#" id="socTt" class="social-big-btn tt">TikTok</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="contact-form-wrap">
+          <h2>Hantar Mesej</h2>
+          <p>Isi borang di bawah dan kami akan menghubungi anda tidak lama lagi.</p>
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nama Penuh *</label>
+                <input type="text" id="name" placeholder="Ahmad bin Abdullah" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">No. Telefon *</label>
+                <input type="tel" id="phone" placeholder="011-1234 5678" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Alamat E-mel *</label>
+              <input type="email" id="email" placeholder="anda@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subjek</label>
+              <select id="subject">
+                <option value="">-- Pilih Subjek --</option>
+                <option value="francais">Peluang Francais</option>
+                <option value="aduan">Aduan / Maklum Balas</option>
+                <option value="kerjasama">Kerjasama / Perniagaan</option>
+                <option value="media">Media & PR</option>
+                <option value="lain">Lain-lain</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Mesej *</label>
+              <textarea id="message" rows="5" placeholder="Tulis mesej anda di sini..." required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Hantar Mesej 🚀</button>
+          </form>
+          <div class="form-success" id="formSuccess" style="display:none">
+            <div class="success-icon">✅</div>
+            <h3>Mesej Berjaya Dihantar!</h3>
+            <p>Terima kasih kerana menghubungi kami. Kami akan membalas secepat mungkin.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">BREK<span>LAJU</span></div>
+        <p>Rangup. Laju. Sedap.<br/>100% Jenama Malaysia.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4>Pautan</h4>
+        <ul>
+          <li><a href="../index.html">Utama</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Tentang Kami</a></li>
+          <li><a href="outlets.html">Cawangan</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav">
+        <h4>Hubungi</h4>
+        <ul>
+          <li>📞 <span id="footerPhone">03-1234 5678</span></li>
+          <li>✉️ <span id="footerEmail">hello@breklaju.my</span></li>
+          <li>📍 <span id="footerAddr">Cyberjaya, Selangor</span></li>
+        </ul>
+      </div>
+      <div class="footer-halal">
+        <div class="halal-badge">
+          <span class="halal-text">HALAL</span>
+          <span class="halal-sub">JAKIM Certified</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Brek Laju Sdn Bhd (1234567-X). Hak Cipta Terpelihara.</p>
+    </div>
+  </footer>
+
+  <script src="../js/db.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    trackPageView('contact');
+    const s = getSettings();
+    document.getElementById('cPhone').textContent = s.contactPhone;
+    document.getElementById('cEmail').textContent = s.contactEmail;
+    document.getElementById('cAddress').textContent = s.contactAddress.split(',')[0] || s.contactAddress;
+    document.getElementById('cAddressSub').textContent = s.contactAddress;
+    document.getElementById('footerPhone').textContent = s.contactPhone;
+    document.getElementById('footerEmail').textContent = s.contactEmail;
+    document.getElementById('footerAddr').textContent = s.contactAddress;
+    if (s.socialFacebook && s.socialFacebook !== '#') document.getElementById('socFb').href = s.socialFacebook;
+    if (s.socialInstagram && s.socialInstagram !== '#') document.getElementById('socIg').href = s.socialInstagram;
+    if (s.socialTiktok && s.socialTiktok !== '#') document.getElementById('socTt').href = s.socialTiktok;
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    });
+  </script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

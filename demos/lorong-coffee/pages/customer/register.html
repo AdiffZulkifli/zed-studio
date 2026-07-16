@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join Lorong Rewards — Lorong Coffee</title>
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+  <style>
+    .auth-page { min-height:100vh; background:var(--cream); display:flex; flex-direction:column; }
+    .auth-hero { background:var(--green); padding:8rem 2rem 4rem; text-align:center; }
+    .auth-hero__title { font-family:var(--font-display); font-size:2.5rem; font-weight:900; color:var(--cream); }
+    .auth-hero__title em { color:var(--yellow); font-style:italic; }
+    .auth-hero__sub { color:rgba(255,255,255,0.6); margin-top:0.75rem; font-size:1rem; }
+
+    .auth-card {
+      background:white; border-radius:24px; padding:2.5rem;
+      max-width:480px; width:100%; margin:-2rem auto 4rem;
+      box-shadow:0 20px 60px rgba(0,0,0,0.12);
+      position:relative; z-index:1;
+    }
+    .auth-label { display:block; font-size:0.8rem; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem; }
+    .auth-input {
+      width:100%; border:2px solid #e8e0d0; border-radius:10px; padding:12px 16px;
+      font-family:var(--font-body); font-size:0.95rem; color:var(--dark); outline:none;
+      transition:border-color 0.2s; background:white; margin-bottom:1.1rem;
+    }
+    .auth-input:focus { border-color:var(--green); }
+    .auth-input::placeholder { color:#bbb; }
+    .auth-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .auth-btn {
+      width:100%; background:var(--green); color:var(--yellow); border:none; border-radius:12px;
+      padding:14px; font-family:var(--font-display); font-size:1.05rem; font-weight:700;
+      cursor:pointer; transition:background 0.2s, transform 0.15s; margin-top:0.5rem;
+    }
+    .auth-btn:hover { background:var(--green-mid); transform:translateY(-1px); }
+    .auth-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+    .auth-error { background:#fde8ea; border:1px solid #f5c6cb; border-radius:8px; padding:10px 14px; color:#c0392b; font-size:0.85rem; margin-bottom:1rem; display:none; }
+    .auth-success { background:#e8f5e9; border:1px solid #a5d6a7; border-radius:8px; padding:10px 14px; color:#2e7d32; font-size:0.85rem; margin-bottom:1rem; display:none; }
+    .auth-link { text-align:center; margin-top:1.5rem; font-size:0.88rem; color:var(--text-muted); }
+    .auth-link a { color:var(--green); font-weight:700; text-decoration:none; }
+    .auth-link a:hover { text-decoration:underline; }
+    .perks { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-top:2rem; }
+    .perk { text-align:center; font-size:0.82rem; color:rgba(255,255,255,0.6); }
+    .perk__icon { font-size:1.8rem; display:block; margin-bottom:0.4rem; }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <a href="../../index.html" class="navbar__logo">
+    <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+    <span>Lorong Coffee</span>
+  </a>
+  <ul class="navbar__links">
+    <li><a href="../menu.html">Menu</a></li>
+    <li><a href="../rewards.html">Rewards</a></li>
+    <li><a href="../stores.html">Find a Store</a></li>
+    <li><a href="login.html" class="navbar__cta">Sign In</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-hero">
+    <div class="section-label" style="justify-content:center;color:rgba(255,255,255,0.5);">Free to join</div>
+    <h1 class="auth-hero__title">Join Lorong <em>Rewards</em></h1>
+    <p class="auth-hero__sub">Buy 10 cups, get 1 free — tracked automatically.</p>
+    <div class="perks">
+      <div class="perk"><span class="perk__icon">☕</span>Track your cups</div>
+      <div class="perk"><span class="perk__icon">🎁</span>Earn free drinks</div>
+      <div class="perk"><span class="perk__icon">📱</span>Works at all branches</div>
+    </div>
+  </div>
+
+  <div class="auth-card">
+    <h2 style="font-family:var(--font-display);font-size:1.4rem;color:var(--green);margin-bottom:1.5rem;text-align:center;">Create Your Account</h2>
+
+    <div class="auth-error" id="authError"></div>
+    <div class="auth-success" id="authSuccess"></div>
+
+    <form id="registerForm">
+      <label class="auth-label">Full Name</label>
+      <input class="auth-input" type="text" id="fieldName" placeholder="Your full name" required/>
+
+      <label class="auth-label">Phone Number</label>
+      <input class="auth-input" type="tel" id="fieldPhone" placeholder="e.g. 0123456789" required/>
+      <div style="font-size:0.75rem;color:var(--text-muted);margin-top:-0.85rem;margin-bottom:1rem;">Used by branch staff to look up your account.</div>
+
+      <label class="auth-label">Email Address</label>
+      <input class="auth-input" type="email" id="fieldEmail" placeholder="your@email.com" required/>
+
+      <div class="auth-row">
+        <div>
+          <label class="auth-label">Password</label>
+          <input class="auth-input" type="password" id="fieldPassword" placeholder="Min. 8 chars" required/>
+        </div>
+        <div>
+          <label class="auth-label">Confirm Password</label>
+          <input class="auth-input" type="password" id="fieldConfirm" placeholder="Repeat password" required/>
+        </div>
+      </div>
+
+      <button type="submit" class="auth-btn" id="submitBtn">Join Lorong Rewards — It's Free!</button>
+    </form>
+
+    <div class="auth-link">
+      Already have an account? <a href="login.html">Sign In</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/main.js"></script>
+<script>
+  if (getCustomerSession()) window.location.href = 'dashboard.html';
+
+  document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const errEl = document.getElementById('authError');
+    const okEl = document.getElementById('authSuccess');
+    errEl.style.display = 'none';
+    okEl.style.display = 'none';
+
+    const name = document.getElementById('fieldName').value.trim();
+    const phone = document.getElementById('fieldPhone').value.trim();
+    const email = document.getElementById('fieldEmail').value.trim();
+    const password = document.getElementById('fieldPassword').value;
+    const confirm = document.getElementById('fieldConfirm').value;
+
+    if (password !== confirm) {
+      errEl.textContent = 'Passwords do not match.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (password.length < 8) {
+      errEl.textContent = 'Password must be at least 8 characters.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Creating account…';
+    btn.disabled = true;
+
+    const result = await customerSignUp(name, phone, email, password);
+
+    if (result.success) {
+      if (result.needsConfirmation) {
+        okEl.textContent = '✅ Account created! Check your email to confirm, then sign in.';
+        okEl.style.display = 'block';
+        btn.textContent = 'Account created!';
+      } else {
+        okEl.textContent = '✅ Account created! Redirecting…';
+        okEl.style.display = 'block';
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+      }
+    } else {
+      errEl.textContent = result.error;
+      errEl.style.display = 'block';
+      btn.textContent = 'Join Lorong Rewards — It\'s Free!';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

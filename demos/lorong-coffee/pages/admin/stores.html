@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Store Manager — Lorong Coffee Admin</title>
+  <link rel="stylesheet" href="../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub">Admin Panel</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">📊</span> Dashboard
+      </a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">☕</span> Menu Items
+      </a>
+      <a href="stores.html" class="admin-nav-link active">
+        <span class="admin-nav-link__icon">🏪</span> Store Locations
+      </a>
+      <a href="admins.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">👤</span> Branch Admins
+      </a>
+      <div class="admin-nav-label">Analytics</div>
+      <a href="analytics.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">📈</span> Sales Analytics
+      </a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../index.html" class="admin-nav-link" target="_blank">
+        <span class="admin-nav-link__icon">🌐</span> View Website
+      </a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title">Store Locations</div>
+          <div class="admin-topbar__breadcrumb">Manage branches and open/closed status</div>
+        </div>
+      </div>
+      <div class="admin-topbar__right">
+        <button class="btn-admin btn-primary" onclick="openAddModal()">+ Add Store</button>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- STORE CARDS GRID -->
+      <div id="storeCardsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem;margin-bottom:1.5rem;">
+        <div style="color:rgba(255,255,255,0.3);padding:2rem;text-align:center;">Loading…</div>
+      </div>
+
+      <!-- TABLE VIEW -->
+      <div class="admin-panel">
+        <div class="admin-panel__header">
+          <div class="admin-panel__title">🏪 All Branches <span id="storeCount" style="font-size:0.85rem;color:rgba(255,255,255,0.4);font-family:var(--font-mono);"></span></div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table" id="storesTable">
+            <thead>
+              <tr>
+                <th>Store</th>
+                <th>Address</th>
+                <th>Hours</th>
+                <th>Status</th>
+                <th>Coming Soon</th>
+                <th>Open / Closed</th>
+                <th>Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="storesTableBody">
+              <tr><td colspan="8" style="text-align:center;color:rgba(255,255,255,0.3);padding:2rem;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal-overlay" id="storeModal">
+  <div class="modal">
+    <div class="modal__header">
+      <div class="modal__title" id="modalTitle">Add Store</div>
+      <button class="modal__close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal__body">
+      <input type="hidden" id="editId"/>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="fieldName">Store Name *</label>
+          <input class="form-input" type="text" id="fieldName" placeholder="e.g. Lorong Coffee — Miri"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fieldEmoji">Emoji Icon</label>
+          <input class="form-input" type="text" id="fieldEmoji" placeholder="🏪" maxlength="4"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="fieldAddress">Address *</label>
+        <input class="form-input" type="text" id="fieldAddress" placeholder="Full address"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="fieldHours">Operating Hours *</label>
+        <input class="form-input" type="text" id="fieldHours" placeholder="Mon–Sun: 8:00 AM – 10:00 PM"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="fieldPhone">Phone</label>
+          <input class="form-input" type="text" id="fieldPhone" placeholder="+60 86-123456"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fieldEmail">Email</label>
+          <input class="form-input" type="email" id="fieldEmail" placeholder="branch@lorongcoffee.my"/>
+        </div>
+      </div>
+      <div style="display:flex;gap:2rem;margin-top:0.5rem;flex-wrap:wrap;">
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="fieldIsOpen" checked/>
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">Open Now</span>
+        </div>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="fieldComingSoon"/>
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn-admin btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-admin btn-primary" onclick="saveStore()">💾 Save Store</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script>
+  initData();
+  if (!requireMainAdmin('login.html')) {}
+
+  // ── RENDER CARDS ───────────────────────────────────────────
+  async function renderCards() {
+    const stores = await getStores();
+    const grid = document.getElementById('storeCardsGrid');
+    grid.innerHTML = stores.map(s => `
+      <div class="admin-panel" style="margin-bottom:0;">
+        <div style="height:100px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;
+          background:${s.comingSoon ? 'linear-gradient(135deg,#333,#444)' : 'linear-gradient(135deg,var(--green),var(--green-mid))'};
+          border-radius:var(--radius-lg) var(--radius-lg) 0 0;position:relative;">
+          ${s.emoji}
+          <span style="position:absolute;top:10px;right:10px;" class="badge ${s.comingSoon ? 'badge-grey' : s.isOpen ? 'badge-green' : 'badge-red'}">
+            ${s.comingSoon ? 'Coming Soon' : s.isOpen ? '● Open' : '● Closed'}
+          </span>
+        </div>
+        <div class="admin-panel__body" style="padding:1rem 1.25rem;">
+          <div style="font-family:var(--font-display);font-weight:700;color:white;font-size:1rem;margin-bottom:0.5rem;">${s.name}</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.4);line-height:1.6;">
+            📍 ${s.address}<br/>
+            🕐 ${s.hours}
+            ${s.phone ? `<br/>📞 ${s.phone}` : ''}
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1rem;">
+            <div class="toggle-wrap">
+              <label class="toggle">
+                <input type="checkbox" ${s.isOpen ? 'checked' : ''} ${s.comingSoon ? 'disabled' : ''} onchange="quickToggleOpen('${s.id}',this.checked)"/>
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="cardLbl-${s.id}">${s.isOpen ? 'Open' : 'Closed'}</span>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-admin btn-ghost btn-sm" onclick="openEditModal('${s.id}')">✏️ Edit</button>
+              <button class="btn-admin btn-danger btn-sm" onclick="deleteStore_('${s.id}','${s.name.replace(/'/g,"\\'")}')">🗑️</button>
+            </div>
+          </div>
+          <div class="last-updated" style="margin-top:0.5rem;">Updated ${formatRelativeTime(s.updatedAt)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── RENDER TABLE ───────────────────────────────────────────
+  async function renderTable() {
+    const stores = await getStores();
+    document.getElementById('storeCount').textContent = `(${stores.length})`;
+    const tbody = document.getElementById('storesTableBody');
+    tbody.innerHTML = stores.map(s => `
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:1.5rem;">${s.emoji}</span>
+            <div class="admin-table__name">${s.name}</div>
+          </div>
+        </td>
+        <td style="max-width:180px;font-size:0.8rem;color:rgba(255,255,255,0.5);">${s.address}</td>
+        <td style="font-size:0.8rem;color:rgba(255,255,255,0.5);">${s.hours}</td>
+        <td><span class="badge ${s.comingSoon ? 'badge-grey' : s.isOpen ? 'badge-green' : 'badge-red'}">${s.comingSoon ? 'Coming Soon' : s.isOpen ? 'Open' : 'Closed'}</span></td>
+        <td>
+          <label class="toggle">
+            <input type="checkbox" ${s.comingSoon ? 'checked' : ''} onchange="quickToggleComingSoon('${s.id}',this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+        <td>
+          <label class="toggle" ${s.comingSoon ? 'title="Cannot toggle while Coming Soon"' : ''}>
+            <input type="checkbox" ${s.isOpen ? 'checked' : ''} ${s.comingSoon ? 'disabled' : ''} onchange="quickToggleOpen('${s.id}',this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+        <td class="last-updated">${formatRelativeTime(s.updatedAt)}</td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-admin btn-ghost btn-sm" onclick="openEditModal('${s.id}')">✏️</button>
+            <button class="btn-admin btn-danger btn-sm" onclick="deleteStore_('${s.id}','${s.name.replace(/'/g,"\\'")}')">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  async function renderAll() { await renderCards(); await renderTable(); }
+
+  // ── QUICK TOGGLES ──────────────────────────────────────────
+  async function quickToggleOpen(id, isOpen) {
+    await updateStore(id, { isOpen });
+    const lbl = document.getElementById(`cardLbl-${id}`);
+    if (lbl) lbl.textContent = isOpen ? 'Open' : 'Closed';
+    toast(isOpen ? '🟢 Store marked as Open' : '🔴 Store marked as Closed');
+    await renderAll();
+  }
+
+  async function quickToggleComingSoon(id, comingSoon) {
+    await updateStore(id, { comingSoon, isOpen: comingSoon ? false : true });
+    toast(comingSoon ? '🚀 Store set to Coming Soon' : '✅ Store is now active');
+    await renderAll();
+  }
+
+  // ── MODAL ──────────────────────────────────────────────────
+  function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Add Store';
+    document.getElementById('editId').value = '';
+    document.getElementById('fieldName').value = '';
+    document.getElementById('fieldEmoji').value = '🏪';
+    document.getElementById('fieldAddress').value = '';
+    document.getElementById('fieldHours').value = 'Mon–Sun: 8:00 AM – 10:00 PM';
+    document.getElementById('fieldPhone').value = '';
+    document.getElementById('fieldEmail').value = '';
+    document.getElementById('fieldIsOpen').checked = true;
+    document.getElementById('fieldComingSoon').checked = false;
+    document.getElementById('storeModal').classList.add('open');
+  }
+
+  async function openEditModal(id) {
+    const store = await getStoreById(id);
+    if (!store) return;
+    document.getElementById('modalTitle').textContent = 'Edit Store';
+    document.getElementById('editId').value = store.id;
+    document.getElementById('fieldName').value = store.name;
+    document.getElementById('fieldEmoji').value = store.emoji || '🏪';
+    document.getElementById('fieldAddress').value = store.address;
+    document.getElementById('fieldHours').value = store.hours;
+    document.getElementById('fieldPhone').value = store.phone || '';
+    document.getElementById('fieldEmail').value = store.email || '';
+    document.getElementById('fieldIsOpen').checked = store.isOpen;
+    document.getElementById('fieldComingSoon').checked = store.comingSoon;
+    document.getElementById('storeModal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('storeModal').classList.remove('open');
+  }
+
+  async function saveStore() {
+    const name = document.getElementById('fieldName').value.trim();
+    const address = document.getElementById('fieldAddress').value.trim();
+    const hours = document.getElementById('fieldHours').value.trim();
+    if (!name || !address || !hours) {
+      toast('⚠️ Please fill in Name, Address, and Hours.', 'error');
+      return;
+    }
+    const data = {
+      name, address, hours,
+      emoji: document.getElementById('fieldEmoji').value.trim() || '🏪',
+      phone: document.getElementById('fieldPhone').value.trim(),
+      email: document.getElementById('fieldEmail').value.trim(),
+      isOpen: document.getElementById('fieldIsOpen').checked,
+      comingSoon: document.getElementById('fieldComingSoon').checked,
+    };
+    const editId = document.getElementById('editId').value;
+    if (editId) {
+      await updateStore(editId, data);
+      toast('✅ Store updated successfully');
+    } else {
+      await addStore(data);
+      toast('✅ New store added');
+    }
+    closeModal();
+    await renderAll();
+  }
+
+  async function deleteStore_(id, name) {
+    if (confirm(`Delete "${name}"? This cannot be undone.`)) {
+      await deleteStore(id);
+      await renderAll();
+      toast(`🗑️ "${name}" deleted`);
+    }
+  }
+
+  // ── TOAST ──────────────────────────────────────────────────
+  function toast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast${type === 'error' ? ' error' : ''}`;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+  }
+
+  function handleLogout() { adminSignOut(); window.location.href = 'login.html'; }
+
+  document.getElementById('storeModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us — Lorong Coffee</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="icon" type="image/jpeg" href="../images/logo.jpg"/>
+  <style>
+    .page-hero { background:var(--green); padding:10rem 2rem 5rem; text-align:center; }
+    .page-hero__title { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--cream); }
+    .page-hero__title em { color:var(--yellow); font-style:italic; }
+    .page-hero__sub { color:rgba(255,255,255,0.6); margin-top:1rem; font-size:1.1rem; max-width:540px; margin-inline:auto; line-height:1.7; }
+
+    .contact-section { background:var(--cream); padding:6rem 2rem; }
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+    
+    .contact-info { display:flex; flex-direction:column; gap:1.5rem; }
+    .contact-info-item { display:flex; align-items:flex-start; gap:1rem; background:var(--white); padding:1.4rem; border-radius:var(--radius); box-shadow:var(--shadow); }
+    .contact-info-item__icon { font-size:1.8rem; }
+    .contact-info-item__label { font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--green-mid); margin-bottom:0.25rem; }
+    .contact-info-item__value { font-weight:600; color:var(--dark); }
+    .contact-info-item__sub { font-size:0.85rem; color:var(--text-muted); }
+
+    .contact-form { background:var(--white); border-radius:var(--radius-lg); padding:2.5rem; box-shadow:var(--shadow-lg); }
+    .form-title { font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--green); margin-bottom:1.75rem; }
+    .form-group { margin-bottom:1.25rem; }
+    .form-group label { display:block; font-size:0.85rem; font-weight:600; color:var(--dark); margin-bottom:0.5rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width:100%; padding:12px 16px;
+      border:2px solid var(--cream-dark); border-radius:var(--radius);
+      font-family:var(--font-body); font-size:0.95rem; color:var(--dark);
+      background:var(--cream); outline:none;
+      transition:border-color var(--transition);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--yellow); }
+    .form-group textarea { resize:vertical; min-height:120px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .submit-btn {
+      width:100%; padding:14px; background:var(--green); color:var(--yellow);
+      border:none; border-radius:var(--radius); font-family:var(--font-body);
+      font-size:1rem; font-weight:700; cursor:pointer;
+      transition:background var(--transition), transform var(--transition);
+    }
+    .submit-btn:hover { background:var(--green-mid); transform:translateY(-2px); }
+
+    @media(max-width:900px) { .contact-grid{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <a href="../index.html" class="navbar__logo">
+    <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+    <span>Lorong Coffee</span>
+  </a>
+  <ul class="navbar__links">
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="rewards.html">Rewards</a></li>
+    <li><a href="stores.html">Find a Store</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="stores.html" class="navbar__cta">Order Now</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="menu.html">Menu</a>
+  <a href="stores.html">Find a Store</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-hero">
+  <div class="section-label" style="justify-content:center;color:rgba(255,255,255,0.5);">We'd Love to Hear From You</div>
+  <h1 class="page-hero__title">Get in <em>Touch</em></h1>
+  <p class="page-hero__sub">Questions, feedback, franchise inquiries, or just want to say hi — our inbox is always open.</p>
+</div>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="section-label">Reach Us</div>
+        <h2 class="section-title">Contact <em>Details</em></h2>
+        <br/>
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">📍</div>
+          <div>
+            <div class="contact-info-item__label">Main Outlet</div>
+            <div class="contact-info-item__value">Lorong Coffee — Bintulu Main</div>
+            <div class="contact-info-item__sub">Jalan Abang Galau, 97000 Bintulu, Sarawak</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">📞</div>
+          <div>
+            <div class="contact-info-item__label">Phone</div>
+            <div class="contact-info-item__value">+60 86-123456</div>
+            <div class="contact-info-item__sub">Mon – Sun, 8:00 AM – 8:00 PM</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">✉️</div>
+          <div>
+            <div class="contact-info-item__label">Email</div>
+            <div class="contact-info-item__value">hello@lorongcoffee.my</div>
+            <div class="contact-info-item__sub">We reply within 24 hours</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">📸</div>
+          <div>
+            <div class="contact-info-item__label">Social Media</div>
+            <div class="contact-info-item__value">@lorongcoffee</div>
+            <div class="contact-info-item__sub">Instagram · Facebook · TikTok</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-item__icon">🕐</div>
+          <div>
+            <div class="contact-info-item__label">Opening Hours</div>
+            <div class="contact-info-item__value">Mon – Sun: 8:00 AM – 10:00 PM</div>
+            <div class="contact-info-item__sub">Open all year round (except major public holidays)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal">
+        <div class="form-title">Send Us a Message</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Ahmad bin Razif"/>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="hello@email.com"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject">
+            <option value="">Select a topic...</option>
+            <option>General Inquiry</option>
+            <option>Feedback / Complaint</option>
+            <option>Franchise Inquiry</option>
+            <option>Career Application</option>
+            <option>Corporate / Catering</option>
+            <option>Media / Partnership</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" placeholder="Tell us how we can help you..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="handleSubmit(this)">☕ Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer__grid">
+    <div>
+      <a href="../index.html" class="footer__brand-logo">
+        <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+        <span>Lorong Coffee</span>
+      </a>
+      <p class="footer__about">Sarawak's favourite specialty coffee. Handcrafted brews, warm vibes.</p>
+      <div class="footer__social">
+        <a href="#" title="Instagram">📸</a><a href="#" title="Facebook">👍</a><a href="#" title="TikTok">🎵</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer__heading">Explore</div>
+      <ul class="footer__links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="menu.html">Full Menu</a></li>
+        <li><a href="rewards.html">Rewards</a></li>
+        <li><a href="stores.html">Find a Store</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Company</div>
+      <ul class="footer__links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Hours</div>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;">Mon – Sun<br/>8:00 AM – 10:00 PM</p>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2025 Lorong Coffee Sdn Bhd.</span>
+    <span>Made with ☕ in Bintulu, Sarawak</span>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+function handleSubmit(btn) {
+  btn.textContent = '✓ Message Sent!';
+  btn.style.background = 'var(--green-light)';
+  setTimeout(() => {
+    btn.textContent = '☕ Send Message';
+    btn.style.background = '';
+  }, 3000);
+}
+</script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

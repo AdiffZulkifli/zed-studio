@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — MedicMesir</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../js/data.js"></script>
+  <script src="../js/admin-auth.js"></script>
+</head>
+<body class="admin-body">
+
+  <div class="login-page" style="width: 100%;">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="admin-sidebar-logo">M</div>
+        <div class="admin-sidebar-title">Medic<span>Mesir</span></div>
+      </div>
+      
+      <h2 class="login-title">Admin Portal</h2>
+      <p class="login-subtitle">Sign in to manage your website content.</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="username" class="form-control" placeholder="Enter your username" required autofocus />
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 2rem;">
+          <label>Password</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required />
+        </div>
+
+        <!-- DEMO CREDENTIALS -->
+        <div class="demo-credentials">
+          <h4>Demo Credentials</h4>
+          <p>User: admin</p>
+          <p>Pass: 123123</p>
+        </div>
+
+        <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem;">
+          Sign In
+        </button>
+        
+        <div id="login-error" style="color: #DC2626; font-size: 0.85rem; margin-top: 1rem; display: none;">
+          Invalid username or password.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value.trim();
+      
+      if (mmCheckAdminLogin(u, p)) {
+        // success
+        sessionStorage.setItem('mm_admin_auth', 'authenticated');
+        document.getElementById('login-error').style.display = 'none';
+        window.location.href = 'dashboard.html';
+      } else {
+        // fail
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

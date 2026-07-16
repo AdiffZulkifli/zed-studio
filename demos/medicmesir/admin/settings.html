@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../js/data.js"></script>
+  <script src="../js/admin-auth.js"></script>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <div class="admin-sidebar-header">
+      <div class="admin-sidebar-logo">M</div>
+      <div class="admin-sidebar-title">Medic<span>Mesir</span></div>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-label">Main Menu</div>
+      <a href="dashboard.html" class="admin-nav-link"><i style="font-style:normal">🏠</i> Dashboard</a>
+      <div class="admin-nav-label">Content</div>
+      <a href="programmes.html" class="admin-nav-link"><i style="font-style:normal">📚</i> Programmes</a>
+      <a href="universities.html" class="admin-nav-link"><i style="font-style:normal">🏛️</i> Universities</a>
+      <a href="offices.html" class="admin-nav-link"><i style="font-style:normal">🏢</i> Offices</a>
+      <div class="admin-nav-label">Marketing</div>
+      <a href="news.html" class="admin-nav-link"><i style="font-style:normal">📰</i> News & Blog</a>
+      <a href="promotions.html" class="admin-nav-link"><i style="font-style:normal">🎉</i> Promotions</a>
+      <div class="admin-nav-label">System</div>
+      <a href="settings.html" class="admin-nav-link active"><i style="font-style:normal">⚙️</i> Settings</a>
+    </nav>
+    <div class="admin-sidebar-footer"><button id="logout-btn" class="btn-logout"><i style="font-style:normal">🚪</i> Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.5rem;">
+          <div class="hamburger-admin" id="mobile-menu-btn"><span></span><span></span><span></span></div>
+          <h1 style="margin:0;">Site Settings</h1>
+        </div>
+        <p>Global variables and contact info shared across the public site.</p>
+      </div>
+      <div>
+        <button class="btn-admin btn-admin-primary" onclick="saveSettings()">Save Changes</button>
+      </div>
+    </div>
+
+    <form id="settingsForm">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+          
+          <!-- BRAND CARD -->
+          <div class="admin-card">
+            <h3 style="margin-top:0; font-family:var(--font-display); font-size:1.5rem; color:var(--navy); border-bottom:1px solid #eee; padding-bottom:1rem; margin-bottom:1.5rem;">Brand Identity</h3>
+            
+            <div class="form-group">
+                <label>Business Name</label>
+                <input type="text" id="s_name" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+                <label>Hero Tagline</label>
+                <input type="text" id="s_tagline" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Year Founded</label>
+                <input type="text" id="s_founded" class="form-control" />
+            </div>
+          </div>
+
+          <!-- CONNECT CARD -->
+          <div class="admin-card">
+            <h3 style="margin-top:0; font-family:var(--font-display); font-size:1.5rem; color:var(--navy); border-bottom:1px solid #eee; padding-bottom:1rem; margin-bottom:1.5rem;">Main Contact Info</h3>
+            
+            <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div class="form-group">
+                    <label>Main Phone</label>
+                    <input type="text" id="s_phone" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp Number</label>
+                    <input type="text" id="s_whatsapp" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Support Email</label>
+                <input type="text" id="s_email" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+                <label>HQ Address (Used in Footer)</label>
+                <textarea id="s_address" class="form-control" style="min-height:60px"></textarea>
+            </div>
+          </div>
+
+          <!-- STATISTICS CARD -->
+          <div class="admin-card" style="grid-column: 1 / -1;">
+            <h3 style="margin-top:0; font-family:var(--font-display); font-size:1.5rem; color:var(--navy); border-bottom:1px solid #eee; padding-bottom:1rem; margin-bottom:1.5rem;">Homepage Statistics counters</h3>
+            
+            <div class="form-row" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1.5rem;">
+                <div class="form-group">
+                    <label>Graduates Count</label>
+                    <div style="display:flex;">
+                         <input type="number" id="s_graduates" class="form-control" style="border-radius:6px 0 0 6px" />
+                         <input type="text" id="s_graduates_sfx" class="form-control" style="width:50px; border-radius:0 6px 6px 0; border-left:none;" placeholder="+" title="Suffix (e.g. +)" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Years Experience</label>
+                    <input type="number" id="s_experience" class="form-control" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Countries Count</label>
+                    <div style="display:flex;">
+                         <input type="number" id="s_countries" class="form-control" style="border-radius:6px 0 0 6px" />
+                         <input type="text" id="s_countries_sfx" class="form-control" style="width:50px; border-radius:0 6px 6px 0; border-left:none;" placeholder="+" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Placement Rate</label>
+                    <div style="display:flex;">
+                         <input type="number" id="s_placement" class="form-control" style="border-radius:6px 0 0 6px" />
+                         <input type="text" id="s_placement_sfx" class="form-control" style="width:50px; border-radius:0 6px 6px 0; border-left:none;" placeholder="%" />
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+          
+        </div>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+
+    function loadSettings() {
+        const s = getSettings();
+        document.getElementById('s_name').value = s.businessName || '';
+        document.getElementById('s_tagline').value = s.tagline || '';
+        document.getElementById('s_founded').value = s.founded || '';
+        
+        document.getElementById('s_phone').value = s.phone || '';
+        document.getElementById('s_whatsapp').value = s.whatsapp || '';
+        document.getElementById('s_email').value = s.email || '';
+        document.getElementById('s_address').value = s.address || '';
+        
+        document.getElementById('s_graduates').value = s.graduates || '';
+        document.getElementById('s_graduates_sfx').value = s.graduatesSuffix || '+';
+        document.getElementById('s_experience').value = s.experienceYears || '';
+        document.getElementById('s_countries').value = s.countries || '';
+        document.getElementById('s_countries_sfx').value = s.countriesSuffix || '+';
+        document.getElementById('s_placement').value = s.placementRate || '';
+        document.getElementById('s_placement_sfx').value = s.placementSuffix || '%';
+    }
+
+    function saveSettings() {
+        const payload = {
+            businessName: document.getElementById('s_name').value,
+            tagline: document.getElementById('s_tagline').value,
+            founded: document.getElementById('s_founded').value,
+            phone: document.getElementById('s_phone').value,
+            whatsapp: document.getElementById('s_whatsapp').value,
+            email: document.getElementById('s_email').value,
+            address: document.getElementById('s_address').value,
+            graduates: document.getElementById('s_graduates').value,
+            graduatesSuffix: document.getElementById('s_graduates_sfx').value,
+            experienceYears: document.getElementById('s_experience').value,
+            countries: document.getElementById('s_countries').value,
+            countriesSuffix: document.getElementById('s_countries_sfx').value,
+            placementRate: document.getElementById('s_placement').value,
+            placementSuffix: document.getElementById('s_placement_sfx').value
+        };
+
+        updateSettings(payload);
+        showAdminToast('Settings saved successfully');
+    }
+
+    loadSettings();
+  </script>
+</body>
+</html>

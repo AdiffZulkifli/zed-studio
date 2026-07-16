@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Lorong Coffee Admin</title>
+  <link rel="stylesheet" href="../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub">Admin Panel</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link active">
+        <span class="admin-nav-link__icon">📊</span> Dashboard
+      </a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">☕</span> Menu Items
+      </a>
+      <a href="stores.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">🏪</span> Store Locations
+      </a>
+      <a href="admins.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">👤</span> Branch Admins
+      </a>
+      <div class="admin-nav-label">Analytics</div>
+      <a href="analytics.html" class="admin-nav-link">
+        <span class="admin-nav-link__icon">📈</span> Sales Analytics
+      </a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../index.html" class="admin-nav-link" target="_blank">
+        <span class="admin-nav-link__icon">🌐</span> View Website
+      </a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link btn-logout" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title">Dashboard</div>
+          <div class="admin-topbar__breadcrumb">Overview &amp; Quick Actions</div>
+        </div>
+      </div>
+      <div class="admin-topbar__right">
+        <div class="admin-topbar__time" id="clockDisplay"></div>
+        <div class="admin-topbar__user">
+          <div class="admin-topbar__avatar">A</div>
+          <span class="admin-topbar__username" id="topbarUsername">Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- STATS -->
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+          <div class="stat-card__icon">☕</div>
+          <div class="stat-card__value" id="statTotalItems">—</div>
+          <div class="stat-card__label">Menu Items</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">✅</div>
+          <div class="stat-card__value" id="statAvailable">—</div>
+          <div class="stat-card__label">Available Now</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🏪</div>
+          <div class="stat-card__value" id="statStores">—</div>
+          <div class="stat-card__label">Store Branches</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🟢</div>
+          <div class="stat-card__value" id="statOpenStores">—</div>
+          <div class="stat-card__label">Open Now</div>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="quick-actions">
+        <a href="menu.html" class="quick-card">
+          <div class="quick-card__icon">☕</div>
+          <div>
+            <div class="quick-card__title">Manage Menu</div>
+            <div class="quick-card__sub">Add, edit, or toggle items</div>
+          </div>
+        </a>
+        <a href="stores.html" class="quick-card">
+          <div class="quick-card__icon">🏪</div>
+          <div>
+            <div class="quick-card__title">Manage Stores</div>
+            <div class="quick-card__sub">Toggle open/closed status</div>
+          </div>
+        </a>
+        <a href="../../index.html" target="_blank" class="quick-card">
+          <div class="quick-card__icon">🌐</div>
+          <div>
+            <div class="quick-card__title">Preview Website</div>
+            <div class="quick-card__sub">See the customer view live</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- TWO COLUMN ROW -->
+      <div class="two-col">
+
+        <!-- PROMOTION PANEL -->
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <div class="admin-panel__title">🎉 Active Promotions</div>
+          </div>
+          <div class="admin-panel__body" id="promoPanel">
+            <p style="color:rgba(255,255,255,0.3); font-size:0.85rem;">Loading…</p>
+          </div>
+        </div>
+
+        <!-- STORE STATUS PANEL -->
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <div class="admin-panel__title">🏪 Store Status</div>
+            <a href="stores.html" class="btn-admin btn-ghost btn-sm">Manage →</a>
+          </div>
+          <div class="admin-panel__body" id="storeStatusPanel">
+            <p style="color:rgba(255,255,255,0.3); font-size:0.85rem;">Loading…</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOST VIEWED -->
+      <div class="admin-panel">
+        <div class="admin-panel__header">
+          <div class="admin-panel__title">📈 Most Viewed Items</div>
+          <span class="last-updated" id="analyticsLastUpdated"></span>
+        </div>
+        <div class="admin-panel__body" id="topItemsList">
+          <p style="color:rgba(255,255,255,0.3); font-size:0.85rem;">No views tracked yet — views are tracked when customers browse the menu.</p>
+        </div>
+      </div>
+
+      <!-- DATA TOOLS -->
+      <div class="admin-panel">
+        <div class="admin-panel__header">
+          <div class="admin-panel__title">🛠️ Data Tools</div>
+        </div>
+        <div class="admin-panel__body" style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button class="btn-admin btn-ghost" onclick="handleExport()">📤 Export JSON</button>
+          <button class="btn-admin btn-danger btn-sm" onclick="handleReset()">🔄 Reset to Defaults</button>
+        </div>
+        <div style="padding:0 1.5rem 1rem;">
+          <p style="font-size:0.75rem; color:rgba(255,255,255,0.2); margin-top:0.5rem;">
+            Export downloads your data as JSON — useful for seeding a Supabase database later.
+            Reset restores all default menu items and store data.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script>
+  // ── AUTH GUARD ─────────────────────────────────────────────
+  initData();
+  const session = requireMainAdmin('login.html');
+  if (!session) { /* stops */ }
+
+  document.getElementById('topbarUsername').textContent = session?.displayName || 'Admin';
+
+  // ── CLOCK ──────────────────────────────────────────────────
+  function updateClock() {
+    document.getElementById('clockDisplay').textContent =
+      new Date().toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' });
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // ── STATS ──────────────────────────────────────────────────
+  async function loadStats() {
+    const menu = await getMenu();
+    const stores = await getStores();
+    document.getElementById('statTotalItems').textContent = menu.length;
+    document.getElementById('statAvailable').textContent = menu.filter(i => i.available).length;
+    document.getElementById('statStores').textContent = stores.filter(s => !s.comingSoon).length;
+    document.getElementById('statOpenStores').textContent = stores.filter(s => s.isOpen && !s.comingSoon).length;
+  }
+
+  // ── PROMOTIONS ─────────────────────────────────────────────
+  async function loadPromos() {
+    const promos = await getPromotions();
+    const container = document.getElementById('promoPanel');
+    if (!promos.length) {
+      container.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">No promotions configured.</p>';
+      return;
+    }
+    container.innerHTML = promos.map(p => `
+      <div class="promo-card" style="margin-bottom:1rem;">
+        <div class="promo-card__text">
+          <div class="promo-card__title">${p.badgeText} ${p.title}</div>
+          <div class="promo-card__sub">${p.subtitle}</div>
+          <div class="last-updated" style="margin-top:4px;">Updated ${formatRelativeTime(p.updatedAt)}</div>
+        </div>
+        <label class="toggle" title="${p.active ? 'Active' : 'Inactive'}">
+          <input type="checkbox" ${p.active ? 'checked' : ''} onchange="togglePromo('${p.id}', this.checked)"/>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    `).join('');
+  }
+
+  async function togglePromo(id, active) {
+    await updatePromotion(id, { active });
+    toast(active ? '✅ Promotion enabled' : '⏸️ Promotion paused');
+  }
+
+  // ── STORE STATUS ───────────────────────────────────────────
+  async function loadStoreStatus() {
+    const stores = await getStores({ comingSoon: false });
+    const container = document.getElementById('storeStatusPanel');
+    container.innerHTML = stores.map(s => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0.7rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:1.2rem;">${s.emoji}</span>
+          <div>
+            <div style="font-size:0.85rem;font-weight:600;color:white;">${s.name.replace('Lorong Coffee — ', '')}</div>
+            <div class="last-updated">Updated ${formatRelativeTime(s.updatedAt)}</div>
+          </div>
+        </div>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" ${s.isOpen ? 'checked' : ''} onchange="toggleStore('${s.id}', this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="storeLbl-${s.id}">${s.isOpen ? 'Open' : 'Closed'}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function toggleStore(id, isOpen) {
+    await updateStore(id, { isOpen });
+    const lbl = document.getElementById(`storeLbl-${id}`);
+    if (lbl) lbl.textContent = isOpen ? 'Open' : 'Closed';
+    toast(isOpen ? '🟢 Store marked as Open' : '🔴 Store marked as Closed');
+    await loadStats();
+  }
+
+  // ── TOP ITEMS ──────────────────────────────────────────────
+  async function loadTopItems() {
+    const topItems = await getTopViewedItems(5);
+    const analytics = await getAnalytics();
+    const container = document.getElementById('topItemsList');
+    const maxViews = topItems[0]?.views || 1;
+
+    document.getElementById('analyticsLastUpdated').textContent =
+      analytics.lastUpdated ? `Updated ${formatRelativeTime(analytics.lastUpdated)}` : '';
+
+    if (!topItems.length || topItems.every(i => !i.views)) {
+      container.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">No views tracked yet — views are tracked when customers browse the menu.</p>';
+      return;
+    }
+
+    container.innerHTML = topItems.map((item, idx) => `
+      <div class="top-item">
+        <div class="top-item__rank">#${idx+1}</div>
+        <div class="top-item__emoji">${item.emoji}</div>
+        <div class="top-item__info">
+          <div class="top-item__name">${item.name}</div>
+          <div class="top-item__views">${item.views || 0} views</div>
+        </div>
+        <div class="top-item__bar-wrap">
+          <div class="top-item__bar" style="width:${Math.round(((item.views||0)/maxViews)*100)}%"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── DATA TOOLS ─────────────────────────────────────────────
+  function handleExport() {
+    const json = exportData();
+    const blob = new Blob([json], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `lorong-coffee-data-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    toast('📤 Data exported as JSON');
+  }
+
+  async function handleReset() {
+    if (confirm('Reset ALL data to defaults? This cannot be undone.')) {
+      await resetData();
+      await loadAll();
+      toast('🔄 Data reset to defaults', 'warning');
+    }
+  }
+
+  // ── LOGOUT ─────────────────────────────────────────────────
+  function handleLogout() {
+    adminSignOut();
+    window.location.href = 'login.html';
+  }
+
+  // ── TOAST ──────────────────────────────────────────────────
+  function toast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast ${type === 'error' ? 'error' : type === 'warning' ? 'warning' : ''}`;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+
+  // ── INIT ───────────────────────────────────────────────────
+  async function loadAll() {
+    await loadStats();
+    await loadPromos();
+    await loadStoreStatus();
+    await loadTopItems();
+  }
+  loadAll();
+</script>
+</body>
+</html>

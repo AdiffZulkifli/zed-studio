@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brek Laju – Ayam Goreng Rangup Malaysia</title>
+  <meta name="description" content="Brek Laju — Ayam goreng rangup dengan rempah rahsia turun-temurun. Sedap, cepat, berpatutan untuk semua orang Malaysia." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* Promo Ticker */
+    .promo-ticker {
+      background: linear-gradient(90deg, var(--dark) 0%, var(--dark-2) 100%);
+      border-bottom: 2px solid var(--red);
+      padding: 10px 0;
+      overflow: hidden;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1001;
+    }
+    .ticker-inner {
+      display: flex;
+      animation: tickerScroll 30s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 48px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+    }
+    .ticker-item a {
+      color: var(--yellow);
+      text-decoration: none;
+      font-weight: 800;
+      margin-left: 6px;
+    }
+    .ticker-sep { color: var(--red); font-size: 1.2rem; }
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    body.has-ticker .navbar { top: 38px; }
+    body.has-ticker .hero { padding-top: 160px; }
+
+    /* Skeleton loader */
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer { 0% {background-position:200% 0;} 100% {background-position:-200% 0;} }
+    .skel-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .skel-img { height: 200px; }
+    .skel-body { padding: 20px; }
+    .skel-line { height: 16px; margin-bottom: 10px; }
+    .skel-line.short { width: 60%; }
+    .skel-line.tiny { height: 12px; width: 40%; }
+
+    /* Sold out overlay */
+    .menu-card.sold-out .menu-img-wrap::after {
+      content: 'HABIS';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; color: rgba(255,255,255,0.9);
+      letter-spacing: 4px;
+    }
+    .menu-card.sold-out { opacity: 0.7; }
+
+    /* Admin link in footer */
+    .admin-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+      font-size: 0.75rem; font-weight: 700;
+      padding: 6px 14px; border-radius: 50px;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    .admin-link:hover { background: rgba(232,25,44,0.15); color: var(--red-light); border-color: rgba(232,25,44,0.3); }
+  </style>
+</head>
+<body>
+
+  <!-- PROMO TICKER (injected dynamically) -->
+  <div class="promo-ticker" id="promoTicker" style="display:none;"></div>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">BREK<span>LAJU</span></a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Utama</a></li>
+      <li><a href="pages/menu.html">Menu</a></li>
+      <li><a href="pages/about.html">Tentang Kami</a></li>
+      <li><a href="pages/outlets.html">Cawangan</a></li>
+      <li><a href="pages/contact.html">Hubungi</a></li>
+      <li><a href="pages/menu.html" class="nav-cta">Pesan Sekarang</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🇲🇾 100% Jenama Malaysia</div>
+      <h1 class="hero-title" id="heroTitle">RASA <span class="accent">LAJU,</span><br/>HATI <span class="accent">PUAS.</span></h1>
+      <p class="hero-sub" id="heroSub">Ayam goreng rangup dengan rempah rahsia turun-temurun. Sedap, cepat, berpatutan — untuk semua orang Malaysia.</p>
+      <div class="hero-btns">
+        <a href="pages/menu.html" class="btn-primary">Lihat Menu</a>
+        <a href="pages/outlets.html" class="btn-ghost">Cari Cawangan</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" id="statBranches">45+</span><span class="stat-label">Cawangan</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">500K+</span><span class="stat-label">Pelanggan Setia</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">2020</span><span class="stat-label">Ditubuhkan</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-wrap">
+        <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=600&q=80" alt="Ayam Goreng Brek Laju" class="hero-img" />
+        <div class="hero-badge-float badge-float-1">🔥 Pedas Gila!</div>
+        <div class="hero-badge-float badge-float-2">⭐ 4.9 Rating</div>
+      </div>
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#fff9f0"/></svg>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-us">
+    <div class="container">
+      <div class="section-label">Kenapa Brek Laju?</div>
+      <h2 class="section-title">Bukan Sekadar Ayam Goreng</h2>
+      <div class="features-grid">
+        <div class="feature-card"><div class="feature-icon">🧂</div><h3>Rempah Rahsia</h3><p>Blend rempah eksklusif kami diperhalusi lebih 10 tahun — rangup di luar, juicy di dalam.</p></div>
+        <div class="feature-card"><div class="feature-icon">⚡</div><h3>Servis Laju</h3><p>Order siap dalam 5 minit. Kami faham masa anda berharga.</p></div>
+        <div class="feature-card"><div class="feature-icon">🌿</div><h3>100% Halal</h3><p>Bersijil JAKIM. Setiap bahan dipilih dengan teliti untuk ketenangan anda.</p></div>
+        <div class="feature-card"><div class="feature-icon">💰</div><h3>Harga Mesra</h3><p>Kenyang dengan harga yang tak sakit poket. Jimat, tapi kualiti premium.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED MENU -->
+  <section class="menu-highlight">
+    <div class="container">
+      <div class="section-label">Menu Pilihan</div>
+      <h2 class="section-title">Wajib Cuba!</h2>
+      <div class="menu-grid" id="featuredGrid">
+        <!-- Skeleton -->
+        <div class="skel-card"><div class="skel-img skeleton"></div><div class="skel-body"><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line tiny skeleton"></div></div></div>
+        <div class="skel-card"><div class="skel-img skeleton"></div><div class="skel-body"><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line tiny skeleton"></div></div></div>
+        <div class="skel-card"><div class="skel-img skeleton"></div><div class="skel-body"><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line tiny skeleton"></div></div></div>
+        <div class="skel-card"><div class="skel-img skeleton"></div><div class="skel-body"><div class="skel-line skeleton"></div><div class="skel-line short skeleton"></div><div class="skel-line tiny skeleton"></div></div></div>
+      </div>
+      <div class="center-btn">
+        <a href="pages/menu.html" class="btn-primary">Lihat Semua Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY STRIP -->
+  <section class="story-strip">
+    <div class="story-img">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Kedai Brek Laju" />
+    </div>
+    <div class="story-content">
+      <div class="section-label">Cerita Kami</div>
+      <h2>Dari Dapur Kecil<br/>Ke Seluruh Malaysia</h2>
+      <p>Brek Laju bermula dengan satu misi — bagi rakyat Malaysia rasa ayam goreng yang <strong>betul-betul rangup, betul-betul sedap</strong>, tanpa perlu bayar mahal. Dari Cyberjaya ke seluruh negara, kami terus berkembang dengan sokongan anda.</p>
+      <a href="pages/about.html" class="btn-outline">Baca Lebih Lanjut</a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-label">Apa Kata Mereka?</div>
+      <h2 class="section-title">Pelanggan Setia Kami</h2>
+      <div class="testi-grid">
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"Ayam dia memang tak tipu! Rangup, berempah, dan tak mahal. Setiap minggu mesti singgah."</p><div class="testi-author"><div class="author-avatar">AF</div><span>Amirul Farhan, KL</span></div></div>
+        <div class="testi-card featured"><div class="stars">★★★★★</div><p>"Servis pantas gila! Dalam 5 minit dah siap. Perfect untuk lunch break yang singkat. Brek Laju memang laju!"</p><div class="testi-author"><div class="author-avatar">SN</div><span>Siti Nabilah, Selangor</span></div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"Bucket keluarga memang value for money. Semua orang kenyang, poket tak sakit. Akan datang lagi!"</p><div class="testi-author"><div class="author-avatar">RH</div><span>Razif Hairul, Johor</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-content">
+      <h2>Jadi Rakan Niaga Kami</h2>
+      <p>Buka cawangan Brek Laju anda sendiri. Peluang perniagaan dengan sokongan penuh dari kami.</p>
+      <a href="pages/contact.html" class="btn-primary-dark">Hubungi Kami</a>
+    </div>
+    <div class="cta-deco">🍗</div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">BREK<span>LAJU</span></div>
+        <p id="footerTagline">Rangup. Laju. Sedap.<br/>100% Jenama Malaysia.</p>
+        <div class="social-links">
+          <a href="#" id="fbLink" aria-label="Facebook">f</a>
+          <a href="#" id="igLink" aria-label="Instagram">ig</a>
+          <a href="#" id="ttLink" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4>Pautan</h4>
+        <ul>
+          <li><a href="index.html">Utama</a></li>
+          <li><a href="pages/menu.html">Menu</a></li>
+          <li><a href="pages/about.html">Tentang Kami</a></li>
+          <li><a href="pages/outlets.html">Cawangan</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav">
+        <h4>Hubungi</h4>
+        <ul>
+          <li>📞 <span id="footerPhone">03-1234 5678</span></li>
+          <li>✉️ <span id="footerEmail">hello@breklaju.my</span></li>
+          <li>📍 <span id="footerAddress">Cyberjaya, Selangor</span></li>
+        </ul>
+      </div>
+      <div class="footer-halal">
+        <div class="halal-badge">
+          <span class="halal-text">HALAL</span>
+          <span class="halal-sub">JAKIM Certified</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <span>© 2025 Brek Laju Sdn Bhd. Hak Cipta Terpelihara.</span>
+        <a href="admin/index.html" class="admin-link">🔐 Admin Panel</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/db.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    trackPageView('home');
+
+    // Load settings
+    const settings = getSettings();
+    const branches = getBranches();
+
+    // Hero text from settings
+    // (keeping existing design, just sync contact info)
+    document.getElementById('statBranches').textContent = branches.length + '+';
+
+    // Footer
+    document.getElementById('footerTagline').innerHTML = settings.tagline + '<br/>100% Jenama Malaysia.';
+    document.getElementById('footerPhone').textContent = settings.contactPhone;
+    document.getElementById('footerEmail').textContent = settings.contactEmail;
+    document.getElementById('footerAddress').textContent = settings.contactAddress;
+    if (settings.socialFacebook && settings.socialFacebook !== '#') document.getElementById('fbLink').href = settings.socialFacebook;
+    if (settings.socialInstagram && settings.socialInstagram !== '#') document.getElementById('igLink').href = settings.socialInstagram;
+    if (settings.socialTiktok && settings.socialTiktok !== '#') document.getElementById('ttLink').href = settings.socialTiktok;
+
+    // Promo Ticker
+    const activePromos = getPromotions({ isActive: true });
+    if (activePromos.length > 0) {
+      const ticker = document.getElementById('promoTicker');
+      ticker.style.display = 'block';
+      document.body.classList.add('has-ticker');
+      // Duplicate items for seamless loop
+      const items = [...activePromos, ...activePromos].map(p =>
+        `<span class="ticker-item">
+          <span>${p.title}</span>
+          ${p.description ? `<span style="color:rgba(255,255,255,0.6);">— ${p.description.substring(0,60)}${p.description.length>60?'…':''}</span>` : ''}
+          ${p.ctaUrl ? `<a href="${p.ctaUrl}">${p.ctaText || 'Ketahui Lebih Lanjut'} →</a>` : ''}
+        </span>
+        <span class="ticker-sep">★</span>`).join('');
+      ticker.innerHTML = `<div class="ticker-inner">${items}</div>`;
+    }
+
+    // Featured menu items
+    const featuredItems = getListings({ isFeatured: true }).slice(0, 4);
+    const grid = document.getElementById('featuredGrid');
+
+    function getBadgeClass(type) {
+      if (type === 'hot') return 'hot';
+      if (type === 'new') return 'new';
+      return '';
+    }
+
+    if (featuredItems.length > 0) {
+      grid.innerHTML = featuredItems.map(item => `
+        <div class="menu-card${!item.isAvailable ? ' sold-out' : ''}">
+          <div class="menu-img-wrap">
+            <img src="${item.imageUrl}" alt="${item.name}" loading="lazy"
+              onerror="this.src='https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&q=60'" />
+            ${item.badge ? `<div class="menu-tag ${getBadgeClass(item.badgeType)}">${item.badge}</div>` : ''}
+          </div>
+          <div class="menu-info">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <div class="menu-price">RM ${item.price.toFixed(2)} <span style="font-size:0.9rem;font-family:'Nunito',sans-serif;font-weight:600;">${item.priceUnit||''}</span></div>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-muted);">Tiada item terkemuka buat masa ini. <a href="admin/listings.html" style="color:var(--red);">Tambah dari admin panel →</a></div>`;
+    }
+  </script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

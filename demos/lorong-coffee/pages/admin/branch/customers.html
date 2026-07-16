@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customers — Lorong Coffee Branch</title>
+  <link rel="stylesheet" href="../../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../../images/logo.jpg"/>
+  <style>
+    .customer-card {
+      background: linear-gradient(135deg, rgba(27,67,50,0.5), rgba(45,106,79,0.3));
+      border: 1px solid rgba(82,183,136,0.2);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .customer-card__header { display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem; }
+    .customer-card__avatar {
+      width:52px; height:52px; background:var(--yellow); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-family:var(--font-display); font-size:1.4rem; font-weight:900; color:var(--green); flex-shrink:0;
+    }
+    .customer-card__name { font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--white); }
+    .customer-card__phone { font-family:var(--font-mono); font-size:0.8rem; color:rgba(255,255,255,0.4); }
+
+    .reward-bar-wrap { background:rgba(255,255,255,0.08); border-radius:50px; height:14px; margin:0.75rem 0; overflow:hidden; position:relative; }
+    .reward-bar-fill { height:100%; background:var(--yellow); border-radius:50px; transition:width 0.6s ease; }
+    .reward-bar-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:var(--green); }
+
+    .reward-ready {
+      background: linear-gradient(135deg, rgba(245,200,0,0.15), rgba(245,200,0,0.05));
+      border: 2px solid var(--yellow);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .reward-ready__title { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--yellow); margin-bottom:0.4rem; }
+    .reward-ready__sub { font-size:0.84rem; color:rgba(255,255,255,0.6); margin-bottom:1rem; }
+
+    .phone-search { display:flex; gap:0.75rem; }
+    .phone-search input { flex:1; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub" id="branchSubtitle">Branch Admin</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link"><span class="admin-nav-link__icon">📊</span> Dashboard</a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link"><span class="admin-nav-link__icon">☕</span> Menu Status</a>
+      <a href="customers.html" class="admin-nav-link active"><span class="admin-nav-link__icon">👥</span> Customers</a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../../index.html" class="admin-nav-link" target="_blank"><span class="admin-nav-link__icon">🌐</span> View Website</a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title">Customer Lookup</div>
+          <div class="admin-topbar__breadcrumb">Record purchases &amp; process reward redemptions</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div style="max-width:620px; margin:0 auto;">
+
+        <!-- SEARCH -->
+        <div class="admin-panel" style="margin-bottom:1.5rem;">
+          <div class="admin-panel__header">
+            <div class="admin-panel__title">🔍 Find Customer</div>
+          </div>
+          <div class="admin-panel__body">
+            <div class="phone-search">
+              <input class="form-input" type="tel" id="phoneInput" placeholder="Enter customer phone number (e.g. 0123456789)"
+                onkeydown="if(event.key==='Enter') searchCustomer()"/>
+              <button class="btn-admin btn-primary" onclick="searchCustomer()" id="searchBtn">Search</button>
+            </div>
+            <div id="searchError" style="display:none;color:#ff6b75;font-size:0.83rem;margin-top:0.75rem;"></div>
+          </div>
+        </div>
+
+        <!-- CUSTOMER RESULT -->
+        <div id="customerResult" style="display:none;">
+
+          <!-- Customer Info Card -->
+          <div class="customer-card" id="customerCard">
+            <div class="customer-card__header">
+              <div class="customer-card__avatar" id="custAvatar">?</div>
+              <div>
+                <div class="customer-card__name" id="custName">—</div>
+                <div class="customer-card__phone" id="custPhone">—</div>
+                <div style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:2px;" id="custEmail"></div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+              <span style="font-size:0.8rem;color:rgba(255,255,255,0.5);">Progress toward free drink</span>
+              <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--yellow);" id="cupCount">0 / 10</span>
+            </div>
+            <div class="reward-bar-wrap">
+              <div class="reward-bar-fill" id="rewardBar" style="width:0%;"></div>
+              <div class="reward-bar-text" id="rewardBarText">0/10</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:4px;">
+              <span>0 cups</span>
+              <span id="totalRedeemed">0 rewards earned total</span>
+            </div>
+          </div>
+
+          <!-- REWARD READY — must redeem first -->
+          <div class="reward-ready" id="rewardReadySection" style="display:none;">
+            <div class="reward-ready__title">🎉 Reward Ready!</div>
+            <div class="reward-ready__sub">This customer has earned a free drink. Select what they'd like, then tap Redeem.</div>
+            <div class="form-group" style="text-align:left;margin-bottom:1rem;">
+              <label class="form-label">Select Free Drink</label>
+              <select class="form-select" id="redeemItemSelect">
+                <option value="">Choose an available item…</option>
+              </select>
+            </div>
+            <button class="btn-admin btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:1rem;" onclick="processRedemption()">
+              🎁 Redeem Free Drink
+            </button>
+            <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:0.75rem;">After redemption, the counter resets and they can continue earning.</p>
+          </div>
+
+          <!-- RECORD PURCHASE (only shown when no pending reward) -->
+          <div class="admin-panel" id="purchaseSection" style="display:none;">
+            <div class="admin-panel__header">
+              <div class="admin-panel__title">☕ Record Purchase</div>
+            </div>
+            <div class="admin-panel__body">
+              <div class="form-group">
+                <label class="form-label">What did they buy?</label>
+                <select class="form-select" id="purchaseItemSelect">
+                  <option value="">Choose a menu item…</option>
+                </select>
+              </div>
+              <button class="btn-admin btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="processPurchase()">
+                + Record This Purchase
+              </button>
+              <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:0.75rem;">
+                Each recorded purchase counts toward the customer's 10-cup reward.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../../js/supabase-client.js"></script>
+<script src="../../../js/data.js"></script>
+<script src="../../../js/auth.js"></script>
+<script>
+  initData();
+  const session = requireBranchAdmin('../login.html');
+  if (!session) { /* stops */ }
+
+  const branchId = session.branchId;
+  let currentCustomer = null;
+  let availableItems = [];
+
+  async function init() {
+    if (branchId) {
+      const store = await getStoreById(branchId);
+      if (store) document.getElementById('branchSubtitle').textContent = store.name.replace('Lorong Coffee — ','');
+    }
+    availableItems = (await getBranchMenuItems(branchId)).filter(i => i.branchStatus === 'available');
+  }
+
+  async function searchCustomer() {
+    const phone = document.getElementById('phoneInput').value.trim();
+    const errEl = document.getElementById('searchError');
+    errEl.style.display = 'none';
+
+    if (!phone) { errEl.textContent = 'Please enter a phone number.'; errEl.style.display = 'block'; return; }
+
+    const btn = document.getElementById('searchBtn');
+    btn.textContent = 'Searching…'; btn.disabled = true;
+
+    const customer = await lookupCustomerByPhone(phone);
+    btn.textContent = 'Search'; btn.disabled = false;
+
+    if (!customer) {
+      errEl.textContent = 'No customer found with this phone number. Ask them to register at lorongcoffee.com/pages/customer/register.html';
+      errEl.style.display = 'block';
+      document.getElementById('customerResult').style.display = 'none';
+      return;
+    }
+
+    currentCustomer = customer;
+    renderCustomer(customer);
+  }
+
+  function renderCustomer(customer) {
+    const reward = customer.reward;
+    const count = reward?.purchase_count || 0;
+    const isRedeemable = reward?.is_redeemable || false;
+
+    document.getElementById('custAvatar').textContent = (customer.name || '?')[0].toUpperCase();
+    document.getElementById('custName').textContent = customer.name;
+    document.getElementById('custPhone').textContent = customer.phone;
+    document.getElementById('custEmail').textContent = customer.email;
+    document.getElementById('cupCount').textContent = `${count} / 10 cups`;
+    document.getElementById('rewardBarText').textContent = `${count}/10`;
+    document.getElementById('rewardBar').style.width = `${Math.min((count / 10) * 100, 100)}%`;
+    document.getElementById('totalRedeemed').textContent = `${reward?.total_redeemed || 0} reward${(reward?.total_redeemed || 0) !== 1 ? 's' : ''} earned total`;
+
+    populateItemSelects();
+
+    document.getElementById('rewardReadySection').style.display = isRedeemable ? 'block' : 'none';
+    document.getElementById('purchaseSection').style.display = isRedeemable ? 'none' : 'block';
+    document.getElementById('customerResult').style.display = 'block';
+  }
+
+  function populateItemSelects() {
+    const opts = '<option value="">Choose an available item…</option>' +
+      availableItems.map(i => `<option value="${i.id}">${i.emoji || '☕'} ${i.name} — RM ${i.price}</option>`).join('');
+    document.getElementById('purchaseItemSelect').innerHTML = opts;
+    document.getElementById('redeemItemSelect').innerHTML = '<option value="">Choose an available item…</option>' +
+      availableItems.map(i => `<option value="${i.id}">${i.emoji || '☕'} ${i.name}</option>`).join('');
+  }
+
+  async function processPurchase() {
+    const itemId = document.getElementById('purchaseItemSelect').value;
+    if (!itemId) { toast('Please select a menu item.', 'error'); return; }
+    if (!currentCustomer) return;
+
+    const result = await recordPurchase(currentCustomer.id, branchId, itemId, session.id);
+    if (!result.success) { toast(result.error, 'error'); return; }
+
+    currentCustomer.reward = { ...currentCustomer.reward, purchase_count: result.newCount, is_redeemable: result.isRedeemable };
+    renderCustomer(currentCustomer);
+
+    if (result.isRedeemable) {
+      toast('🎉 10 cups reached! Reward is now ready to redeem.');
+    } else {
+      toast(`✅ Purchase recorded. ${result.newCount}/10 cups.`);
+    }
+  }
+
+  async function processRedemption() {
+    const itemId = document.getElementById('redeemItemSelect').value;
+    if (!itemId) { toast('Please select the free drink item.', 'error'); return; }
+    if (!currentCustomer) return;
+
+    const result = await redeemReward(currentCustomer.id, branchId, itemId, session.id);
+    if (!result.success) { toast(result.error, 'error'); return; }
+
+    currentCustomer.reward = { ...currentCustomer.reward, purchase_count: 0, is_redeemable: false, total_redeemed: (currentCustomer.reward?.total_redeemed || 0) + 1 };
+    renderCustomer(currentCustomer);
+    toast('🎁 Reward redeemed! Counter reset. Enjoy the free drink!');
+  }
+
+  function handleLogout() { adminSignOut(); window.location.href = '../login.html'; }
+
+  function toast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast${type === 'error' ? ' error' : ''}`;
+    t.textContent = msg; c.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+
+  init();
+</script>
+</body>
+</html>

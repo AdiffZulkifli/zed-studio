@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rewards — Lorong Coffee</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="icon" type="image/jpeg" href="../images/logo.jpg"/>
+  <style>
+    .page-hero { background:var(--green); padding:10rem 2rem 5rem; text-align:center; }
+    .page-hero__title { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--cream); }
+    .page-hero__title em { color:var(--yellow); font-style:italic; }
+    .page-hero__sub { color:rgba(255,255,255,0.6); margin-top:1rem; font-size:1.1rem; max-width:540px; margin-inline:auto; line-height:1.7; }
+
+    .rewards-section { background:var(--cream); padding:6rem 2rem; }
+
+    /* Stamp card mockup */
+    .stamp-card {
+      background:var(--green); border-radius:24px; padding:2.5rem;
+      max-width:660px; margin:0 auto 4rem; position:relative; overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,0.2);
+    }
+    .stamp-card::before {
+      content:''; position:absolute; top:-100px; right:-100px;
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle, rgba(245,200,0,0.15), transparent 70%);
+    }
+    .stamp-card__label { font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:0.75rem; }
+    .stamp-card__title { font-family:var(--font-display); font-size:1.6rem; font-weight:900; color:var(--yellow); margin-bottom:1.5rem; }
+    .stamp-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:1.5rem; }
+    .stamp {
+      width:50px; height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem; border:2px solid rgba(255,255,255,0.15);
+    }
+    .stamp.filled { background:rgba(245,200,0,0.15); border-color:var(--yellow); }
+    .stamp.empty { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.2); font-size:1rem; }
+    .stamp-cta { display:flex; gap:1rem; flex-wrap:wrap; }
+
+    /* How it works */
+    .how-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; margin-top:3rem; }
+    .how-step { text-align:center; }
+    .how-step__num { width:52px; height:52px; background:var(--yellow); color:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:1.4rem; font-weight:900; margin:0 auto 1rem; }
+    .how-step__title { font-weight:700; color:var(--green); margin-bottom:0.4rem; }
+    .how-step__text { font-size:0.85rem; color:var(--text-muted); line-height:1.6; }
+
+    /* Rules */
+    .rules-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:2rem; }
+    .rule-card { background:white; border-radius:16px; padding:1.5rem; border-left:4px solid var(--yellow); }
+    .rule-card__icon { font-size:1.5rem; margin-bottom:0.5rem; }
+    .rule-card__title { font-weight:700; color:var(--green); margin-bottom:0.4rem; }
+    .rule-card__text { font-size:0.85rem; color:var(--text-muted); line-height:1.6; }
+
+    @media(max-width:900px) {
+      .how-grid { grid-template-columns:repeat(2,1fr); }
+      .rules-grid { grid-template-columns:1fr; }
+    }
+    @media(max-width:600px) {
+      .how-grid { grid-template-columns:1fr 1fr; }
+      .stamp { width:40px; height:40px; font-size:1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <a href="../index.html" class="navbar__logo">
+    <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+    <span>Lorong Coffee</span>
+  </a>
+  <ul class="navbar__links">
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="rewards.html">Rewards</a></li>
+    <li><a href="stores.html">Find a Store</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="customer/login.html" class="navbar__cta">My Rewards</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="menu.html">Menu</a>
+  <a href="rewards.html">Rewards</a>
+  <a href="stores.html">Find a Store</a>
+  <a href="customer/login.html">My Rewards</a>
+</div>
+
+<div class="page-hero">
+  <div class="section-label" style="justify-content:center;color:rgba(255,255,255,0.5);">Simple & Rewarding</div>
+  <h1 class="page-hero__title">Lorong <em>Rewards</em></h1>
+  <p class="page-hero__sub">Buy 10 cups, get 1 free. No points, no tiers — just coffee and a simple stamp card that actually works.</p>
+</div>
+
+<section class="rewards-section">
+  <div class="container">
+
+    <!-- Stamp Card Visual -->
+    <div class="stamp-card reveal">
+      <div class="stamp-card__label">Your Lorong Stamp Card</div>
+      <div class="stamp-card__title">Buy 10 Cups → 1 Free ☕</div>
+      <div class="stamp-row">
+        <div class="stamp filled">☕</div>
+        <div class="stamp filled">☕</div>
+        <div class="stamp filled">☕</div>
+        <div class="stamp filled">☕</div>
+        <div class="stamp filled">☕</div>
+        <div class="stamp filled">☕</div>
+        <div class="stamp filled">☕</div>
+        <div class="stamp empty">○</div>
+        <div class="stamp empty">○</div>
+        <div class="stamp empty">○</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:1.5rem;">7 of 10 cups — 3 more to go!</div>
+      <div class="stamp-cta">
+        <a href="customer/register.html" class="btn btn-primary">Join Free — Start Earning</a>
+        <a href="customer/login.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8);">Sign In to My Rewards</a>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="section-label">Dead Simple</div>
+    <h2 class="section-title">How <em>It Works</em></h2>
+    <div class="how-grid">
+      <div class="how-step reveal">
+        <div class="how-step__num">1</div>
+        <div class="how-step__title">Register Free</div>
+        <p class="how-step__text">Sign up with your name, phone number, and email. Takes 30 seconds.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step__num">2</div>
+        <div class="how-step__title">Tell Staff Your Number</div>
+        <p class="how-step__text">When ordering, give your phone number to the branch staff. They'll log your purchase.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step__num">3</div>
+        <div class="how-step__title">Reach 10 Cups</div>
+        <p class="how-step__text">After 10 recorded cups, your free drink reward is ready. Check your progress anytime online.</p>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step__num">4</div>
+        <div class="how-step__title">Redeem — Then Repeat</div>
+        <p class="how-step__text">Tell the staff you want to redeem. Enjoy your free drink. Counter resets and the fun starts again.</p>
+      </div>
+    </div>
+
+    <br/><br/>
+
+    <!-- Rules / Important Notes -->
+    <div class="section-label">Good to Know</div>
+    <h2 class="section-title">Reward <em>Rules</em></h2>
+    <div class="rules-grid">
+      <div class="rule-card reveal">
+        <div class="rule-card__icon">📱</div>
+        <div class="rule-card__title">Phone Number Required</div>
+        <p class="rule-card__text">Always give your registered phone number when ordering so the branch can log your purchase to your account.</p>
+      </div>
+      <div class="rule-card reveal">
+        <div class="rule-card__icon">🔄</div>
+        <div class="rule-card__title">Redeem Before Buying More</div>
+        <p class="rule-card__text">Once your reward is ready, you must redeem it before more purchases are added to your account.</p>
+      </div>
+      <div class="rule-card reveal">
+        <div class="rule-card__icon">🏪</div>
+        <div class="rule-card__title">Valid at All Branches</div>
+        <p class="rule-card__text">Your stamp card works at every Lorong Coffee branch. Mix and match — a cup from any branch counts.</p>
+      </div>
+      <div class="rule-card reveal">
+        <div class="rule-card__icon">☕</div>
+        <div class="rule-card__title">Any Drink Counts</div>
+        <p class="rule-card__text">Every drink purchase counts toward your reward, regardless of size or type. Redeem for any available menu item.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:4rem;">
+      <a href="customer/register.html" class="btn btn-green" style="font-size:1.1rem;padding:1rem 2.5rem;">
+        ☕ Join Lorong Rewards — It's Free!
+      </a>
+      <div style="margin-top:1rem;">
+        <a href="customer/login.html" style="color:var(--text-muted);font-size:0.88rem;">Already a member? Sign in →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-banner__label">Start Today</div>
+    <h2 class="cta-banner__title">Your Next Free Coffee Is <em>Closer</em> Than You Think</h2>
+    <p class="cta-banner__subtitle">Register in 30 seconds. Tell us your phone number when ordering. That's all it takes.</p>
+    <div class="cta-banner__apps">
+      <a href="customer/register.html" class="btn btn-primary">☕ Join Free Now</a>
+      <a href="stores.html" class="btn btn-outline">📍 Find a Store</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer__grid">
+    <div>
+      <a href="../index.html" class="footer__brand-logo">
+        <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+        <span>Lorong Coffee</span>
+      </a>
+      <p class="footer__about">Sarawak's favourite specialty coffee. Handcrafted brews, warm vibes.</p>
+      <div class="footer__social">
+        <a href="#" title="Instagram">📸</a><a href="#" title="Facebook">👍</a><a href="#" title="TikTok">🎵</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer__heading">Explore</div>
+      <ul class="footer__links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="menu.html">Full Menu</a></li>
+        <li><a href="rewards.html">Rewards</a></li>
+        <li><a href="stores.html">Find a Store</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Company</div>
+      <ul class="footer__links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Hours</div>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;">Mon – Sun<br/>8:00 AM – 10:00 PM</p>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2025 Lorong Coffee Sdn Bhd.</span>
+    <span>Made with ☕ in Bintulu, Sarawak</span>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

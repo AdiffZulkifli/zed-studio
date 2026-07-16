@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Promosi – Brek Laju Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><a href="dashboard.html" class="sidebar-logo">BREK<span>LAJU</span></a><div class="sidebar-label">Admin Panel</div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Utama</div>
+      <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+      <div class="nav-section-title">Pengurusan</div>
+      <a href="listings.html" class="nav-item">🍗 Item Menu</a>
+      <a href="branches.html" class="nav-item">📍 Cawangan</a>
+      <a href="promotions.html" class="nav-item active">📢 Promosi</a>
+      <div class="nav-section-title">Sistem</div>
+      <a href="analytics.html" class="nav-item">📈 Analitik</a>
+      <a href="settings.html" class="nav-item">⚙️ Tetapan</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html" target="_blank" class="view-site-link" style="margin-bottom:10px;display:flex;">🌐 Lihat Laman Web</a>
+      <button class="btn-logout" onclick="adminLogout();window.location.href='index.html'">🚪 Log Keluar</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <button class="sidebar-toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <span class="admin-header-title">📢 Pengurusan Promosi & Pengumuman</span>
+        <div class="admin-header-sub">Urus banner, promosi, dan pengumuman di laman web</div>
+      </div>
+      <div class="admin-header-right"><span class="header-badge" id="promoCount">– promosi</span></div>
+    </header>
+
+    <div class="admin-content">
+      <div class="section-header">
+        <div>
+          <div class="section-title-lg">Senarai Promosi</div>
+          <div class="section-desc">Promosi aktif akan dipaparkan sebagai bar pengumuman di laman utama</div>
+        </div>
+        <button class="btn btn-primary" id="addBtn">＋ Tambah Promosi</button>
+      </div>
+
+      <!-- Preview note -->
+      <div style="background:rgba(255,211,42,0.08);border:1px solid rgba(255,211,42,0.25);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:24px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:1.2rem;">💡</span>
+        <div>
+          <strong style="color:var(--yellow);font-size:0.88rem;">Cara Kerja Promosi</strong>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">Promosi yang <strong>Aktif</strong> akan dipaparkan sebagai ticker/bar pengumuman di halaman utama laman web. Anda boleh aktifkan atau nyahaktifkan sebarang masa.</div>
+        </div>
+      </div>
+
+      <div class="promo-list" id="promoList"></div>
+    </div>
+  </main>
+</div>
+
+<!-- FORM MODAL -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Tambah Promosi Baru</span>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId" />
+      <div class="form-group">
+        <label class="form-label">Tajuk Promosi *</label>
+        <input type="text" id="fTitle" class="form-control" placeholder="cth. 🔥 Promosi Bulan Ini!" />
+        <div class="form-hint">Gunakan emoji untuk menarik perhatian</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Penerangan</label>
+        <textarea id="fDescription" class="form-control" placeholder="Butiran promosi..." rows="3"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Teks Butang CTA</label>
+          <input type="text" id="fCtaText" class="form-control" placeholder="cth. Pesan Sekarang" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">URL Butang CTA</label>
+          <input type="text" id="fCtaUrl" class="form-control" placeholder="pages/menu.html" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL Imej (pilihan)</label>
+        <input type="url" id="fImageUrl" class="form-control" placeholder="https://..." />
+      </div>
+      <div class="toggle-wrap" style="margin-top:8px;">
+        <label class="toggle">
+          <input type="checkbox" id="fIsActive" checked />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Aktifkan promosi ini</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="modalCancel">Batal</button>
+      <button class="btn btn-primary" id="modalSave">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">Padam Promosi?</div>
+    <div class="confirm-desc">Promosi ini akan dipadam secara kekal.</div>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" id="confirmCancel">Batal</button>
+      <button class="btn btn-danger" id="confirmDelete">Ya, Padam</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../js/db.js"></script>
+<script>
+  requireAdmin('index.html');
+  trackPageView('admin-promotions');
+  let deleteTargetId = null, editMode = false;
+
+  function renderList() {
+    const promos = getPromotions();
+    document.getElementById('promoCount').textContent = promos.length + ' promosi';
+    const list = document.getElementById('promoList');
+    if (promos.length === 0) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">📢</div><div class="empty-title">Tiada promosi</div><div class="empty-desc">Tambah promosi pertama anda!</div></div>`;
+      return;
+    }
+    list.innerHTML = promos.map(p => `
+      <div class="promo-admin-card ${p.isActive ? '' : 'inactive'}">
+        <div class="pac-icon">${p.title.match(/[\u{1F300}-\u{1F9FF}]/u)?.[0] || '📢'}</div>
+        <div class="pac-content">
+          <div class="pac-title">${p.title}</div>
+          <div class="pac-desc">${p.description}</div>
+          <div class="pac-meta">
+            🔗 ${p.ctaText||'–'} → ${p.ctaUrl||'–'} &nbsp;|&nbsp; 🕐 ${fmtDate(p.updatedAt)}
+          </div>
+        </div>
+        <div class="pac-actions">
+          <span class="badge ${p.isActive ? 'badge-active' : 'badge-inactive'}">
+            ${p.isActive ? '<span class="dot-pulse"></span> Aktif' : 'Tidak Aktif'}
+          </span>
+          <label class="toggle" title="Toggle aktif/tidak aktif">
+            <input type="checkbox" ${p.isActive?'checked':''} onchange="toggleActive('${p.id}', this.checked)" />
+            <span class="toggle-slider"></span>
+          </label>
+          <button class="btn btn-sm btn-secondary" onclick="openEdit('${p.id}')">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="confirmDel('${p.id}')">🗑️</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function toggleActive(id, val) {
+    updatePromotion(id, { isActive: val });
+    showToast(val ? '✅ Promosi diaktifkan' : '⏸️ Promosi dinyahaktifkan', 'success');
+    renderList();
+  }
+
+  function openModal(title) { document.getElementById('modalTitle').textContent = title; document.getElementById('formModal').classList.add('open'); }
+  function closeModal() { document.getElementById('formModal').classList.remove('open'); }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalCancel').addEventListener('click', closeModal);
+  document.getElementById('formModal').addEventListener('click', e => { if (e.target === document.getElementById('formModal')) closeModal(); });
+
+  function clearForm() {
+    ['fTitle','fDescription','fCtaText','fCtaUrl','fImageUrl'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fIsActive').checked = true;
+    document.getElementById('editId').value = '';
+  }
+
+  document.getElementById('addBtn').addEventListener('click', () => { editMode = false; clearForm(); openModal('＋ Tambah Promosi Baru'); });
+
+  function openEdit(id) {
+    editMode = true; const p = getPromotion(id); if (!p) return;
+    document.getElementById('editId').value = id;
+    document.getElementById('fTitle').value = p.title;
+    document.getElementById('fDescription').value = p.description;
+    document.getElementById('fCtaText').value = p.ctaText || '';
+    document.getElementById('fCtaUrl').value = p.ctaUrl || '';
+    document.getElementById('fImageUrl').value = p.imageUrl || '';
+    document.getElementById('fIsActive').checked = p.isActive;
+    openModal('✏️ Edit Promosi');
+  }
+
+  document.getElementById('modalSave').addEventListener('click', () => {
+    const title = document.getElementById('fTitle').value.trim();
+    if (!title) { showToast('Sila masukkan tajuk promosi.', 'error'); return; }
+    const data = { title, description: document.getElementById('fDescription').value.trim(), ctaText: document.getElementById('fCtaText').value.trim(), ctaUrl: document.getElementById('fCtaUrl').value.trim(), imageUrl: document.getElementById('fImageUrl').value.trim(), isActive: document.getElementById('fIsActive').checked };
+    if (editMode) { updatePromotion(document.getElementById('editId').value, data); showToast('✅ Promosi dikemaskini!', 'success'); }
+    else { createPromotion(data); showToast('✅ Promosi baru ditambah!', 'success'); }
+    closeModal(); renderList();
+  });
+
+  function confirmDel(id) { deleteTargetId = id; document.getElementById('confirmModal').classList.add('open'); }
+  document.getElementById('confirmCancel').addEventListener('click', () => document.getElementById('confirmModal').classList.remove('open'));
+  document.getElementById('confirmDelete').addEventListener('click', () => {
+    if (deleteTargetId) { deletePromotion(deleteTargetId); showToast('🗑️ Promosi dipadam.', 'success'); }
+    document.getElementById('confirmModal').classList.remove('open'); deleteTargetId = null; renderList();
+  });
+  document.getElementById('confirmModal').addEventListener('click', e => { if (e.target === document.getElementById('confirmModal')) document.getElementById('confirmModal').classList.remove('open'); });
+
+  function showToast(msg, type = 'success') {
+    const t = document.createElement('div'); t.className = `toast ${type}`;
+    t.innerHTML = `<span>${type==='success'?'✅':'❌'}</span> ${msg}`;
+    document.getElementById('toastContainer').appendChild(t); setTimeout(() => t.remove(), 3500);
+  }
+
+  if (window.location.hash === '#add') { clearForm(); openModal('＋ Tambah Promosi Baru'); }
+  renderList();
+</script>
+</body>
+</html>

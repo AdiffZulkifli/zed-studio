@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Find a Store — Lorong Coffee</title>
+  <meta name="description" content="Find your nearest Lorong Coffee outlet across Bintulu, Sarawak. Check store hours, status, and get directions."/>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="icon" type="image/jpeg" href="../images/logo.jpg"/>
+  <style>
+    .page-hero { background:var(--green); padding:10rem 2rem 5rem; text-align:center; }
+    .page-hero__title { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; color:var(--cream); }
+    .page-hero__title em { color:var(--yellow); font-style:italic; }
+    .page-hero__sub { color:rgba(255,255,255,0.6); margin-top:1rem; font-size:1.1rem; max-width:540px; margin-inline:auto; line-height:1.7; }
+    .page-hero__meta { margin-top:1.5rem; display:flex; justify-content:center; }
+
+    .stores-section { background:var(--cream); padding:6rem 2rem; }
+    .search-bar {
+      display:flex; align-items:center; gap:1rem; max-width:500px;
+      background:var(--white); border:2px solid var(--cream-dark);
+      border-radius:50px; padding:12px 20px; margin-bottom:3rem;
+      transition: border-color var(--transition);
+    }
+    .search-bar:focus-within { border-color:var(--yellow); }
+    .search-bar input { border:none; outline:none; background:transparent; font-size:0.95rem; font-family:var(--font-body); flex:1; color:var(--dark); }
+    .search-bar button { background:var(--yellow); color:var(--green); border:none; border-radius:50px; padding:8px 18px; font-weight:700; font-size:0.85rem; cursor:pointer; transition:background var(--transition); }
+    .search-bar button:hover { background:var(--yellow-dark); }
+
+    .stores-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1.5rem; }
+    .location-card {
+      background:var(--white); border-radius:var(--radius-lg);
+      overflow:hidden; box-shadow:var(--shadow);
+      border:2px solid transparent; transition:transform var(--transition), border-color var(--transition);
+    }
+    .location-card:hover { transform:translateY(-4px); border-color:var(--yellow); }
+    .location-card--soon { opacity:0.75; }
+    .location-card__header {
+      height:120px; display:flex; align-items:center; justify-content:center;
+      font-size:4rem; background:linear-gradient(135deg, var(--green), var(--green-mid));
+      position:relative;
+    }
+    .location-card__status {
+      position:absolute; top:12px; right:12px;
+      background:var(--green-light); color:white;
+      font-family:var(--font-mono); font-size:0.65rem;
+      font-weight:700; padding:3px 10px; border-radius:50px;
+      text-transform:uppercase; letter-spacing:0.08em;
+    }
+    .location-card__status.closed { background:#E63946; }
+    .location-card__body { padding:1.5rem; }
+    .location-card__name { font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--green); margin-bottom:0.5rem; }
+    .location-card__info { font-size:0.88rem; color:var(--text-muted); line-height:1.7; }
+    .location-card__info strong { color:var(--dark); }
+    .location-card__actions { display:flex; gap:0.75rem; padding:0 1.5rem 1.5rem; }
+    .location-card__btn {
+      flex:1; padding:10px; border-radius:var(--radius); font-size:0.83rem; font-weight:700;
+      text-align:center; text-decoration:none; transition:var(--transition); cursor:pointer; border:none; display:block;
+    }
+    .location-card__btn-primary { background:var(--yellow); color:var(--green); }
+    .location-card__btn-primary:hover { background:var(--yellow-dark); }
+    .location-card__btn-outline { background:transparent; border:2px solid var(--cream-dark); color:var(--dark); }
+    .location-card__btn-outline:hover { border-color:var(--green); color:var(--green); }
+
+    .stores-meta-bar {
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:1rem; margin-bottom:2rem;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <a href="../index.html" class="navbar__logo">
+    <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+    <span>Lorong Coffee</span>
+  </a>
+  <ul class="navbar__links">
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="rewards.html">Rewards</a></li>
+    <li><a href="stores.html">Find a Store</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#stores-grid" class="navbar__cta">Order Here →</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="menu.html">Menu</a>
+  <a href="rewards.html">Rewards</a>
+  <a href="stores.html">Find a Store</a>
+</div>
+
+<div class="page-hero">
+  <div class="section-label" style="justify-content:center;color:rgba(255,255,255,0.5);">Locations</div>
+  <h1 class="page-hero__title">Find Your <em>Lorong</em></h1>
+  <p class="page-hero__sub">Every cup of Lorong Coffee is just around the corner. Find your nearest outlet across Bintulu.</p>
+  <div class="page-hero__meta">
+    <div id="stores-stats"></div>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="ticker__track">
+    <span class="ticker__item">Bintulu Main</span><span class="ticker__item">Parkcity Mall</span>
+    <span class="ticker__item">Kidurong</span><span class="ticker__item">Coming Soon: Sibu</span>
+    <span class="ticker__item">Coming Soon: Miri</span><span class="ticker__item">Bintulu Main</span>
+    <span class="ticker__item">Parkcity Mall</span><span class="ticker__item">Kidurong</span>
+    <span class="ticker__item">Coming Soon: Sibu</span><span class="ticker__item">Coming Soon: Miri</span>
+  </div>
+</div>
+
+<section class="stores-section">
+  <div class="container">
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="store-search-input" placeholder="Search by area or street…" autocomplete="off"/>
+      <button id="store-search-btn">Search</button>
+    </div>
+
+    <div class="stores-meta-bar">
+      <div>
+        <div class="section-label">All Locations</div>
+        <h2 class="section-title">Our <em>Outlets</em></h2>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);" id="stores-count"></div>
+    </div>
+
+    <!-- Dynamic store cards rendered by stores-page.js -->
+    <div class="stores-grid" id="stores-grid"></div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-banner__label">Franchise Opportunities</div>
+    <h2 class="cta-banner__title">Bring Lorong Coffee to <em>Your Town</em></h2>
+    <p class="cta-banner__subtitle">Interested in opening a Lorong Coffee outlet? We'd love to grow with you across Sarawak and beyond.</p>
+    <div class="cta-banner__apps">
+      <a href="contact.html" class="btn btn-primary">📩 Get in Touch</a>
+      <a href="about.html" class="btn btn-outline">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer__grid">
+    <div>
+      <a href="../index.html" class="footer__brand-logo">
+        <img src="../images/logo.jpg" alt="Lorong Coffee"/>
+        <span>Lorong Coffee</span>
+      </a>
+      <p class="footer__about">Sarawak's favourite specialty coffee. Handcrafted brews, warm vibes.</p>
+      <div class="footer__social">
+        <a href="#" title="Instagram">📸</a><a href="#" title="Facebook">👍</a><a href="#" title="TikTok">🎵</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer__heading">Explore</div>
+      <ul class="footer__links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="menu.html">Full Menu</a></li>
+        <li><a href="rewards.html">Rewards</a></li>
+        <li><a href="stores.html">Find a Store</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Company</div>
+      <ul class="footer__links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer__heading">Hours</div>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;">Mon – Sun<br/>8:00 AM – 10:00 PM</p>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2025 Lorong Coffee Sdn Bhd.</span>
+    <span>Made with ☕ in Bintulu, Sarawak</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js?v=3"></script>
+<script src="../js/data.js?v=3"></script>
+<script src="../js/main.js?v=3"></script>
+<script src="../js/stores-page.js?v=3"></script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

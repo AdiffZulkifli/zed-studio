@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login — Lorong Coffee</title>
+  <link rel="stylesheet" href="../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-card__brand">
+      <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="login-card__brand-name">Lorong Coffee</div>
+      <div class="login-card__brand-sub">Admin Control Panel</div>
+    </div>
+
+    <div class="login-card__error" id="loginError">
+      ❌ Invalid email or password. Please try again.
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" placeholder="Enter admin email" autocomplete="email" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" type="password" id="password" placeholder="Enter password" autocomplete="current-password" required/>
+      </div>
+      <button type="submit" class="btn-admin btn-primary" id="submitBtn" style="width:100%; justify-content:center; padding:12px;">
+        🔐 Sign In
+      </button>
+    </form>
+
+    <div class="login-hint">
+      Main admin: admin@lorongcoffee.com / 123123
+    </div>
+
+    <div style="text-align:center; margin-top:1.5rem; display:flex; justify-content:center; gap:1.5rem;">
+      <a href="../../index.html" style="font-size:0.78rem; color:rgba(255,255,255,0.3); text-decoration:none;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+        ← Back to Website
+      </a>
+      <a href="../../pages/customer/login.html" style="font-size:0.78rem; color:rgba(255,255,255,0.3); text-decoration:none;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+        Customer Portal →
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script>
+  const existing = getAdminSession();
+  if (existing) {
+    window.location.href = existing.role === 'main_admin' ? 'dashboard.html' : 'branch/dashboard.html';
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Signing in…';
+    btn.disabled = true;
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const result = await adminSignIn(email, password);
+
+    if (result.success) {
+      window.location.href = result.session.role === 'main_admin' ? 'dashboard.html' : 'branch/dashboard.html';
+    } else {
+      const err = document.getElementById('loginError');
+      err.textContent = '❌ ' + result.error;
+      err.classList.add('show');
+      document.getElementById('password').value = '';
+      btn.textContent = '🔐 Sign In';
+      btn.disabled = false;
+      setTimeout(() => err.classList.remove('show'), 4000);
+    }
+  });
+</script>
+</body>
+</html>

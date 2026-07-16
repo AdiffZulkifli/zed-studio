@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Branch Admins — Lorong Coffee</title>
+  <link rel="stylesheet" href="../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub">Main Admin</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link"><span class="admin-nav-link__icon">📊</span> Dashboard</a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link"><span class="admin-nav-link__icon">☕</span> Menu Items</a>
+      <a href="stores.html" class="admin-nav-link"><span class="admin-nav-link__icon">🏪</span> Store Locations</a>
+      <a href="admins.html" class="admin-nav-link active"><span class="admin-nav-link__icon">👤</span> Branch Admins</a>
+      <div class="admin-nav-label">Analytics</div>
+      <a href="analytics.html" class="admin-nav-link"><span class="admin-nav-link__icon">📈</span> Sales Analytics</a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../index.html" class="admin-nav-link" target="_blank"><span class="admin-nav-link__icon">🌐</span> View Website</a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title">Branch Admins</div>
+          <div class="admin-topbar__breadcrumb">Manage branch admin accounts</div>
+        </div>
+      </div>
+      <div class="admin-topbar__right">
+        <button class="btn-admin btn-primary" onclick="openCreateModal()">+ Create Admin</button>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="admin-panel">
+        <div class="admin-panel__header">
+          <div class="admin-panel__title">👤 Admin Accounts</div>
+          <span class="last-updated" id="adminCount"></span>
+        </div>
+        <div class="admin-panel__body" style="padding:0;">
+          <table class="admin-table" id="adminsTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Branch</th>
+                <th>Last Login</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminsBody">
+              <tr><td colspan="7" style="text-align:center;padding:3rem;color:rgba(255,255,255,0.3);">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE ADMIN MODAL -->
+<div class="modal-overlay" id="createModal">
+  <div class="modal">
+    <div class="modal__header">
+      <div class="modal__title">Create Branch Admin</div>
+      <button class="modal__close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal__body">
+      <div class="form-group">
+        <label class="form-label">Display Name</label>
+        <input class="form-input" type="text" id="fieldName" placeholder="e.g. Bintulu Branch Admin"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" id="fieldEmail" placeholder="branch@lorongcoffee.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="fieldPassword" placeholder="Min. 8 characters"/>
+        <div class="form-hint">Share this with the branch admin. They can use it to log in at /pages/admin/login.html</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Assigned Branch</label>
+        <select class="form-select" id="fieldBranch">
+          <option value="">Loading branches…</option>
+        </select>
+      </div>
+      <div id="createError" style="display:none;background:rgba(230,57,70,0.12);border:1px solid rgba(230,57,70,0.25);border-radius:8px;padding:10px 14px;color:#ff6b75;font-size:0.83rem;margin-top:0.5rem;"></div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn-admin btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-admin btn-primary" onclick="createAdmin()" id="createBtn">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESET PASSWORD MODAL -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <div class="modal__header">
+      <div class="modal__title">Reset Password</div>
+      <button class="modal__close" onclick="closeResetModal()">✕</button>
+    </div>
+    <div class="modal__body">
+      <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-bottom:1.25rem;">Set a new password for <strong id="resetTargetName" style="color:var(--yellow)"></strong>.</p>
+      <input type="hidden" id="resetTargetId"/>
+      <div class="form-group">
+        <label class="form-label">New Password</label>
+        <input class="form-input" type="password" id="resetPassword" placeholder="Min. 8 characters"/>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn-admin btn-ghost" onclick="closeResetModal()">Cancel</button>
+      <button class="btn-admin btn-primary" onclick="doResetPassword()">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script>
+  initData();
+  const session = requireMainAdmin('login.html');
+  if (!session) { /* stops */ }
+
+  let stores = [];
+
+  async function loadAll() {
+    stores = await getStores();
+    await renderAdmins();
+  }
+
+  async function renderAdmins() {
+    const admins = await getAdminAccounts();
+    const storeMap = {};
+    stores.forEach(s => storeMap[s.id] = s.name.replace('Lorong Coffee — ', ''));
+
+    document.getElementById('adminCount').textContent = `${admins.length} account${admins.length !== 1 ? 's' : ''}`;
+
+    const tbody = document.getElementById('adminsBody');
+    if (!admins.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:3rem;color:rgba(255,255,255,0.3);">No admin accounts found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = admins.map(a => `
+      <tr>
+        <td class="admin-table__name">${a.display_name}</td>
+        <td>${a.email}</td>
+        <td>
+          <span class="badge ${a.role === 'main_admin' ? 'badge-yellow' : 'badge-green'}">
+            ${a.role === 'main_admin' ? '⭐ Main' : '🏪 Branch'}
+          </span>
+        </td>
+        <td>${a.branch_id ? (storeMap[a.branch_id] || a.branch_id) : '—'}</td>
+        <td><span class="last-updated">${formatRelativeTime(a.last_login)}</span></td>
+        <td>
+          <span class="badge ${a.is_active ? 'badge-green' : 'badge-red'}">
+            ${a.is_active ? 'Active' : 'Disabled'}
+          </span>
+        </td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap;">
+          ${a.role !== 'main_admin' ? `
+            <button class="btn-admin btn-ghost btn-sm" onclick="toggleActive('${a.id}', ${a.is_active})">
+              ${a.is_active ? 'Disable' : 'Enable'}
+            </button>
+            <button class="btn-admin btn-ghost btn-sm" onclick="openResetModal('${a.id}', '${a.display_name.replace(/'/g, "\\'")}')">
+              🔑 Reset PW
+            </button>
+            <button class="btn-admin btn-danger btn-sm" onclick="deleteAdmin('${a.id}', '${a.display_name.replace(/'/g, "\\'")}')">
+              Delete
+            </button>
+          ` : '<span style="font-size:0.75rem;color:rgba(255,255,255,0.2);">Protected</span>'}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function openCreateModal() {
+    document.getElementById('fieldName').value = '';
+    document.getElementById('fieldEmail').value = '';
+    document.getElementById('fieldPassword').value = '';
+    document.getElementById('createError').style.display = 'none';
+
+    const sel = document.getElementById('fieldBranch');
+    const activeStores = stores.filter(s => !s.comingSoon);
+    sel.innerHTML = '<option value="">— Select a branch —</option>' +
+      activeStores.map(s => `<option value="${s.id}">${s.name.replace('Lorong Coffee — ', '')}</option>`).join('');
+
+    document.getElementById('createModal').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('createModal').classList.remove('open'); }
+
+  async function createAdmin() {
+    const name = document.getElementById('fieldName').value.trim();
+    const email = document.getElementById('fieldEmail').value.trim();
+    const password = document.getElementById('fieldPassword').value;
+    const branchId = document.getElementById('fieldBranch').value;
+    const errEl = document.getElementById('createError');
+
+    if (!name || !email || !password || !branchId) {
+      errEl.textContent = 'Please fill in all fields.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (password.length < 8) {
+      errEl.textContent = 'Password must be at least 8 characters.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('createBtn');
+    btn.textContent = 'Creating…';
+    btn.disabled = true;
+    errEl.style.display = 'none';
+
+    try {
+      await createAdminAccount(email, password, 'branch_admin', name, branchId);
+      closeModal();
+      toast('✅ Branch admin account created');
+      await renderAdmins();
+    } catch(err) {
+      errEl.textContent = err.message?.includes('duplicate') ? 'This email is already registered.' : (err.message || 'Failed to create account.');
+      errEl.style.display = 'block';
+    }
+    btn.textContent = 'Create Account';
+    btn.disabled = false;
+  }
+
+  async function toggleActive(id, currentlyActive) {
+    await toggleAdminActive(id, !currentlyActive);
+    toast(currentlyActive ? '⏸️ Admin disabled' : '✅ Admin enabled');
+    await renderAdmins();
+  }
+
+  async function deleteAdmin(id, name) {
+    if (!confirm(`Delete admin account for "${name}"? This cannot be undone.`)) return;
+    await deleteAdminAccount(id);
+    toast(`🗑️ "${name}" deleted`);
+    await renderAdmins();
+  }
+
+  function openResetModal(id, name) {
+    document.getElementById('resetTargetId').value = id;
+    document.getElementById('resetTargetName').textContent = name;
+    document.getElementById('resetPassword').value = '';
+    document.getElementById('resetModal').classList.add('open');
+  }
+
+  function closeResetModal() { document.getElementById('resetModal').classList.remove('open'); }
+
+  async function doResetPassword() {
+    const id = document.getElementById('resetTargetId').value;
+    const pw = document.getElementById('resetPassword').value;
+    if (pw.length < 8) { toast('Password must be at least 8 characters.', 'error'); return; }
+    const ok = await resetAdminPassword(id, pw);
+    if (ok) { closeResetModal(); toast('✅ Password updated'); }
+    else toast('Failed to update password.', 'error');
+  }
+
+  function handleLogout() { adminSignOut(); window.location.href = 'login.html'; }
+
+  function toast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast${type === 'error' ? ' error' : ''}`;
+    t.textContent = msg; c.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+  }
+
+  document.getElementById('createModal').addEventListener('click', e => { if (e.target === document.getElementById('createModal')) closeModal(); });
+  document.getElementById('resetModal').addEventListener('click', e => { if (e.target === document.getElementById('resetModal')) closeResetModal(); });
+
+  loadAll();
+</script>
+</body>
+</html>

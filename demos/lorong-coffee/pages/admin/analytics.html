@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sales Analytics — Lorong Coffee</title>
+  <link rel="stylesheet" href="../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../images/logo.jpg"/>
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub">Main Admin</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link"><span class="admin-nav-link__icon">📊</span> Dashboard</a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link"><span class="admin-nav-link__icon">☕</span> Menu Items</a>
+      <a href="stores.html" class="admin-nav-link"><span class="admin-nav-link__icon">🏪</span> Store Locations</a>
+      <a href="admins.html" class="admin-nav-link"><span class="admin-nav-link__icon">👤</span> Branch Admins</a>
+      <div class="admin-nav-label">Analytics</div>
+      <a href="analytics.html" class="admin-nav-link active"><span class="admin-nav-link__icon">📈</span> Sales Analytics</a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../index.html" class="admin-nav-link" target="_blank"><span class="admin-nav-link__icon">🌐</span> View Website</a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title">Sales Analytics</div>
+          <div class="admin-topbar__breadcrumb">Purchase trends across all branches</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- GLOBAL STATS -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-card">
+          <div class="stat-card__icon">🧾</div>
+          <div class="stat-card__value" id="statTotal">—</div>
+          <div class="stat-card__label">Total Purchases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">👥</div>
+          <div class="stat-card__value" id="statCustomers">—</div>
+          <div class="stat-card__label">Registered Customers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🎁</div>
+          <div class="stat-card__value" id="statRedemptions">—</div>
+          <div class="stat-card__label">Rewards Redeemed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🏪</div>
+          <div class="stat-card__value" id="statBranches">—</div>
+          <div class="stat-card__label">Active Branches</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- TOP ITEMS GLOBALLY -->
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <div class="admin-panel__title">🏆 Most Purchased — All Branches</div>
+          </div>
+          <div class="admin-panel__body" id="globalTopItems">
+            <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">Loading…</p>
+          </div>
+        </div>
+
+        <!-- PER-BRANCH SUMMARY -->
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <div class="admin-panel__title">🏪 Branch Breakdown</div>
+          </div>
+          <div class="admin-panel__body" id="branchBreakdown">
+            <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">Loading…</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PER-BRANCH TOP ITEMS -->
+      <div class="admin-panel">
+        <div class="admin-panel__header">
+          <div class="admin-panel__title">📊 Top Items Per Branch</div>
+        </div>
+        <div class="admin-panel__body" id="perBranchItems">
+          <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">Loading…</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../js/supabase-client.js"></script>
+<script src="../../js/data.js"></script>
+<script src="../../js/auth.js"></script>
+<script>
+  initData();
+  const session = requireMainAdmin('login.html');
+  if (!session) { /* stops */ }
+
+  async function loadAnalytics() {
+    const [stats, totalCustomers, totalRedemptions, stores] = await Promise.all([
+      getGlobalPurchaseStats(),
+      getTotalCustomers(),
+      getTotalRedemptions(null),
+      getStores({ comingSoon: false })
+    ]);
+
+    document.getElementById('statTotal').textContent = stats.totalPurchases.toLocaleString();
+    document.getElementById('statCustomers').textContent = totalCustomers.toLocaleString();
+    document.getElementById('statRedemptions').textContent = totalRedemptions.toLocaleString();
+    document.getElementById('statBranches').textContent = stores.length;
+
+    renderGlobalTop(stats.topItems);
+    renderBranchBreakdown(stats.branchBreakdown, stores);
+    renderPerBranchItems(stats.branchBreakdown, stores);
+  }
+
+  function renderGlobalTop(items) {
+    const el = document.getElementById('globalTopItems');
+    if (!items.length) {
+      el.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">No purchase data yet.</p>';
+      return;
+    }
+    const max = items[0].count;
+    el.innerHTML = items.map((item, i) => `
+      <div class="top-item">
+        <div class="top-item__rank">#${i+1}</div>
+        <div class="top-item__emoji">${item.emoji || '☕'}</div>
+        <div class="top-item__info">
+          <div class="top-item__name">${item.name || 'Unknown'}</div>
+          <div class="top-item__views">${item.count} purchase${item.count !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="top-item__bar-wrap">
+          <div class="top-item__bar" style="width:${Math.round((item.count/max)*100)}%"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderBranchBreakdown(branchBreakdown, stores) {
+    const el = document.getElementById('branchBreakdown');
+    const entries = Object.entries(branchBreakdown);
+    if (!entries.length) {
+      el.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">No purchase data yet.</p>';
+      return;
+    }
+    const sorted = entries.sort((a, b) => b[1].total - a[1].total);
+    const maxTotal = sorted[0][1].total;
+
+    el.innerHTML = sorted.map(([id, data]) => `
+      <div style="margin-bottom:1.25rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:0.88rem;font-weight:600;color:var(--white);">${data.branchName?.replace('Lorong Coffee — ','') || id}</span>
+          <span style="font-size:0.8rem;color:var(--yellow);font-weight:700;">${data.total} purchases</span>
+        </div>
+        <div class="top-item__bar-wrap" style="width:100%;">
+          <div class="top-item__bar" style="width:${Math.round((data.total/maxTotal)*100)}%;height:6px;border-radius:3px;"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderPerBranchItems(branchBreakdown, stores) {
+    const el = document.getElementById('perBranchItems');
+    const entries = Object.entries(branchBreakdown);
+    if (!entries.length) {
+      el.innerHTML = '<p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">No purchase data yet. Branch admins need to record purchases first.</p>';
+      return;
+    }
+
+    el.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;">` +
+      entries.map(([id, data]) => {
+        const topItems = Object.values(data.items).sort((a,b) => b.count - a.count).slice(0, 5);
+        const branchMax = topItems[0]?.count || 1;
+        return `
+          <div style="background:var(--dark-3);border-radius:var(--radius);padding:1.25rem;border:1px solid rgba(255,255,255,0.06);">
+            <div style="font-weight:700;color:var(--yellow);margin-bottom:1rem;font-size:0.9rem;">
+              🏪 ${data.branchName?.replace('Lorong Coffee — ','') || id}
+            </div>
+            ${topItems.map((item, i) => `
+              <div class="top-item" style="padding:0.5rem 0;">
+                <div class="top-item__rank">#${i+1}</div>
+                <div class="top-item__emoji" style="font-size:1.1rem;">${item.emoji || '☕'}</div>
+                <div class="top-item__info">
+                  <div class="top-item__name" style="font-size:0.82rem;">${item.name || 'Unknown'}</div>
+                  <div class="top-item__views">${item.count}×</div>
+                </div>
+                <div class="top-item__bar-wrap" style="width:50px;">
+                  <div class="top-item__bar" style="width:${Math.round((item.count/branchMax)*100)}%"></div>
+                </div>
+              </div>
+            `).join('')}
+            ${!topItems.length ? '<p style="color:rgba(255,255,255,0.3);font-size:0.8rem;">No data yet</p>' : ''}
+          </div>
+        `;
+      }).join('') + `</div>`;
+  }
+
+  function handleLogout() { adminSignOut(); window.location.href = 'login.html'; }
+
+  loadAnalytics();
+</script>
+</body>
+</html>

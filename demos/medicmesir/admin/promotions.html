@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Promotions — Admin</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../js/data.js"></script>
+  <script src="../js/admin-auth.js"></script>
+  <style>
+    .promo-preview-box {
+      width: 100%;
+      height: 60px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 0 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <div class="admin-sidebar-header">
+      <div class="admin-sidebar-logo">M</div>
+      <div class="admin-sidebar-title">Medic<span>Mesir</span></div>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-label">Main Menu</div>
+      <a href="dashboard.html" class="admin-nav-link"><i style="font-style:normal">🏠</i> Dashboard</a>
+      <div class="admin-nav-label">Content</div>
+      <a href="programmes.html" class="admin-nav-link"><i style="font-style:normal">📚</i> Programmes</a>
+      <a href="universities.html" class="admin-nav-link"><i style="font-style:normal">🏛️</i> Universities</a>
+      <a href="offices.html" class="admin-nav-link"><i style="font-style:normal">🏢</i> Offices</a>
+      <div class="admin-nav-label">Marketing</div>
+      <a href="news.html" class="admin-nav-link"><i style="font-style:normal">📰</i> News & Blog</a>
+      <a href="promotions.html" class="admin-nav-link active"><i style="font-style:normal">🎉</i> Promotions</a>
+      <div class="admin-nav-label">System</div>
+      <a href="settings.html" class="admin-nav-link"><i style="font-style:normal">⚙️</i> Settings</a>
+    </nav>
+    <div class="admin-sidebar-footer"><button id="logout-btn" class="btn-logout"><i style="font-style:normal">🚪</i> Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.5rem;">
+          <div class="hamburger-admin" id="mobile-menu-btn"><span></span><span></span><span></span></div>
+          <h1 style="margin:0;">Site Promotions</h1>
+        </div>
+        <p>Manage the top banner ribbon displayed across the public site.</p>
+      </div>
+      <div>
+        <button class="btn-admin btn-admin-primary" onclick="openModal()">+ Add Promotion</button>
+      </div>
+    </div>
+
+    <div class="admin-card" style="padding:0;">
+      <div class="admin-table-wrapper" style="margin:0; border-top:none;">
+        <table class="admin-table" id="dataTable">
+          <thead>
+            <tr>
+              <th>Promotion Display</th>
+              <th>Status</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="formModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add Promotion</h3>
+        <button class="btn-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="dataForm">
+          <input type="hidden" id="p_id" />
+          
+          <div class="form-group">
+            <label>Live Preview</label>
+            <div id="livePreview" class="promo-preview-box" style="background:#C9963A">
+              🎓 September Intake — Apply Now
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Main Title text</label>
+            <input type="text" id="p_title" class="form-control" required placeholder="🎓 September 2025 Intake — Applications Now Open!" oninput="updatePreview()" />
+          </div>
+
+          <div class="form-group">
+            <label>Subtitle / Details (Optional)</label>
+            <input type="text" id="p_subtitle" class="form-control" placeholder="Limited spots available. Deadline: 30 June" />
+          </div>
+
+          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Button Text (e.g. Apply Now)</label>
+              <input type="text" id="p_cta_text" class="form-control" required placeholder="Apply Now" oninput="updatePreview()" />
+            </div>
+            <div class="form-group">
+              <label>Button Link</label>
+              <input type="text" id="p_cta_link" class="form-control" required placeholder="pages/contact.html" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Background Gradient / Color</label>
+            <input type="text" id="p_bg" class="form-control" required placeholder="linear-gradient(90deg, #B8852E 0%, #C9963A 100%)" value="#C9963A" oninput="updatePreview()" />
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin-top:1rem;">
+            <input type="checkbox" id="p_active" checked style="width:18px; height:18px;" />
+            <label style="margin:0;">Set as Active (Will turn off other active banners)</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-admin btn-admin-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn-admin btn-admin-primary" onclick="saveData()">Save Promotion</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+
+    const tb = document.querySelector('#dataTable tbody');
+    let allData = [];
+
+    function renderTable() {
+      allData = getPromotions(); 
+      tb.innerHTML = '';
+      if(allData.length === 0) {
+        tb.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#888;">No promotions active.</td></tr>';
+        return;
+      }
+
+      allData.forEach(p => {
+        const tr = document.createElement('tr');
+        const badge = p.active ? '<span class="badge active">Live Now</span>' : '<span class="badge hidden">Inactive</span>';
+        
+        tr.innerHTML = `
+          <td>
+            <div style="background:${p.bgGradient || '#ccc'}; color:white; padding:12px 16px; border-radius:6px; display:inline-block; max-width:500px">
+                <div style="font-weight:600; font-size:0.95rem; margin-bottom:0.25rem;">${p.title}</div>
+                <div style="font-size:0.8rem; opacity:0.9;">${p.subtitle || ''} &nbsp; <u>${p.ctaText || 'Link'}</u></div>
+            </div>
+          </td>
+          <td>${badge}</td>
+          <td style="text-align:right">
+            <div class="table-actions" style="justify-content:flex-end">
+              <button class="btn-action" onclick="editRow('${p.id}')">✏️</button>
+              <button class="btn-action delete" onclick="deleteRow('${p.id}')">🗑️</button>
+            </div>
+          </td>
+        `;
+        tb.appendChild(tr);
+      });
+    }
+
+    function updatePreview() {
+        const titleEl = document.getElementById('p_title');
+        const ctaEl = document.getElementById('p_cta_text');
+        const bgEl = document.getElementById('p_bg');
+        const preview = document.getElementById('livePreview');
+        
+        const title = titleEl.value || 'Banner Title';
+        const cta = ctaEl.value || 'Click Here';
+        
+        preview.style.background = bgEl.value;
+        preview.innerHTML = `${title} &nbsp;&mdash;&nbsp; <u>${cta}</u>`;
+    }
+
+    function openModal() {
+      document.getElementById('dataForm').reset();
+      document.getElementById('p_id').value = '';
+      document.getElementById('modalTitle').textContent = 'Add Promotion';
+      updatePreview();
+      document.getElementById('formModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('formModal').classList.remove('open');
+    }
+
+    function editRow(id) {
+      const p = allData.find(x => x.id === id);
+      if(!p) return;
+      document.getElementById('p_id').value = p.id;
+      document.getElementById('p_title').value = p.title;
+      document.getElementById('p_subtitle').value = p.subtitle;
+      document.getElementById('p_cta_text').value = p.ctaText;
+      document.getElementById('p_cta_link').value = p.ctaLink;
+      document.getElementById('p_bg').value = p.bgGradient;
+      document.getElementById('p_active').checked = p.active;
+      
+      document.getElementById('modalTitle').textContent = 'Edit Promotion';
+      updatePreview();
+      document.getElementById('formModal').classList.add('open');
+    }
+
+    function deleteRow(id) {
+      if(confirm('Are you sure you want to delete this promotion?')) {
+        deletePromotion(id);
+        showAdminToast('Promotion deleted');
+        renderTable();
+      }
+    }
+
+    function saveData() {
+      const form = document.getElementById('dataForm');
+      if(!form.checkValidity()) {
+        form.reportValidity(); return;
+      }
+
+      const isActive = document.getElementById('p_active').checked;
+      
+      // If setting this to active, disable others first
+      if (isActive) {
+          allData.forEach(p => {
+              if(p.active && p.id !== document.getElementById('p_id').value) {
+                  updatePromotion(p.id, { active: false });
+              }
+          });
+      }
+
+      const payload = {
+        type: 'ribbon',
+        title: document.getElementById('p_title').value,
+        subtitle: document.getElementById('p_subtitle').value,
+        ctaText: document.getElementById('p_cta_text').value,
+        ctaLink: document.getElementById('p_cta_link').value,
+        bgGradient: document.getElementById('p_bg').value,
+        active: isActive
+      };
+
+      const id = document.getElementById('p_id').value;
+      if (id) {
+        updatePromotion(id, payload);
+        showAdminToast('Promotion updated successfully');
+      } else {
+        createPromotion(payload);
+        showAdminToast('Promotion created successfully');
+      }
+
+      closeModal();
+      renderTable();
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cawangan – Brek Laju</title>
+  <meta name="description" content="Cari cawangan Brek Laju berhampiran anda — tersebar di seluruh Malaysia." />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/outlets.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* Enhanced open/closed status */
+    .outlet-status {
+      position: absolute; top: 12px; left: 12px;
+      padding: 6px 14px; border-radius: 50px;
+      font-size: 0.75rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .outlet-status.open { background: rgba(0,200,100,0.9); color: #fff; }
+    .outlet-status.closed { background: rgba(0,0,0,0.65); color: rgba(255,255,255,0.7); }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: currentColor;
+      animation: blink 2s ease-in-out infinite;
+    }
+    .outlet-status.closed .status-dot { animation: none; opacity: 0.5; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .outlet-updated {
+      font-size: 0.72rem; color: var(--text-muted); margin-top: 8px; opacity: 0.75;
+    }
+
+    /* Skeleton */
+    .outlet-skeleton {
+      border-radius: 16px; overflow: hidden;
+      background: #fff; box-shadow: 0 8px 32px rgba(26,10,0,0.08);
+    }
+    .sk-outlet-img { height: 180px; background: linear-gradient(90deg,#f0e8de 25%,#f8f0e8 50%,#f0e8de 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; }
+    .sk-outlet-body { padding: 20px; }
+    .sk-line { height:14px; border-radius:6px; margin-bottom:10px; background:linear-gradient(90deg,#f0e8de 25%,#f8f0e8 50%,#f0e8de 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; }
+    .sk-line.med { width:70%; } .sk-line.short { width:45%; }
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+    .count-badge {
+      display: inline-block; background: rgba(232,25,44,0.1); color: var(--red);
+      border: 1px solid rgba(232,25,44,0.2); padding: 4px 12px;
+      border-radius: 50px; font-size: 0.78rem; font-weight: 800;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled" id="navbar">
+    <a href="../index.html" class="nav-logo">BREK<span>LAJU</span></a>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Utama</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Tentang Kami</a></li>
+      <li><a href="outlets.html" class="active">Cawangan</a></li>
+      <li><a href="contact.html">Hubungi</a></li>
+      <li><a href="menu.html" class="nav-cta">Pesan Sekarang</a></li>
+    </ul>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-badge">📍 Lokasi</div>
+    <h1>CARI <span>BREK LAJU</span></h1>
+    <p id="heroDesc">Tersebar di seluruh Malaysia. Ada satu dekat dengan anda!</p>
+  </section>
+
+  <section class="outlets-section">
+    <div class="container">
+
+      <!-- State filter (built dynamically) -->
+      <div class="state-filter" id="stateFilter">
+        <button class="filter-btn active" data-state="all">Semua Negeri</button>
+        <!-- States injected dynamically -->
+      </div>
+
+      <div id="branchCount" class="count-badge" style="margin-top:16px;"></div>
+
+      <div class="outlets-grid" id="outletsGrid">
+        <!-- Skeletons -->
+        <div class="outlet-skeleton"><div class="sk-outlet-img"></div><div class="sk-outlet-body"><div class="sk-line"></div><div class="sk-line med"></div><div class="sk-line short"></div></div></div>
+        <div class="outlet-skeleton"><div class="sk-outlet-img"></div><div class="sk-outlet-body"><div class="sk-line"></div><div class="sk-line med"></div><div class="sk-line short"></div></div></div>
+        <div class="outlet-skeleton"><div class="sk-outlet-img"></div><div class="sk-outlet-body"><div class="sk-line"></div><div class="sk-line med"></div><div class="sk-line short"></div></div></div>
+        <div class="outlet-skeleton"><div class="sk-outlet-img"></div><div class="sk-outlet-body"><div class="sk-line"></div><div class="sk-line med"></div><div class="sk-line short"></div></div></div>
+      </div>
+
+      <!-- Franchise CTA -->
+      <div class="franchise-cta">
+        <div class="franchise-text">
+          <h2>Nak Buka Outlet Sendiri?</h2>
+          <p>Jadilah sebahagian dari keluarga besar Brek Laju. Kami sedia bimbing anda dari mula!</p>
+        </div>
+        <a href="contact.html" class="btn-primary">Daftar Sebagai Rakan Niaga</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">BREK<span>LAJU</span></div>
+        <p id="footerTagline">Rangup. Laju. Sedap.<br/>100% Jenama Malaysia.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="TikTok">tt</a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4>Pautan</h4>
+        <ul>
+          <li><a href="../index.html">Utama</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Tentang Kami</a></li>
+          <li><a href="outlets.html">Cawangan</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav">
+        <h4>Hubungi</h4>
+        <ul>
+          <li>📞 <span id="footerPhone">–</span></li>
+          <li>✉️ <span id="footerEmail">–</span></li>
+          <li>📍 <span id="footerAddress">–</span></li>
+        </ul>
+      </div>
+      <div class="footer-halal">
+        <div class="halal-badge"><span class="halal-text">HALAL</span><span class="halal-sub">JAKIM Certified</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Brek Laju Sdn Bhd. Hak Cipta Terpelihara.</p>
+    </div>
+  </footer>
+
+  <script src="../js/db.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    trackPageView('outlets');
+
+    const settings = getSettings();
+    document.getElementById('footerPhone').textContent = settings.contactPhone;
+    document.getElementById('footerEmail').textContent = settings.contactEmail;
+    document.getElementById('footerAddress').textContent = settings.contactAddress;
+
+    const allBranches = getBranches();
+
+    // Build state filter from actual data
+    const stateFilter = document.getElementById('stateFilter');
+    const usedStates = [...new Set(allBranches.map(b => b.state))];
+    STATES.filter(s => usedStates.includes(s.id)).forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn'; btn.dataset.state = s.id;
+      btn.textContent = s.label; stateFilter.appendChild(btn);
+    });
+
+    // Update hero desc
+    const openCount = allBranches.filter(b => b.isOpen).length;
+    document.getElementById('heroDesc').textContent = `${allBranches.length}+ cawangan di seluruh Malaysia. ${openCount} sedang buka sekarang!`;
+
+    let activeState = 'all';
+
+    function renderBranches(state = 'all') {
+      const filtered = state === 'all' ? allBranches : allBranches.filter(b => b.state === state);
+      const countEl = document.getElementById('branchCount');
+      countEl.textContent = filtered.length + ' cawangan' + (state !== 'all' ? ' dijumpai' : '');
+
+      const grid = document.getElementById('outletsGrid');
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-muted);">Tiada cawangan dalam negeri ini buat masa ini.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(b => {
+        const stateLabel = STATES.find(s => s.id === b.state)?.label || b.state;
+        return `
+          <div class="outlet-card" data-state="${b.state}">
+            <div class="outlet-img" style="position:relative;overflow:hidden;">
+              <img src="${b.imageUrl}" alt="${b.name}" loading="lazy"
+                onerror="this.src='https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=400&q=60'" />
+              <div class="outlet-status ${b.isOpen ? 'open' : 'closed'}">
+                <span class="status-dot"></span>
+                ${b.isOpen ? 'Buka Sekarang' : 'Tutup Sekarang'}
+              </div>
+            </div>
+            <div class="outlet-info">
+              <h3>${b.name}</h3>
+              <div class="outlet-detail">📍 ${b.address}</div>
+              <div class="outlet-detail">🕐 ${b.hours}</div>
+              <div class="outlet-detail">📞 ${b.phone}</div>
+              <a href="${b.mapsUrl}" target="_blank" rel="noopener" class="outlet-map-btn">Dapatkan Arah ↗</a>
+              <div class="outlet-updated">Dikemaskini: ${fmtDate(b.updatedAt)}</div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // Filter click
+    document.getElementById('stateFilter').addEventListener('click', e => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      document.querySelectorAll('#stateFilter .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeState = btn.dataset.state;
+      renderBranches(activeState);
+    });
+
+    renderBranches('all');
+  </script>
+<style>.zed-demo-ribbon{position:fixed;bottom:1rem;left:1rem;z-index:99999;background:#14140f;color:#faf9f6;font-family:'Segoe UI',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:.55rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;gap:.5rem;text-decoration:none;opacity:.94}.zed-demo-ribbon:hover{opacity:1;transform:translateY(-1px)}.zed-demo-ribbon b{color:#7ed6ae;font-weight:700}</style>
+<a class="zed-demo-ribbon" href="https://wa.me/60123456789?text=Hi%20Zed%20Studio%2C%20I%20saw%20your%20demo%20and%20want%20a%20website%20like%20this." target="_blank" rel="noopener">⚡ Demo by <b>ZED STUDIO</b> — get a site like this</a>
+</body>
+</html>

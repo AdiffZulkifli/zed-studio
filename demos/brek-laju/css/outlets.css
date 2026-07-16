@@ -1,0 +1,119 @@
+/* Outlets page */
+.outlets-section { padding: 80px 0 100px; background: var(--cream); }
+
+.state-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.outlets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+  margin-bottom: 64px;
+}
+
+.outlet-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.outlet-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.outlet-card.hidden { display: none; }
+
+.outlet-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.outlet-img img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.outlet-card:hover .outlet-img img { transform: scale(1.05); }
+
+.outlet-status {
+  position: absolute;
+  top: 12px; right: 12px;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.outlet-status.open { background: #10b981; color: var(--white); }
+.outlet-status.closed { background: #6b7280; color: var(--white); }
+
+.outlet-info { padding: 22px; }
+
+.outlet-info h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+
+.outlet-detail {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.outlet-map-btn {
+  display: inline-block;
+  margin-top: 14px;
+  background: var(--red);
+  color: var(--white);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.outlet-map-btn:hover {
+  background: var(--red-dark);
+  transform: translateX(4px);
+}
+
+.franchise-cta {
+  background: linear-gradient(135deg, var(--dark), var(--dark-3));
+  border-radius: 24px;
+  padding: 56px 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.franchise-text h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--white);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.franchise-text p {
+  color: rgba(255,255,255,0.7);
+  font-size: 1rem;
+}
+
+@media (max-width: 700px) {
+  .franchise-cta { flex-direction: column; padding: 40px 28px; text-align: center; }
+}

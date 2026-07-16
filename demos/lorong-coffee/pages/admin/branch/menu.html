@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu Status — Lorong Coffee Branch</title>
+  <link rel="stylesheet" href="../../../css/admin.css"/>
+  <link rel="icon" type="image/jpeg" href="../../../images/logo.jpg"/>
+  <style>
+    .status-row { display:flex; align-items:center; gap:1rem; padding:0.9rem 1.5rem; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .status-row:last-child { border-bottom:none; }
+    .status-row__info { flex:1; }
+    .status-row__name { font-weight:600; color:var(--white); font-size:0.9rem; }
+    .status-row__meta { font-size:0.75rem; color:rgba(255,255,255,0.35); margin-top:2px; }
+    .status-select {
+      background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+      border-radius:8px; padding:7px 12px; color:var(--white);
+      font-family:var(--font-body); font-size:0.82rem; cursor:pointer; outline:none;
+      transition:border-color 0.2s;
+    }
+    .status-select:focus { border-color:var(--yellow); }
+    .status-select.available { border-color:rgba(82,183,136,0.4); color:var(--green-light); }
+    .status-select.sold_out { border-color:rgba(245,200,0,0.4); color:var(--yellow); }
+    .status-select.not_carried { border-color:rgba(230,57,70,0.4); color:#ff6b75; }
+    .cat-header { padding:0.6rem 1.5rem; background:rgba(255,255,255,0.03); font-family:var(--font-mono); font-size:0.65rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.1em; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="admin-sidebar" id="sidebar">
+    <a href="dashboard.html" class="admin-sidebar__brand">
+      <img src="../../../images/logo.jpg" alt="Lorong Coffee"/>
+      <div class="admin-sidebar__brand-text">
+        <div class="admin-sidebar__brand-name">Lorong Coffee</div>
+        <div class="admin-sidebar__brand-sub" id="branchSubtitle">Branch Admin</div>
+      </div>
+    </a>
+    <nav class="admin-sidebar__nav">
+      <div class="admin-nav-label">Main</div>
+      <a href="dashboard.html" class="admin-nav-link"><span class="admin-nav-link__icon">📊</span> Dashboard</a>
+      <div class="admin-nav-label">Manage</div>
+      <a href="menu.html" class="admin-nav-link active"><span class="admin-nav-link__icon">☕</span> Menu Status</a>
+      <a href="customers.html" class="admin-nav-link"><span class="admin-nav-link__icon">👥</span> Customers</a>
+      <div class="admin-nav-label">Site</div>
+      <a href="../../../index.html" class="admin-nav-link" target="_blank"><span class="admin-nav-link__icon">🌐</span> View Website</a>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <button class="admin-nav-link" onclick="handleLogout()" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
+        <span class="admin-nav-link__icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="admin-topbar__title">Menu Status</div>
+          <div class="admin-topbar__breadcrumb">Set item availability for your branch</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+
+      <div class="admin-panel" style="margin-bottom:1rem;">
+        <div class="admin-panel__body" style="padding:1rem 1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
+          <div style="font-size:0.85rem;color:rgba(255,255,255,0.55);flex:1;">
+            Changes save automatically. Customers will see the updated availability on the menu page.
+          </div>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;font-size:0.8rem;">
+            <span style="color:var(--green-light);">● Available</span>
+            <span style="color:var(--yellow);">● Sold Out <span style="color:rgba(255,255,255,0.3);font-size:0.72rem;">(temp)</span></span>
+            <span style="color:#ff6b75;">● Not Carried <span style="color:rgba(255,255,255,0.3);font-size:0.72rem;">(permanent)</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="menuPanel">
+        <div class="admin-panel__body" style="padding:3rem;text-align:center;color:rgba(255,255,255,0.3);">
+          Loading menu…
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../../js/supabase-client.js"></script>
+<script src="../../../js/data.js"></script>
+<script src="../../../js/auth.js"></script>
+<script>
+  initData();
+  const session = requireBranchAdmin('../login.html');
+  if (!session) { /* stops */ }
+
+  const branchId = session.branchId;
+  const CATEGORY_LABELS = { coffee:'Coffee', cold:'Cold Brews', noncoffee:'Non-Coffee', seasonal:'Seasonal' };
+
+  async function loadMenu() {
+    if (branchId) {
+      const store = await getStoreById(branchId);
+      if (store) document.getElementById('branchSubtitle').textContent = store.name.replace('Lorong Coffee — ','');
+    }
+
+    const items = await getBranchMenuItems(branchId);
+    const panel = document.getElementById('menuPanel');
+
+    if (!items.length) {
+      panel.innerHTML = '<div class="admin-panel__body"><p style="color:rgba(255,255,255,0.3);">No menu items found.</p></div>';
+      return;
+    }
+
+    const byCategory = {};
+    items.forEach(item => {
+      const cat = item.category || 'other';
+      if (!byCategory[cat]) byCategory[cat] = [];
+      byCategory[cat].push(item);
+    });
+
+    panel.innerHTML = Object.entries(byCategory).map(([cat, catItems]) => `
+      <div class="cat-header">${CATEGORY_LABELS[cat] || cat}</div>
+      ${catItems.map(item => `
+        <div class="status-row">
+          <span style="font-size:1.6rem;">${item.emoji || '☕'}</span>
+          <div class="status-row__info">
+            <div class="status-row__name">${item.name}</div>
+            <div class="status-row__meta">RM ${item.price} &nbsp;·&nbsp; ${CATEGORY_LABELS[item.category] || item.category}</div>
+          </div>
+          <select
+            class="status-select ${item.branchStatus}"
+            data-id="${item.id}"
+            onchange="updateStatus('${item.id}', this.value, this)">
+            <option value="available" ${item.branchStatus === 'available' ? 'selected' : ''}>● Available</option>
+            <option value="sold_out" ${item.branchStatus === 'sold_out' ? 'selected' : ''}>● Sold Out</option>
+            <option value="not_carried" ${item.branchStatus === 'not_carried' ? 'selected' : ''}>● Not Carried</option>
+          </select>
+        </div>
+      `).join('')}
+    `).join('');
+  }
+
+  async function updateStatus(menuItemId, status, selectEl) {
+    selectEl.className = `status-select ${status}`;
+    const ok = await setBranchMenuStatus(branchId, menuItemId, status);
+    if (ok) {
+      toast(status === 'available' ? '✅ Marked as Available' : status === 'sold_out' ? '🟡 Marked as Sold Out' : '🔴 Marked as Not Carried');
+    } else {
+      toast('Failed to update status.', 'error');
+    }
+  }
+
+  function handleLogout() { adminSignOut(); window.location.href = '../login.html'; }
+
+  function toast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast${type === 'error' ? ' error' : ''}`;
+    t.textContent = msg; c.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+  }
+
+  loadMenu();
+</script>
+</body>
+</html>
