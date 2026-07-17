@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Zed Studio — Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  body { font-family: 'Inter', sans-serif; color: #14140f; line-height: 1.6; }
+  .page { width: 210mm; height: 296mm; padding: 18mm 20mm; page-break-after: always; position: relative; overflow: hidden; }
+  .page:last-child { page-break-after: auto; }
+  h1,h2,h3,.disp { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  .logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15pt; letter-spacing:0.04em; }
+  .logo em { font-style:normal; color:#7ee0af; }
+  .eyebrow { font-family:'Space Grotesk',sans-serif; font-size:8.5pt; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#2e6b52; margin-bottom:4mm; }
+
+  /* Cover */
+  .cover { background:#0c0e0d; color:#f2f1ea; display:flex; flex-direction:column; justify-content:space-between; }
+  .cover .eyebrow { color:#7ee0af; }
+  .cover h1 { font-size:34pt; line-height:1.08; font-weight:700; }
+  .cover h1 em { font-style:normal; color:#7ee0af; }
+  .cover .sub { color:rgba(242,241,234,0.7); font-size:12pt; margin-top:6mm; max-width:140mm; }
+  .cover .foot { display:flex; justify-content:space-between; align-items:flex-end; color:rgba(242,241,234,0.75); font-size:9.5pt; }
+  .badge { display:inline-block; background:#7ee0af; color:#0c0e0d; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:9pt; padding:2mm 5mm; border-radius:99px; margin-top:8mm; }
+
+  h2 { font-size:19pt; font-weight:700; margin-bottom:5mm; }
+  h3 { font-size:12pt; font-weight:700; margin-bottom:1.5mm; }
+  p, li { font-size:10pt; color:#4c4b44; }
+  .lead { font-size:11.5pt; }
+  .accent { color:#2e6b52; font-weight:600; }
+
+  .vs { display:grid; grid-template-columns:1fr 1fr; gap:5mm; margin:6mm 0; }
+  .vs .col { border:1px solid #e2dfd6; border-radius:4mm; padding:6mm; }
+  .vs .col.own { border-color:#2e6b52; background:#f4faf7; }
+  .vs h3 { font-size:11pt; }
+  .vs ul { list-style:none; margin-top:3mm; }
+  .vs li { padding:1.2mm 0 1.2mm 6mm; position:relative; font-size:9.5pt; }
+  .vs .rent li::before { content:'✕'; position:absolute; left:0; color:#c0674f; font-weight:700; }
+  .vs .own li::before { content:'✓'; position:absolute; left:0; color:#2e6b52; font-weight:700; }
+
+  .pointrow { display:flex; gap:5mm; margin-top:5mm; }
+  .point { flex:1; border-top:2.5px solid #1a3a2f; padding-top:3mm; }
+
+  .shots { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4mm; margin:5mm 0; }
+  .shots figure img { width:100%; border-radius:2.5mm; border:1px solid #e2dfd6; }
+  .shots figcaption { font-size:8.5pt; color:#4c4b44; margin-top:1.5mm; }
+  .shots figcaption b { font-family:'Space Grotesk',sans-serif; color:#14140f; }
+
+  table { width:100%; border-collapse:collapse; margin:4mm 0; }
+  th, td { text-align:left; padding:2.8mm 3mm; font-size:9.5pt; border-bottom:1px solid #e2dfd6; }
+  th { font-family:'Space Grotesk',sans-serif; font-size:8.5pt; letter-spacing:0.08em; text-transform:uppercase; color:#4c4b44; }
+  tr.hero-row { background:#f4faf7; }
+  tr.hero-row td { font-weight:600; color:#1a3a2f; border-top:1.5px solid #2e6b52; border-bottom:1.5px solid #2e6b52; }
+
+  .pricegrid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4mm; margin:5mm 0; }
+  .pcard { border:1px solid #e2dfd6; border-radius:4mm; padding:5mm; }
+  .pcard.feat { border:1.5px solid #1a3a2f; background:#f4faf7; }
+  .pcard h3 { font-size:11pt; }
+  .pcard .price { font-family:'Space Grotesk',sans-serif; font-size:16pt; font-weight:700; margin:2mm 0; }
+  .pcard .price small { font-size:8.5pt; font-weight:500; color:#4c4b44; }
+  .pcard p { font-size:8.8pt; }
+
+  .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:4mm; margin:4mm 0; }
+  .steps div { border-top:2px solid #e2dfd6; padding-top:2.5mm; }
+  .steps b { font-family:'Space Grotesk',sans-serif; font-size:9.5pt; display:block; }
+  .steps span { color:#2e6b52; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:9pt; }
+  .steps p { font-size:8.5pt; }
+
+  .contactband { background:#1a3a2f; color:#f2f1ea; border-radius:4mm; padding:6mm 8mm; display:flex; justify-content:space-between; align-items:center; margin-top:6mm; }
+  .contactband b { font-family:'Space Grotesk',sans-serif; font-size:12pt; display:block; }
+  .contactband p { color:rgba(242,241,234,0.8); font-size:9.5pt; }
+  .pagefoot { position:absolute; bottom:10mm; left:20mm; right:20mm; display:flex; justify-content:space-between; font-size:8pt; color:#9b988c; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 — COVER -->
+<section class="page cover">
+  <div>
+    <div class="logo">ZED<em>STUDIO</em></div>
+  </div>
+  <div>
+    <p class="eyebrow">Premium websites for Malaysian businesses</p>
+    <h1>Your business deserves better<br/><em>than a template.</em></h1>
+    <p class="sub">Hand-coded, bespoke websites with your own admin dashboard — bilingual, mobile-first, and built to turn visitors into paying customers.</p>
+    <span class="badge">LAUNCH PRICING — FIRST 10 CLIENTS ONLY</span>
+  </div>
+  <div class="foot">
+    <div>
+      <b style="color:#f2f1ea">See it live:</b> zed-studio-theta.vercel.app<br/>
+      Try the demos — even the admin panels.
+    </div>
+    <div style="text-align:right">
+      WhatsApp +60 11-6329 3004<br/>
+      adiffhaizal1@gmail.com
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 2 — WHY A WEBSITE -->
+<section class="page">
+  <p class="eyebrow">The honest question</p>
+  <h2>"I already have TikTok &amp; Instagram — <br/>why do I need a website?"</h2>
+  <p class="lead">Fair question. Social media is excellent — <span class="accent">for attention</span>. But attention you rent is not a business you own.</p>
+
+  <div class="vs">
+    <div class="col rent">
+      <h3>Social media = renting a stall</h3>
+      <ul>
+        <li>The algorithm decides who sees you — reach can drop overnight</li>
+        <li>Account restricted or hacked? Your business disappears with it</li>
+        <li>Your profile looks the same as every competitor's</li>
+        <li>Can't take bookings, loyalty points, or structured orders</li>
+        <li>Customers searching Google will not find your TikTok</li>
+      </ul>
+    </div>
+    <div class="col own">
+      <h3>Website = owning your shop</h3>
+      <ul>
+        <li>Found on Google by customers already looking to buy</li>
+        <li>Open 24/7 — menu, prices, location, booking, all self-serve</li>
+        <li>Designed only for your brand — instant credibility</li>
+        <li>Booking, rewards and ordering built for your industry</li>
+        <li>Yours forever. No algorithm, no platform rules</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="lead" style="margin-bottom:4mm"><b>The truth: you need both.</b> TikTok brings the crowd. Your website is where the crowd becomes customers — and where serious buyers check whether you're a real business before they spend.</p>
+
+  <div class="pointrow">
+    <div class="point"><h3>Search intent</h3><p>Someone typing "klinik gigi near me" into Google is ready to book <i>today</i>. Without a website, that customer goes to your competitor.</p></div>
+    <div class="point"><h3>Trust check</h3><p>Before a big purchase, Malaysians check: real website? real address? If the answer is "only TikTok", the price you can charge drops.</p></div>
+    <div class="point"><h3>It works while you sleep</h3><p>Answers the same 10 questions (price? location? open?) automatically — so your WhatsApp only receives serious enquiries.</p></div>
+  </div>
+  <div class="pagefoot"><span>ZED STUDIO</span><span>02</span></div>
+</section>
+
+<!-- PAGE 3 — WHAT YOU GET + PROOF -->
+<section class="page">
+  <p class="eyebrow">What we build</p>
+  <h2>Not a template. A website made only for you.</h2>
+
+  <div class="pointrow" style="margin-bottom:5mm">
+    <div class="point"><h3>Bespoke design</h3><p>Hand-coded from zero around your brand. No page builders, no recycled themes.</p></div>
+    <div class="point"><h3>Your own admin panel</h3><p>Update menu, prices, photos and promos yourself — no developer fees for small changes.</p></div>
+    <div class="point"><h3>Bilingual &amp; fast</h3><p>English + Bahasa Malaysia built in. Loads in under a second on mobile data.</p></div>
+    <div class="point"><h3>Built for enquiries</h3><p>Every page guides visitors to one action: contacting you on WhatsApp.</p></div>
+  </div>
+
+  <h3 style="margin-bottom:3mm">Proof — real working demos, not mockups:</h3>
+  <div class="shots">
+    <figure><img src="../images/lorong-coffee.png" alt="Lorong Coffee demo"/><figcaption><b>Lorong Coffee</b> — café with customer rewards &amp; multi-branch admin</figcaption></figure>
+    <figure><img src="../images/brek-laju.png" alt="Brek Laju demo"/><figcaption><b>Brek Laju</b> — fast food with dynamic menu &amp; analytics</figcaption></figure>
+    <figure><img src="../images/medicmesir.png" alt="MedicMesir demo"/><figcaption><b>MedicMesir</b> — agency with programmes, news &amp; enquiry funnel</figcaption></figure>
+  </div>
+
+  <p class="lead" style="margin-top:2mm">Every demo is a complete live website with a working database and admin dashboard. <span class="accent">Visit zed-studio-theta.vercel.app and try the admin panels yourself</span> — the login is pre-filled. Change a price, watch it appear on the site. That's the control you'll have over your own website.</p>
+
+  <p style="margin-top:5mm">Each industry gets what <i>it</i> needs: cafés get loyalty rewards, clinics and barbers get booking, restaurants get menus and promos — designed around how your customers actually buy.</p>
+  <div class="pagefoot"><span>ZED STUDIO</span><span>03</span></div>
+</section>
+
+<!-- PAGE 4 — PRICING + PROCESS -->
+<section class="page">
+  <p class="eyebrow">Investment</p>
+  <h2>The market, honestly — and where we sit.</h2>
+
+  <table>
+    <tr><th>Option</th><th>Typical price (Malaysia, 2026)</th><th>The catch</th></tr>
+    <tr><td>DIY website builder</td><td>RM 379–479 / month, forever</td><td>RM 4,500+ every year, you do all the work, generic template</td></tr>
+    <tr><td>Freelancer (template)</td><td>RM 1,500 – 6,000</td><td>Usually a recycled theme; support often ends at launch</td></tr>
+    <tr><td>Small design studio</td><td>RM 3,000 – 10,000</td><td>Solid work, priced for bigger companies</td></tr>
+    <tr><td>Full-service agency</td><td>RM 8,000 – 25,000+</td><td>Enterprise budgets</td></tr>
+    <tr class="hero-row"><td>ZED STUDIO — launch pricing</td><td>RM 990 – 3,990 fixed</td><td>Hand-coded custom + admin panel. First 10 clients only.</td></tr>
+  </table>
+
+  <div class="pricegrid">
+    <div class="pcard"><h3>Landing Page</h3><div class="price">RM 990</div><p>One bespoke page that sells 24/7. WhatsApp buttons, SEO, ~1 week.</p></div>
+    <div class="pcard feat"><h3>Business Website</h3><div class="price">RM 2,190</div><p>Up to 6 pages, EN+BM, gallery, FAQ, Google Maps, 2–3 weeks. <b>Most popular.</b></p></div>
+    <div class="pcard"><h3>Custom Web System</h3><div class="price">RM 3,990<small>+</small></div><p>Everything + database, booking/rewards, customer accounts, admin dashboard.</p></div>
+  </div>
+  <p style="font-size:9pt">Also: <b>Website Redesign from RM 1,490</b> · Domain &amp; DNS setup RM 150 · Care Plans from RM 79/month. All prices fixed and agreed in writing before work begins — no hourly billing, no surprises.</p>
+
+  <h3 style="margin-top:6mm; margin-bottom:2mm">How it works</h3>
+  <div class="steps">
+    <div><span>01</span><b>Discovery</b><p>Free WhatsApp chat. Fixed quote, no obligation.</p></div>
+    <div><span>02</span><b>Design</b><p>Homepage first — refined until you love it.</p></div>
+    <div><span>03</span><b>Build</b><p>Full site + your content + admin dashboard.</p></div>
+    <div><span>04</span><b>Launch</b><p>Live on your domain. Keys handed over.</p></div>
+  </div>
+
+  <div class="contactband">
+    <div>
+      <b>Ready when you are.</b>
+      <p>WhatsApp +60 11-6329 3004 · adiffhaizal1@gmail.com</p>
+    </div>
+    <div style="text-align:right">
+      <b style="font-size:10pt">zed-studio-theta.vercel.app</b>
+      <p>Try the live demos first.</p>
+    </div>
+  </div>
+  <div class="pagefoot"><span>ZED STUDIO</span><span>04</span></div>
+</section>
+
+</body>
+</html>

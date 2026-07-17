@@ -5,7 +5,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+- Sales kit: `sales/Zed-Studio-Pitch.pdf` (4-page branded pitch incl. market
+  pricing comparison and the TikTok-vs-website argument),
+  `sales/Zed-Studio-Agreement.pdf` (1-page client agreement, 50/50 payment,
+  3 revisions, 14-day fix window), both generated from HTML sources in `sales/`
+- `docs/SALES-PLAYBOOK.md`: prospecting channels, BM sales scripts, objection
+  handling, market-pricing sources
 
 ## [0.4.0] — 2026-07-17
 
