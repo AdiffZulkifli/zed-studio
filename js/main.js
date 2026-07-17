@@ -11,11 +11,16 @@ function applyLanguage(lang) {
     const key = el.getAttribute('data-i18n');
     if (dict[key] !== undefined) el.innerHTML = dict[key];
   });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+  });
   document.documentElement.lang = lang === 'ms' ? 'ms' : 'en';
   document.querySelectorAll('[data-lang-opt]').forEach(el => {
     el.classList.toggle('active', el.getAttribute('data-lang-opt') === lang);
   });
   localStorage.setItem(ZED_LANG_KEY, lang);
+  document.dispatchEvent(new CustomEvent('zed:lang', { detail: lang }));
 }
 
 const savedLang = localStorage.getItem(ZED_LANG_KEY) || 'en';

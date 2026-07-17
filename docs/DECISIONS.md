@@ -4,6 +4,13 @@ One entry per significant decision. Newest at the top. Never delete — supersed
 
 ---
 
+## ADR-008 · 2026-07-17 · Lead capture: no-login wizard + insert-only table + WhatsApp handoff
+**Status:** Accepted
+**Context:** Founder wants prospects to describe their project (industry, stage, features, contact) so he can quote fast and reuse the brief as a Claude Code prompt. ChatGPT suggested Google sign-in; requiring any login before an enquiry adds friction and OAuth setup cost for marginal benefit (auto-filled name/email).
+**Decision:** `/start.html` is a 5-step no-login wizard (industry → stage → current website → features → details + name/email/phone). On completion it (a) inserts the lead into `zs_leads`, (b) computes a recommended package from stage/features (booking/rewards/accounts or multi-branch ⇒ Custom; redesign ⇒ Redesign; starting ⇒ Landing; else Business), (c) stores a generated English build-brief (`brief_prompt`) for direct reuse in Claude Code, and (d) offers a wa.me handoff with the summary pre-filled. `zs_leads` is **insert-only for anon** — no read/update/delete policies, so leads are private; founder reads them in the Supabase dashboard.
+**Consequences:** Zero-friction enquiries with double delivery (DB + WhatsApp). Google sign-in deferred to a future client portal. Wizard options are data-driven arrays in `js/wizard.js`; industry list covers all industries even where no demo exists yet.
+**Alternatives considered:** Google OAuth gate (rejected: friction, founder setup); email notification service (deferred: wa.me handoff + dashboard suffice at this volume).
+
 ## ADR-007 · 2026-07-17 · Public demo admins with nightly data reset
 **Status:** Accepted
 **Context:** Letting prospects use the demo admin panels is our strongest sales proof, but public write access means demo data will eventually be vandalised or broken.

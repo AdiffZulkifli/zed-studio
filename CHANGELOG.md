@@ -7,6 +7,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 _Nothing yet._
 
+## [0.4.0] — 2026-07-17
+
+### Added
+- Project Wizard (`start.html`, ADR-008): bilingual 5-step enquiry — industry
+  (12 options incl. industries without demos yet), business stage, current
+  website, features, details + contact (name/email/phone). Auto-recommends a
+  package, saves to private `zs_leads` (insert-only), generates an internal
+  Claude-Code-ready brief, and offers WhatsApp handoff with summary pre-filled
+- "Start your project →" CTA under the demo grid
+
+### Changed
+- Pricing card CTAs and redesign banner now open the wizard with the package
+  pre-selected (was: raw WhatsApp links)
+- Demo ribbons now read "customise this website for your business" and open
+  the wizard with the demo's industry pre-selected
+
 ## [0.3.0] — 2026-07-17
 
 ### Added

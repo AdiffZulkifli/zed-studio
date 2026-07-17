@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Start Your Project — Zed Studio</title>
+  <meta name="description" content="Tell us about your business in 2 minutes — industry, goals and features. We reply on WhatsApp with a fixed quote."/>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg"/>
+  <meta name="theme-color" content="#0c0e0d"/>
+  <script>
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('zed_theme') || 'dark');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav__inner">
+      <a href="index.html" class="logo">ZED<em>STUDIO</em></a>
+      <div class="nav__links" id="navLinks">
+        <a href="index.html#demos" data-i18n="nav.demos">Demos</a>
+        <a href="index.html#pricing" data-i18n="nav.pricing">Pricing</a>
+        <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+          <span data-lang-opt="en">EN</span><span class="lang-toggle__sep">/</span><span data-lang-opt="ms">BM</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch between dark and light theme">☀</button>
+      </div>
+      <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <main class="wiz">
+    <div class="container container--narrow">
+      <header class="wiz__head">
+        <p class="eyebrow" data-i18n="w.eyebrow">Start your project</p>
+        <h1 data-i18n="w.title">Tell us what you need — in 2 minutes.</h1>
+        <p class="wiz__sub" data-i18n="w.sub">Answer a few questions and we'll reply on WhatsApp or email with a fixed quote and a plan. No obligation.</p>
+      </header>
+
+      <div class="wiz__progress" id="wizProgress" aria-hidden="true"></div>
+
+      <form id="wizForm" novalidate>
+        <!-- Step 1: industry -->
+        <section class="wiz__step" data-step="0">
+          <h2 class="wiz__q" data-i18n="w.industryQ">Which industry is your business in?</h2>
+          <div class="wiz__options wiz__options--grid" id="optIndustry"></div>
+        </section>
+
+        <!-- Step 2: stage -->
+        <section class="wiz__step" data-step="1" hidden>
+          <h2 class="wiz__q" data-i18n="w.stageQ">Where is your business today?</h2>
+          <div class="wiz__options" id="optStage"></div>
+        </section>
+
+        <!-- Step 3: current website -->
+        <section class="wiz__step" data-step="2" hidden>
+          <h2 class="wiz__q" data-i18n="w.webQ">Do you have a website right now?</h2>
+          <div class="wiz__options" id="optWeb"></div>
+        </section>
+
+        <!-- Step 4: features -->
+        <section class="wiz__step" data-step="3" hidden>
+          <h2 class="wiz__q" data-i18n="w.featuresQ">What should your website do?</h2>
+          <p class="wiz__hint" data-i18n="w.featuresHint">Choose everything that applies — we'll advise what's worth it.</p>
+          <div class="wiz__options wiz__options--grid" id="optFeatures"></div>
+        </section>
+
+        <!-- Step 5: details + contact -->
+        <section class="wiz__step" data-step="4" hidden>
+          <h2 class="wiz__q" data-i18n="w.detailsQ">Tell us a little about your business</h2>
+          <textarea class="wiz__textarea" id="fldDetails" rows="4" data-i18n-ph="w.detailsPh" placeholder="Business name, location, what makes you special… anything helps (optional)"></textarea>
+
+          <h2 class="wiz__q" style="margin-top:2rem" data-i18n="w.contactQ">Where should we reach you?</h2>
+          <div class="wiz__fields">
+            <label><span data-i18n="w.name">Name</span><input type="text" id="fldName" autocomplete="name" required/></label>
+            <label><span data-i18n="w.email">Email</span><input type="email" id="fldEmail" autocomplete="email" required/></label>
+            <label><span data-i18n="w.phone">Phone (WhatsApp)</span><input type="tel" id="fldPhone" autocomplete="tel" placeholder="01X-XXX XXXX" required/></label>
+          </div>
+          <p class="wiz__error" id="wizError" hidden data-i18n="w.errContact">Please fill in your name, a valid email and phone number.</p>
+        </section>
+
+        <!-- Step 6: done -->
+        <section class="wiz__step wiz__done" data-step="5" hidden>
+          <h2 class="wiz__q" data-i18n="w.doneTitle">Got it — here's what we heard.</h2>
+          <div class="wiz__summary" id="wizSummary"></div>
+          <div class="wiz__recommend">
+            <span data-i18n="w.recommend">Our recommendation:</span>
+            <strong id="wizPackage"></strong>
+          </div>
+          <p class="wiz__sub" data-i18n="w.doneSub">We'll contact you within 24 hours. Want an answer faster? Send it straight to our WhatsApp:</p>
+          <a class="btn btn--primary" id="wizWhatsApp" target="_blank" rel="noopener" data-i18n="w.waBtn">Send via WhatsApp →</a>
+          <p class="wiz__saved" id="wizSaved" hidden data-i18n="w.saved">✓ Your enquiry has been saved — we've received it either way.</p>
+        </section>
+
+        <div class="wiz__nav" id="wizNav">
+          <button type="button" class="btn btn--outline" id="wizBack" hidden data-i18n="w.back">← Back</button>
+          <button type="button" class="btn btn--primary" id="wizNext" data-i18n="w.next">Continue →</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="index.html" class="logo logo--light">ZED<em>STUDIO</em></a>
+      <p data-i18n="footer.line">Premium websites for Malaysian businesses.</p>
+      <p class="footer__copy">© 2026 Zed Studio</p>
+    </div>
+  </footer>
+
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/wizard.js"></script>
+</body>
+</html>

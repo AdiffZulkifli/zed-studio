@@ -47,9 +47,14 @@ Status: `todo` · `blocked` · `in-progress` · `done`.
 ### Milestone M4 — Trust signals
 | # | Issue | Status | Notes |
 |---|---|---|---|
+| D4 | One-click demo admin trial + nightly data reset | **done** | ADR-007 (2026-07-17); pg_cron schedule = founder one-liner in README |
+| D5 | Project Wizard lead capture (`start.html`) + `zs_leads` | **done** | ADR-008 (2026-07-17); pricing CTAs + demo ribbons feed it |
 | D1 | Testimonials / case-study section (needs first real clients) | blocked | Business input required |
 | D2 | Simple analytics (privacy-friendly, e.g. GoatCounter/Plausible) | todo | Can't optimise conversion without measurement |
-| D3 | WhatsApp link tracking (per-package UTM-style params) | todo | Know which package drives enquiries |
+| D3 | WhatsApp link tracking (per-package UTM-style params) | todo | Partially covered by wizard `package_hint` |
+| D6 | Netflix-style industry demo grid with categories/search | todo | Becomes worthwhile at ~6+ demos; until then the wizard's industry picker covers all industries (founder vision, 2026-07-17) |
+| D7 | Google sign-in client portal | todo | Deferred by ADR-008; needs founder's Google Cloud OAuth credentials |
+| D8 | Industry-specific demo features (booking for barber/clinic, rewards for F&B) | todo | Feeds M2 demo proposals |
 
 ## Epic E — Operations
 > Goal: repeatable delivery process for real client projects.
