@@ -12,9 +12,10 @@ Status: `todo` · `blocked` · `in-progress` · `done`.
 | # | Issue | Status | Notes |
 |---|---|---|---|
 | A1 | Replace placeholder WhatsApp number | **done** | +60 11-6329 3004 live everywhere (2026-07-17). Business email still adiffhaizal1@gmail.com |
-| A2 | Deploy to Vercel (founder decision: Vercel, not GitHub Pages) | **blocked** | Needs founder: vercel.com → Add New… → Project → Import `zed-studio` → Deploy (zero config) |
-| A7 | Surface "first 10 businesses get launch pricing" offer on site | todo | From business_strategy.md — adds urgency + justifies pricing tier name |
-| A3 | Favicon + OG share image + meta polish | todo | So WhatsApp/Facebook shares look professional |
+| A2 | Deploy to Vercel | **done** | Live: https://zed-studio-theta.vercel.app (2026-07-17); pushes to `main` auto-deploy |
+| A7 | Surface "first 10 businesses get launch pricing" offer on site | **done** | Pricing section copy, EN + BM (2026-07-17) |
+| A8 | Dark-first redesign + theme toggle | **done** | ADR-006; dark default, light preserved, persisted toggle (2026-07-17) |
+| A3 | Favicon + OG share image + meta polish | **in-progress** | Favicon done (mint Z SVG); OG image still the lorong-coffee screenshot — needs a branded card |
 | A4 | SEO baseline: `sitemap.xml`, `robots.txt`, JSON-LD (ProfessionalService) | todo | |
 | A5 | Accessibility pass: landmarks, focus states, contrast, reduced-motion | todo | Bar: WCAG 2.1 AA on the marketing site |
 | A6 | Performance pass: self-host/optimise fonts, image compression, Lighthouse ≥ 95 | todo | Site must prove the "loads in under a second" claim |

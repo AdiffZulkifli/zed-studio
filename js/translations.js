@@ -60,7 +60,7 @@ window.ZED_I18N = {
     'why.w6.desc': 'You know the full price before we start. No hourly billing, no surprise invoices.',
 
     'pricing.title': 'Launch pricing',
-    'pricing.sub': "Premium quality at launch pricing — these rates won't stay this low. All prices are fixed and agreed before work begins.",
+    'pricing.sub': 'Premium quality at launch pricing — reserved for our first 10 clients, then rates go up. All prices are fixed and agreed before work begins.',
     'pricing.popular': 'MOST POPULAR',
     'pricing.from': 'from',
     'pricing.cta': 'Start with this',
@@ -182,7 +182,7 @@ window.ZED_I18N = {
     'why.w6.desc': 'Anda tahu harga penuh sebelum kami mula. Tiada bil mengikut jam, tiada invois mengejut.',
 
     'pricing.title': 'Harga pelancaran',
-    'pricing.sub': 'Kualiti premium pada harga pelancaran — kadar ini takkan kekal rendah. Semua harga adalah tetap dan dipersetujui sebelum kerja bermula.',
+    'pricing.sub': 'Kualiti premium pada harga pelancaran — dikhaskan untuk 10 pelanggan pertama kami, selepas itu kadar akan naik. Semua harga adalah tetap dan dipersetujui sebelum kerja bermula.',
     'pricing.popular': 'PALING POPULAR',
     'pricing.from': 'dari',
     'pricing.cta': 'Mula dengan ini',

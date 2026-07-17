@@ -8,6 +8,12 @@
   <meta property="og:title" content="Zed Studio — Premium Websites for Malaysian Businesses"/>
   <meta property="og:description" content="Bespoke websites that win trust and enquiries. Explore live industry demos."/>
   <meta property="og:image" content="images/lorong-coffee.png"/>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg"/>
+  <meta name="theme-color" content="#0c0e0d"/>
+  <script>
+    // Apply saved theme before first paint (default: dark)
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('zed_theme') || 'dark');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -28,6 +34,7 @@
         <button class="lang-toggle" id="langToggle" aria-label="Switch language">
           <span data-lang-opt="en">EN</span><span class="lang-toggle__sep">/</span><span data-lang-opt="ms">BM</span>
         </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch between dark and light theme">☀</button>
         <a href="https://wa.me/601163293004" target="_blank" rel="noopener" class="btn btn--nav" data-i18n="nav.cta">WhatsApp Us</a>
       </div>
       <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -174,7 +181,7 @@
         <span class="section__num">04</span>
         <div>
           <h2 data-i18n="pricing.title">Launch pricing</h2>
-          <p data-i18n="pricing.sub">Premium quality at launch pricing — these rates won't stay this low. All prices are fixed and agreed before work begins.</p>
+          <p data-i18n="pricing.sub">Premium quality at launch pricing — reserved for our first 10 clients, then rates go up. All prices are fixed and agreed before work begins.</p>
         </div>
       </div>
 

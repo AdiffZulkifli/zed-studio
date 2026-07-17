@@ -4,6 +4,13 @@ One entry per significant decision. Newest at the top. Never delete — supersed
 
 ---
 
+## ADR-006 · 2026-07-17 · Dark-first dual theming via CSS custom properties
+**Status:** Accepted
+**Context:** Founder wants a futuristic dark default with a light option, explicitly avoiding "AI slop" aesthetics.
+**Decision:** All colors are tokens on `:root` (dark values); `[data-theme="light"]` overrides restore the original editorial light theme. An inline head script applies the stored theme (`localStorage.zed_theme`, default `dark`) before first paint to avoid flash. Brand identity is preserved across themes (warm off-white, green accent, gold); banned styles documented in BRAND.md (no purple/cyan gradients, no gradient text, no glassmorphism, single CTA glow only).
+**Consequences:** New components must use tokens exclusively; hardcoded colors are a review-blocker. Adding future themes = one more attribute block.
+**Alternatives considered:** `prefers-color-scheme` as default source (rejected — founder wants dark default regardless of OS); separate stylesheets per theme (rejected — drift risk).
+
 ## ADR-005 · 2026-07-17 · Vercel for hosting; GitHub for version control only
 **Status:** Accepted
 **Context:** Founder direction (ZedStudio-System-v2): "Use Vercel for deployment. Keep zed-studio-system private. zed-studio public. GitHub is just for version control." Founder has prior Vercel experience.

@@ -26,6 +26,24 @@ document.getElementById('langToggle').addEventListener('click', () => {
   applyLanguage(current === 'en' ? 'ms' : 'en');
 });
 
+// ── Theme (dark default; toggle persists) ────────────────────
+const ZED_THEME_KEY = 'zed_theme';
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(ZED_THEME_KEY, theme);
+  const btn = document.getElementById('themeToggle');
+  btn.textContent = theme === 'dark' ? '☀' : '☾';
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#0c0e0d' : '#faf9f6');
+}
+
+applyTheme(localStorage.getItem(ZED_THEME_KEY) || 'dark');
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const current = localStorage.getItem(ZED_THEME_KEY) || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
 // ── Nav ──────────────────────────────────────────────────────
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));

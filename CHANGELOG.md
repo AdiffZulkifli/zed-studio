@@ -5,15 +5,25 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [0.2.0] — 2026-07-17
+
 ### Added
-- CTO operating agreement in CLAUDE.md; documentation infrastructure (CHANGELOG, docs/DECISIONS, docs/ROADMAP)
-- ADR-005: Vercel hosting; GitHub as version control only (ADR-004 made permanent)
+- Dark-first dual theming (ADR-006): dark default, light theme preserved,
+  pre-paint theme application, persisted `☀/☾` toggle in nav
+- SVG favicon (mint Z on graphite)
+- "First 10 clients" launch-offer wording in pricing (EN + BM)
+- `prefers-reduced-motion` support and `:focus-visible` styles
+- Docs: BRAND.md, COMPONENTS.md, DEMO-PLAYBOOK.md, CLIENT-DELIVERY.md
+- CTO operating agreement in CLAUDE.md; docs infrastructure (CHANGELOG,
+  DECISIONS ADR-001..006, ROADMAP)
+- Production deployment: https://zed-studio-theta.vercel.app (Vercel
+  auto-deploys `main`; ADR-005)
 
 ### Changed
-- Real WhatsApp number (+60 11-6329 3004) across the site and all 19 demo ribbons (roadmap A1 — done)
-
-### Fixed
-- Demo businesses' own fictional phone numbers intentionally left unchanged (they are demo content)
+- Real WhatsApp number (+60 11-6329 3004) across the site and all 19 demo
+  ribbons; demo businesses' fictional numbers intentionally unchanged
 
 ## [0.1.0] — 2026-07-17
 
@@ -27,7 +37,3 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
   Supabase with its own admin panel
 - Zed Studio demo ribbon on all public demo pages
 - CLAUDE.md master context, README
-
-### Known placeholders
-- WhatsApp number `60123456789` (site + demo ribbons)
-- Contact email adiffhaizal1@gmail.com pending business email decision
