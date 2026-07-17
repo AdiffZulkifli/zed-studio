@@ -52,6 +52,9 @@ Target Malaysian SMEs. Premium quality at launch pricing. Recurring revenue from
 ## New industry demo checklist (from prompts/create-new-industry)
 Unique branding · realistic content · Hero, About, Services, Gallery, FAQ, Contact · WhatsApp CTA · demo ribbon · data-driven architecture.
 
-## Known placeholders (fix before real launch)
-- WhatsApp number is `wa.me/60123456789` everywhere — replace with the real number
-- Contact email is adiffhaizal1@gmail.com — replace if a business email is set up
+## Contact & deployment facts
+- WhatsApp (real, confirmed 2026-07-17): **+60 11-6329 3004** → `wa.me/601163293004`
+- Email: adiffhaizal1@gmail.com (business email TBD)
+- Hosting: **Vercel** (import of the public GitHub repo; auto-deploys `main`). GitHub is version control only — no GitHub Issues; roadmap lives in `docs/ROADMAP.md`
+- `zed-studio-system` (private repo at `C:\Projects\zed-studio-system`) holds business strategy docs — never deploy, never make public
+- Offer: first 10 businesses receive launch pricing (surface on site — roadmap A7)

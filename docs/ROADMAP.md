@@ -11,8 +11,9 @@ Status: `todo` · `blocked` · `in-progress` · `done`.
 ### Milestone M1 — Go live (target: this week)
 | # | Issue | Status | Notes |
 |---|---|---|---|
-| A1 | Replace placeholder WhatsApp number + confirm business email | **blocked** | Needs founder: real number & email decision |
-| A2 | Enable GitHub Pages deployment | **blocked** | Needs founder: repo Settings → Pages → main/root (2 clicks) |
+| A1 | Replace placeholder WhatsApp number | **done** | +60 11-6329 3004 live everywhere (2026-07-17). Business email still adiffhaizal1@gmail.com |
+| A2 | Deploy to Vercel (founder decision: Vercel, not GitHub Pages) | **blocked** | Needs founder: vercel.com → Add New… → Project → Import `zed-studio` → Deploy (zero config) |
+| A7 | Surface "first 10 businesses get launch pricing" offer on site | todo | From business_strategy.md — adds urgency + justifies pricing tier name |
 | A3 | Favicon + OG share image + meta polish | todo | So WhatsApp/Facebook shares look professional |
 | A4 | SEO baseline: `sitemap.xml`, `robots.txt`, JSON-LD (ProfessionalService) | todo | |
 | A5 | Accessibility pass: landmarks, focus states, contrast, reduced-motion | todo | Bar: WCAG 2.1 AA on the marketing site |

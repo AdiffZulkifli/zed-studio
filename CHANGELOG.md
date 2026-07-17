@@ -7,6 +7,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 ### Added
 - CTO operating agreement in CLAUDE.md; documentation infrastructure (CHANGELOG, docs/DECISIONS, docs/ROADMAP)
+- ADR-005: Vercel hosting; GitHub as version control only (ADR-004 made permanent)
+
+### Changed
+- Real WhatsApp number (+60 11-6329 3004) across the site and all 19 demo ribbons (roadmap A1 — done)
+
+### Fixed
+- Demo businesses' own fictional phone numbers intentionally left unchanged (they are demo content)
 
 ## [0.1.0] — 2026-07-17
 

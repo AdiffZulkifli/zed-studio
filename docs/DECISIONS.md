@@ -4,11 +4,17 @@ One entry per significant decision. Newest at the top. Never delete — supersed
 
 ---
 
-## ADR-004 · 2026-07-17 · Roadmap tracked in-repo until GitHub CLI is available
-**Status:** Accepted (temporary)
-**Context:** The operating agreement requires GitHub Issues, but no `gh` CLI or API token is available in the dev environment yet.
-**Decision:** `docs/ROADMAP.md` is the single source of truth for epics/milestones/issues. When `gh` is installed and authenticated, migrate each backlog item to a real GitHub Issue and keep ROADMAP.md as the high-level view only.
-**Consequences:** No issue numbers/links yet; PR references use branch names until migration.
+## ADR-005 · 2026-07-17 · Vercel for hosting; GitHub for version control only
+**Status:** Accepted
+**Context:** Founder direction (ZedStudio-System-v2): "Use Vercel for deployment. Keep zed-studio-system private. zed-studio public. GitHub is just for version control." Founder has prior Vercel experience.
+**Decision:** Production hosting is Vercel, importing the public `zed-studio` GitHub repo (zero-config static deploy; every push to `main` auto-deploys). GitHub Pages is not used.
+**Consequences:** Free preview deployments per branch (useful for demo/client review); custom domain attaches in Vercel; `zed-studio-system` stays private and is never deployed.
+
+## ADR-004 · 2026-07-17 · Roadmap tracked in-repo (docs/ROADMAP.md)
+**Status:** Accepted (made permanent 2026-07-17 — founder: "GitHub is just for version control", so GitHub Issues are not required)
+**Context:** Originally a workaround for missing `gh` CLI; founder direction then made in-repo tracking the intended system.
+**Decision:** `docs/ROADMAP.md` is the single source of truth for epics/milestones/issues.
+**Consequences:** No issue numbers; work items referenced as A1/B2/etc. PR references use branch names.
 
 ## ADR-003 · 2026-07-17 · Demos are vendored copies inside this repo
 **Status:** Accepted

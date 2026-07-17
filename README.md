@@ -31,8 +31,8 @@ Each demo is a complete working website backed by Supabase — public site plus 
 | `demos/brek-laju` | Fast food | `admin/index.html` — password only |
 | `demos/medicmesir` | Education agency | `admin/login.html` — admin |
 
-## Before real launch
+## Deployment
 
-1. Replace the placeholder WhatsApp number `60123456789` (search the repo — it appears in `index.html` and the demo ribbons).
-2. Decide the business email (currently adiffhaizal1@gmail.com).
-3. Enable GitHub Pages (Settings → Pages → Deploy from branch → main) for a free live URL.
+Hosted on **Vercel** (static, zero config): vercel.com → Add New… → Project → Import `AdiffZulkifli/zed-studio` → Deploy. Every push to `main` auto-deploys; branches get preview URLs.
+
+Remaining launch items are tracked in [docs/ROADMAP.md](docs/ROADMAP.md).
