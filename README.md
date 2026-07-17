@@ -23,7 +23,14 @@ Open http://localhost:8140/
 
 ## Demos
 
-Each demo is a complete working website backed by Supabase — public site plus admin panel (all passwords `123123`):
+Each demo is a complete working website backed by Supabase — public site plus admin panel (all passwords `123123`, login forms pre-filled). Demo data auto-resets nightly from `demo_seed` snapshots via `reset_demo_data()`.
+
+**One-time setup still needed (run in Supabase SQL Editor):**
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+SELECT cron.schedule('reset-demo-data-daily', '0 19 * * *', 'SELECT public.reset_demo_data()');
+```
+
 
 | Demo | Industry | Admin |
 |---|---|---|

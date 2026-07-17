@@ -7,6 +7,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 _Nothing yet._
 
+## [0.3.0] — 2026-07-17
+
+### Added
+- "Try the admin →" link + pre-filled login note on every demo card (EN + BM)
+- Demo login forms pre-filled with demo credentials — one click to sign in
+- `demo_seed` snapshot schema + `reset_demo_data()` function (ADR-007);
+  nightly pg_cron schedule pending founder run (see README)
+- Demo-section note inviting visitors to edit freely (data resets nightly)
+
 ## [0.2.0] — 2026-07-17
 
 ### Added

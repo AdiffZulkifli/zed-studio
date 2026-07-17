@@ -4,6 +4,13 @@ One entry per significant decision. Newest at the top. Never delete — supersed
 
 ---
 
+## ADR-007 · 2026-07-17 · Public demo admins with nightly data reset
+**Status:** Accepted
+**Context:** Letting prospects use the demo admin panels is our strongest sales proof, but public write access means demo data will eventually be vandalised or broken.
+**Decision:** Demo login forms ship pre-filled with demo credentials (one click + Sign in). Known-good data is snapshotted in the `demo_seed` schema; `public.reset_demo_data()` (SECURITY DEFINER, EXECUTE revoked from anon/authenticated so it is not callable via REST) restores all demo tables and wipes visitor-generated customer data. A pg_cron job runs it nightly at 03:00 MYT.
+**Consequences:** Prospects can safely edit anything; damage self-heals within 24h. When demo content is deliberately improved, the snapshot must be refreshed (re-run the snapshot migration) or the change reverts at night — documented in DEMO-PLAYBOOK.md.
+**Alternatives considered:** Read-only demo admins (rejected — kills the "feel it work" moment); per-visitor sandboxed data (rejected — complexity unjustified at this stage).
+
 ## ADR-006 · 2026-07-17 · Dark-first dual theming via CSS custom properties
 **Status:** Accepted
 **Context:** Founder wants a futuristic dark default with a light option, explicitly avoiding "AI slop" aesthetics.

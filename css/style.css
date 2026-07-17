@@ -217,8 +217,13 @@ ul { list-style: none; }
 }
 .demo-card__body h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; }
 .demo-card__body > p:not(.demo-card__industry) { color: var(--muted); font-size: 0.93rem; flex: 1; }
-.demo-card__link { font-weight: 600; color: var(--accent); font-size: 0.93rem; margin-top: 1.2rem; }
+.demo-card__links { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 1.2rem; }
+.demo-card__link { font-weight: 600; color: var(--accent); font-size: 0.93rem; }
 .demo-card__link:hover { text-decoration: underline; }
+.demo-card__creds {
+  font-family: var(--font-display); font-size: 0.74rem; font-weight: 500;
+  color: var(--muted); margin-top: 0.55rem; letter-spacing: 0.02em;
+}
 .demo-note { text-align: center; color: var(--muted); margin-top: 3rem; font-size: 0.98rem; }
 
 /* ── Services ── */

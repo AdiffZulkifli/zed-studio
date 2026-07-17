@@ -19,7 +19,13 @@ The repeatable recipe for adding a demo. A demo is a **production-ready website 
   `npx playwright screenshot --browser chromium --channel chrome --viewport-size "1440,900" --wait-for-timeout 7000 <url> images/<slug>.png`
 - Add demo card in `index.html` #demos + `demos.dN.*` keys in BOTH dictionaries in `js/translations.js`
 
-## 4. Ship
+## 4. Demo admin trial + nightly reset (ADR-007)
+- Pre-fill the demo's login form with its credentials (`value=` attributes)
+- Add the demo's admin URL as a "Try the admin →" link on its marketing-site card
+- Snapshot its tables into `demo_seed` (`CREATE TABLE demo_seed.<t> AS SELECT * FROM public.<t>`) and add the restore lines to `public.reset_demo_data()`
+- **Whenever you deliberately improve demo content, refresh its `demo_seed` snapshot** — otherwise the nightly reset reverts your improvement
+
+## 5. Ship
 - Verify: pages render from Supabase, admin login works, ribbon on public pages only, no console errors
 - Update: CHANGELOG, ROADMAP, this file if the recipe changed
 - Conventional commit: `feat(demo): add <industry> demo — <business name>`
