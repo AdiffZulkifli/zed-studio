@@ -1,6 +1,6 @@
 # Zed Studio
 
-Premium websites for Malaysian businesses — bespoke design, bilingual (English/Bahasa Malaysia), hand-coded, with real admin dashboards.
+Premium websites for Malaysian businesses — bespoke design, bilingual (English/Bahasa Malaysia), fully custom, with real admin dashboards.
 
 **Live structure**
 

@@ -20,7 +20,7 @@ Build premium websites for Malaysian SMEs. Never produce generic AI-looking desi
 1. Custom Website Development
 2. Website Redesign
 
-Optional: Domain & DNS setup (RM 150 one-time), Care Plans (Essential RM 79/mo, Pro RM 149/mo).
+Optional: Domain & DNS setup (RM 150 service + domain billed at cost), Care Plans (Essential RM 79/mo, Pro RM 149/mo).
 
 ## Pricing (launch pricing — premium quality, never marketed as cheapest)
 | Package | Price |

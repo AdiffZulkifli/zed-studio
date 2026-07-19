@@ -6,6 +6,17 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 ## [Unreleased]
 
 ### Added
+- `sales/Zed-Studio-Handbook.pdf`: A–Z owner's manual for a first-time
+  founder — finding customers, full BM scripts, objection answers, agreement
+  explained clause by clause, client workflow, time budgets, payment scripts
+  + invoice template, Care Plan definitions and delivery runbook, cheat sheet
+
+### Changed
+- Copy correction: "hand-coded" removed everywhere (EN "fully custom /
+  custom-built", BM "dibina khas") — site, README, pitch, ADR-001
+- Domain & DNS pricing clarified everywhere: RM 150 is the setup service;
+  the domain itself is billed at its actual yearly price (RM 50–120 typical)
+- Pitch and Agreement PDFs regenerated with both corrections
 - Sales kit: `sales/Zed-Studio-Pitch.pdf` (4-page branded pitch incl. market
   pricing comparison and the TikTok-vs-website argument),
   `sales/Zed-Studio-Agreement.pdf` (1-page client agreement, 50/50 payment,

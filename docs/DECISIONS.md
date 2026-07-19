@@ -49,8 +49,8 @@ One entry per significant decision. Newest at the top. Never delete — supersed
 **Decision:** All copy lives in `js/translations.js` as flat key/value dictionaries per language. Elements declare `data-i18n="key"`; `applyLanguage()` swaps content and sets `<html lang>`. Language persisted in `localStorage` (`zed_lang`).
 **Consequences:** Adding a language = adding one dictionary. Arabic will additionally need `dir="rtl"` handling and logical CSS properties — tracked in the roadmap (M3), no component rewrites expected. Trade-off: content swaps client-side, so search engines index the default English; acceptable now, revisit if BM SEO becomes a priority (would move to per-language static pages).
 
-## ADR-001 · 2026-07-17 · Static hand-coded site + Supabase, no framework/build step
+## ADR-001 · 2026-07-17 · Static custom-built site + Supabase, no framework/build step
 **Status:** Accepted
-**Context:** Zed Studio sells hand-coded, fast, bespoke sites. The stack should demonstrate the product promise and stay maintainable by a small team.
+**Context:** Zed Studio sells fully custom, fast, bespoke sites. The stack should demonstrate the product promise and stay maintainable by a small team.
 **Decision:** Plain HTML/CSS/JS, no build pipeline, deployed on GitHub Pages. Dynamic demo data via Supabase (PostgreSQL + REST), table prefixes per project (`lc_`, `bl_`, `mm_`).
 **Consequences:** Zero build complexity, sub-second loads, free hosting. Trade-offs: no component compilation (reuse is by convention — see coding standards in CLAUDE.md), and Supabase anon keys with open RLS policies are acceptable for demos only — client production work needs proper RLS per project.
