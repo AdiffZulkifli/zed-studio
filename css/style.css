@@ -300,6 +300,24 @@ ul { list-style: none; }
 .addon strong { font-family: var(--font-display); color: var(--text); font-size: 1.05rem; white-space: nowrap; }
 .addon strong small { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
 
+/* ── Care Plans explained ── */
+.careplans { margin-top: 3.5rem; border-top: 1px dashed var(--line); padding-top: 2.6rem; }
+.careplans__intro h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; }
+.careplans__intro p { color: var(--muted); max-width: 680px; font-size: 0.98rem; }
+.careplans__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.8rem; }
+.careplan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.8rem 2rem; }
+.careplan--pro { border-color: var(--accent); }
+.careplan h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.careplan h4 strong { color: var(--accent); font-size: 1.15rem; }
+.careplan h4 small { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+.careplan__for { color: var(--muted); font-size: 0.86rem; margin: 0.2rem 0 1rem; }
+.careplan ul { }
+.careplan li { padding: 0.4rem 0 0.4rem 1.6rem; position: relative; color: var(--muted); font-size: 0.92rem; border-bottom: 1px dashed var(--line); }
+.careplan li:last-child { border-bottom: none; }
+.careplan li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.careplans__note { color: var(--muted); font-size: 0.9rem; margin-top: 1.4rem; max-width: 720px; }
+@media (max-width: 940px) { .careplans__grid { grid-template-columns: 1fr; } }
+
 /* ── Process ── */
 .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 .step { border-top: 2px solid var(--line); padding-top: 1.4rem; }
