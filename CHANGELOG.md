@@ -6,6 +6,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 ## [Unreleased]
 
 ### Added
+- Anchor pricing: normal rates (RM 1,490 / 2,990 / 5,490) shown struck-through
+  above launch prices on site and pitch — clarifies that launch pricing covers
+  ALL packages for the first 10 clients
+- Domain management model: RM 150 setup + RM 150/year (domain cost included,
+  domain registered in client's name, self-manage anytime) — site FAQ/add-on,
+  agreement clause 6.4, pitch, handbook, pricing research
+- Spec-Mockup Play added to FINDING-CLIENTS.md (build-first outreach with
+  guardrails: screenshots only, qualified prospects, 2–3/week max)
 - `sales/Zed-Studio-Handbook.pdf`: A–Z owner's manual for a first-time
   founder — finding customers, full BM scripts, objection answers, agreement
   explained clause by clause, client workflow, time budgets, payment scripts

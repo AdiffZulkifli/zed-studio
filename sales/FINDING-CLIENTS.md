@@ -33,6 +33,14 @@ Scripts live in `docs/SALES-PLAYBOOK.md`. Send prospects `Zed-Studio-Pitch.pdf`.
 ## Numbers to expect (be patient, this is normal)
 Cold WhatsApp: ~10–20% reply, ~5% become conversations. 100 contacts ≈ 5–10 real conversations ≈ 1–3 clients. At RM 990–2,190 each, month one can realistically pay for the domain, SSM, and your time. Warm circle converts 5–10× better — which is why it's week 1.
 
+## The Spec-Mockup Play ("I already made something for you")
+Building first and showing it converts extremely well — but only when disciplined, or you'll burn days on people who never pay:
+- **Cold prospects get demos, not custom work.** The industry demos ARE your "I already built this for you" — zero extra cost per prospect.
+- **Qualified prospects only** (real business, good reviews, owner reachable, can clearly afford RM 990+): build a **hero-section mockup** — their name, their logo/photos from their socials, one screen. Send as a **screenshot or short screen-recording on WhatsApp — never a live link** (screenshots can't be stolen and used for free).
+- Message: *"Boss, saya dah cuba design homepage untuk [NAMA KEDAI] — ni first look. Kalau boss suka, saya siapkan penuh. Kalau ada yang tak kena, cakap je, saya ubah."*
+- **Limit: 2–3 mockups per week.** If they engage → quote → agreement → deposit → the full build starts. The mockup counts as revision round 1.
+- Redesign version of the play: screenshot of their current dated site next to your redesigned hero — the contrast sells itself.
+
 ## When a lead arrives (from wizard, DM, or walk-in)
 1. Reply within 2 hours if humanly possible (24h max — it's our public promise)
 2. Qualify: industry, stage, what they sell → send the matching demo + pitch PDF

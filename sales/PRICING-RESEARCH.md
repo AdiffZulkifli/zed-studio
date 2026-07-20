@@ -25,6 +25,10 @@ Why Zed Studio's prices are set where they are, with every source used. Refresh 
 | Redesign | RM 1,490+ | Typically quoted 60–80% of new-build | In line |
 | Care Plans | RM 79/149 monthly | Market maintenance RM 120–300/mo | Cheapest credible tier; upsell room later |
 
+**Domain management model (decided 2026-07-19):** RM 150 setup (one-time) + **RM 150/year management**, which includes the domain's registrar cost (.com ≈ RM 55–70, .my ≈ RM 100–120). Margin ≈ RM 30–90/yr per client. The domain is always registered in the client's name (never hold domains hostage — it's the top agency complaint and would destroy the trust positioning); clients may self-manage at any renewal. This plus Care Plans forms the recurring-revenue layer.
+
+**Launch pricing mechanics:** the listed RM 990/2,190/3,990 ARE the discounted first-10-clients rates. Normal rates (shown struck-through on the site for anchoring): RM 1,490 / 2,990 / 5,490. After client #10, the struck-through prices become the real prices.
+
 **Three rules this research supports:**
 1. **We are never "the cheapest"** — RM 500 template sellers exist. Our sentence: *"harga freelancer, kualiti studio"* (freelancer price, studio quality). The comparison table in the pitch PDF proves it.
 2. **The one-time vs monthly argument is our strongest closer** — a RM 400/month builder costs RM 4,800 in year one and keeps charging. Our Business Website costs less than half of that, once, and the client owns it.
