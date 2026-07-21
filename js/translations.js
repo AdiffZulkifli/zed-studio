@@ -8,6 +8,7 @@ window.ZED_I18N = {
     'nav.services': 'Services',
     'nav.pricing': 'Pricing',
     'nav.process': 'Process',
+    'nav.about': 'About',
     'nav.faq': 'FAQ',
     'nav.cta': 'WhatsApp Us',
 
@@ -143,6 +144,11 @@ window.ZED_I18N = {
 
     'footer.line': 'Premium websites for Malaysian businesses.',
 
+    'about.eyebrow': 'The person behind Zed Studio',
+    'about.title': "You'll be working with me — directly.",
+    'about.body': "I'm Adiff Haizal, a Malaysian graduate with a degree in Artificial Intelligence. I started Zed Studio because I believe every local business — not just the big brands — deserves a website that wins trust and brings in customers. When you work with Zed Studio, you deal with me directly, from the first chat to launch: no agency middlemen, no outsourcing. I genuinely love this craft and love helping businesses grow, and it shows in every site I build.",
+    'about.sign': '— Adiff Haizal, Founder of Zed Studio',
+
     // ── Project Wizard ──
     'w.eyebrow': 'Start your project',
     'w.title': 'Tell us what you need — in 2 minutes.',
@@ -194,6 +200,7 @@ window.ZED_I18N = {
     'nav.services': 'Servis',
     'nav.pricing': 'Harga',
     'nav.process': 'Proses',
+    'nav.about': 'Tentang',
     'nav.faq': 'Soalan Lazim',
     'nav.cta': 'WhatsApp Kami',
 
@@ -328,6 +335,11 @@ window.ZED_I18N = {
     'contact.email': 'E-mel kami',
 
     'footer.line': 'Laman web premium untuk perniagaan Malaysia.',
+
+    'about.eyebrow': 'Orang di sebalik Zed Studio',
+    'about.title': 'Anda akan berurusan terus dengan saya.',
+    'about.body': 'Saya Adiff Haizal, graduan Malaysia dengan ijazah dalam Kecerdasan Buatan (AI). Saya mulakan Zed Studio kerana saya percaya setiap perniagaan tempatan — bukan jenama besar sahaja — layak mendapat website yang membina kepercayaan dan menarik pelanggan. Bila anda bekerja dengan Zed Studio, anda berurusan terus dengan saya, dari sembang pertama sehingga pelancaran: tiada orang tengah agensi, tiada outsourcing. Saya betul-betul suka kerja ini dan suka membantu perniagaan berkembang — dan ia terserlah dalam setiap website yang saya bina.',
+    'about.sign': '— Adiff Haizal, Pengasas Zed Studio',
 
     // ── Wizard Projek ──
     'w.eyebrow': 'Mulakan projek anda',

@@ -6,6 +6,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 ## [Unreleased]
 
 ### Added
+- Founder trust section (`#about`, EN+BM): real name, AI credential, direct
+  personal service — a face behind the brand (nav link replaces Process)
+- Vercel Web Analytics script on homepage + wizard (privacy-friendly, no
+  cookies; founder enables "Web Analytics" in the Vercel dashboard) — roadmap D2
+- SEO baseline (roadmap A4): `robots.txt`, `sitemap.xml`, and JSON-LD
+  ProfessionalService structured data (name, founder, area served, price,
+  phone) on the homepage
 - Branded 1200×630 OG share card (`images/og-cover.png`, source
   `sales/og-card.html`) — WhatsApp/Facebook link previews now show Zed Studio
   branding instead of a demo screenshot; OG/Twitter tags use absolute URLs on

@@ -37,7 +37,7 @@
         <a href="#demos" data-i18n="nav.demos">Demos</a>
         <a href="#services" data-i18n="nav.services">Services</a>
         <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
-        <a href="#process" data-i18n="nav.process">Process</a>
+        <a href="#about" data-i18n="nav.about">About</a>
         <a href="#faq" data-i18n="nav.faq">FAQ</a>
         <button class="lang-toggle" id="langToggle" aria-label="Switch language">
           <span data-lang-opt="en">EN</span><span class="lang-toggle__sep">/</span><span data-lang-opt="ms">BM</span>
@@ -194,6 +194,16 @@
         <div class="why-item"><h3 data-i18n="why.w5.title">Built for enquiries</h3><p data-i18n="why.w5.desc">Every page guides visitors to one action: contacting you on WhatsApp. Design that pays for itself.</p></div>
         <div class="why-item"><h3 data-i18n="why.w6.title">Honest, fixed pricing</h3><p data-i18n="why.w6.desc">You know the full price before we start. No hourly billing, no surprise invoices.</p></div>
       </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section class="founder" id="about">
+    <div class="container container--narrow founder__inner">
+      <p class="eyebrow" data-i18n="about.eyebrow">The person behind Zed Studio</p>
+      <h2 class="founder__title" data-i18n="about.title">You'll be working with me — directly.</h2>
+      <p class="founder__body" data-i18n="about.body">I'm Adiff Haizal, a Malaysian graduate with a degree in Artificial Intelligence. I started Zed Studio because I believe every local business — not just the big brands — deserves a website that wins trust and brings in customers. When you work with Zed Studio, you deal with me directly, from the first chat to launch: no agency middlemen, no outsourcing. I genuinely love this craft and love helping businesses grow, and it shows in every site I build.</p>
+      <p class="founder__sign" data-i18n="about.sign">— Adiff Haizal, Founder of Zed Studio</p>
     </div>
   </section>
 
@@ -379,5 +389,24 @@
 
   <script src="js/translations.js"></script>
   <script src="js/main.js"></script>
+  <!-- Vercel Web Analytics (privacy-friendly, no cookies). Enable "Web Analytics" in the Vercel dashboard to start collecting. -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Zed Studio",
+    "description": "Custom websites for Malaysian SMEs — bespoke design, bilingual (English/Bahasa Malaysia), with a self-service admin dashboard.",
+    "url": "https://zed-studio-theta.vercel.app/",
+    "image": "https://zed-studio-theta.vercel.app/images/og-cover.png",
+    "founder": { "@type": "Person", "name": "Adiff Haizal" },
+    "areaServed": { "@type": "Country", "name": "Malaysia" },
+    "priceRange": "RM 990 – RM 5,490",
+    "telephone": "+60 11-6329 3004",
+    "email": "adiffhaizal1@gmail.com",
+    "serviceType": ["Custom Website Development", "Website Redesign"],
+    "sameAs": []
+  }
+  </script>
 </body>
 </html>

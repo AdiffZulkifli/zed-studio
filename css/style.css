@@ -300,6 +300,13 @@ ul { list-style: none; }
 .addon strong { font-family: var(--font-display); color: var(--text); font-size: 1.05rem; white-space: nowrap; }
 .addon strong small { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
 
+/* ── Founder note ── */
+.founder { padding: 5.5rem 0; background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.founder__inner { text-align: center; }
+.founder__title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.3rem; }
+.founder__body { color: var(--muted); font-size: 1.08rem; line-height: 1.75; }
+.founder__sign { font-family: var(--font-display); font-weight: 600; color: var(--text); margin-top: 1.6rem; }
+
 /* ── Care Plans explained ── */
 .careplans { margin-top: 3.5rem; border-top: 1px dashed var(--line); padding-top: 2.6rem; }
 .careplans__intro h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; }

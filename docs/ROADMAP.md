@@ -16,7 +16,7 @@ Status: `todo` · `blocked` · `in-progress` · `done`.
 | A7 | Surface "first 10 businesses get launch pricing" offer on site | **done** | Pricing section copy, EN + BM (2026-07-17) |
 | A8 | Dark-first redesign + theme toggle | **done** | ADR-006; dark default, light preserved, persisted toggle (2026-07-17) |
 | A3 | Favicon + OG share image + meta polish | **done** | Branded 1200x630 OG card + absolute-URL OG/Twitter tags on home + wizard (2026-07-20) |
-| A4 | SEO baseline: `sitemap.xml`, `robots.txt`, JSON-LD (ProfessionalService) | todo | |
+| A4 | SEO baseline: `sitemap.xml`, `robots.txt`, JSON-LD (ProfessionalService) | **done** | robots + sitemap + JSON-LD on homepage (2026-07-20). Submit domain to Google Search Console at client/custom-domain time |
 | A5 | Accessibility pass: landmarks, focus states, contrast, reduced-motion | todo | Bar: WCAG 2.1 AA on the marketing site |
 | A6 | Performance pass: self-host/optimise fonts, image compression, Lighthouse ≥ 95 | todo | Site must prove the "loads in under a second" claim |
 
@@ -49,8 +49,9 @@ Status: `todo` · `blocked` · `in-progress` · `done`.
 |---|---|---|---|
 | D4 | One-click demo admin trial + nightly data reset | **done** | ADR-007 (2026-07-17); pg_cron schedule = founder one-liner in README |
 | D5 | Project Wizard lead capture (`start.html`) + `zs_leads` | **done** | ADR-008 (2026-07-17); pricing CTAs + demo ribbons feed it |
+| D9 | Founder trust section (#about) | **done** | Real name + AI credential + direct-service promise, EN+BM (2026-07-20) |
 | D1 | Testimonials / case-study section (needs first real clients) | blocked | Business input required |
-| D2 | Simple analytics (privacy-friendly, e.g. GoatCounter/Plausible) | todo | Can't optimise conversion without measurement |
+| D2 | Privacy-friendly analytics | **done** | Vercel Web Analytics on home + wizard (2026-07-20); founder must toggle "Web Analytics" ON in Vercel dashboard |
 | D3 | WhatsApp link tracking (per-package UTM-style params) | todo | Partially covered by wizard `package_hint` |
 | D6 | Netflix-style industry demo grid with categories/search | todo | Becomes worthwhile at ~6+ demos; until then the wizard's industry picker covers all industries (founder vision, 2026-07-17) |
 | D7 | Google sign-in client portal | todo | Deferred by ADR-008; needs founder's Google Cloud OAuth credentials |

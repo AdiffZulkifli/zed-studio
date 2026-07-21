@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /demos/*/admin/
+Disallow: /demos/*/pages/admin/
+Disallow: /demos/*/pages/customer/
+
+Sitemap: https://zed-studio-theta.vercel.app/sitemap.xml
