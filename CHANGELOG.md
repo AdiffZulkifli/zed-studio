@@ -6,6 +6,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 ## [Unreleased]
 
 ### Added
+- Branded 1200×630 OG share card (`images/og-cover.png`, source
+  `sales/og-card.html`) — WhatsApp/Facebook link previews now show Zed Studio
+  branding instead of a demo screenshot; OG/Twitter tags use absolute URLs on
+  homepage + wizard (roadmap A3 complete)
 - Anchor pricing: normal rates (RM 1,490 / 2,990 / 5,490) shown struck-through
   above launch prices on site and pitch — clarifies that launch pricing covers
   ALL packages for the first 10 clients

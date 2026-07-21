@@ -15,7 +15,7 @@ Status: `todo` · `blocked` · `in-progress` · `done`.
 | A2 | Deploy to Vercel | **done** | Live: https://zed-studio-theta.vercel.app (2026-07-17); pushes to `main` auto-deploy |
 | A7 | Surface "first 10 businesses get launch pricing" offer on site | **done** | Pricing section copy, EN + BM (2026-07-17) |
 | A8 | Dark-first redesign + theme toggle | **done** | ADR-006; dark default, light preserved, persisted toggle (2026-07-17) |
-| A3 | Favicon + OG share image + meta polish | **in-progress** | Favicon done (mint Z SVG); OG image still the lorong-coffee screenshot — needs a branded card |
+| A3 | Favicon + OG share image + meta polish | **done** | Branded 1200x630 OG card + absolute-URL OG/Twitter tags on home + wizard (2026-07-20) |
 | A4 | SEO baseline: `sitemap.xml`, `robots.txt`, JSON-LD (ProfessionalService) | todo | |
 | A5 | Accessibility pass: landmarks, focus states, contrast, reduced-motion | todo | Bar: WCAG 2.1 AA on the marketing site |
 | A6 | Performance pass: self-host/optimise fonts, image compression, Lighthouse ≥ 95 | todo | Site must prove the "loads in under a second" claim |
