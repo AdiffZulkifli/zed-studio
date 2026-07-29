@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; }
+  .slide {
+    width:1280px; height:769px; background:#0c0e0d; color:#f2f1ea;
+    position:relative; overflow:hidden; padding:70px 80px;
+  }
+  .slide::before {
+    content:''; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(242,241,234,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242,241,234,0.055) 1px, transparent 1px);
+    background-size:60px 60px;
+    -webkit-mask-image:radial-gradient(ellipse 75% 75% at 80% 15%, #000, transparent 72%);
+    mask-image:radial-gradient(ellipse 75% 75% at 80% 15%, #000, transparent 72%);
+  }
+  .slide::after {
+    content:''; position:absolute; top:-160px; right:-140px; width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(126,224,175,0.16), transparent 68%);
+  }
+  .logo { position:relative; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; letter-spacing:1.5px; }
+  .logo em { font-style:normal; color:#7ee0af; }
+  .disp { font-family:'Space Grotesk',sans-serif; letter-spacing:-1px; }
+  .accent { color:#7ee0af; }
+
+  /* Slide 1 — cover */
+  .s1 { display:flex; flex-direction:column; justify-content:space-between; }
+  .s1 .eyebrow { position:relative; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; letter-spacing:5px; text-transform:uppercase; color:#7ee0af; }
+  .s1 h1 { position:relative; font-size:82px; font-weight:700; line-height:1.04; margin-top:22px; }
+  .s1 .sub { position:relative; font-size:29px; color:rgba(242,241,234,0.72); margin-top:26px; max-width:900px; }
+  .s1 .tags { position:relative; display:flex; gap:16px; margin-top:38px; }
+  .s1 .tag { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; border:1.5px solid rgba(126,224,175,0.4); color:#7ee0af; padding:9px 22px; border-radius:99px; }
+
+  /* Slide 2 — what you get */
+  .s2 h2 { position:relative; font-size:56px; font-weight:700; }
+  .s2 .grid { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:26px 40px; margin-top:50px; }
+  .s2 .item { display:flex; gap:20px; align-items:flex-start; }
+  .s2 .check { flex-shrink:0; width:44px; height:44px; border-radius:12px; background:#7ee0af; color:#0c0e0d; font-size:26px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .s2 .item h3 { font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:600; }
+  .s2 .item p { font-size:20px; color:rgba(242,241,234,0.62); margin-top:3px; }
+
+  /* Slide 3 — demos */
+  .s3 h2 { position:relative; font-size:52px; font-weight:700; }
+  .s3 .subh { position:relative; font-size:24px; color:rgba(242,241,234,0.7); margin-top:12px; }
+  .s3 .shots { position:relative; display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; margin-top:46px; }
+  .s3 figure { border:1px solid rgba(242,241,234,0.12); border-radius:14px; overflow:hidden; background:#141918; }
+  .s3 img { width:100%; height:230px; object-fit:cover; object-position:top; display:block; }
+  .s3 figcaption { padding:16px 18px; }
+  .s3 figcaption b { font-family:'Space Grotesk',sans-serif; font-size:21px; }
+  .s3 figcaption span { display:block; font-size:16px; color:#7ee0af; margin-top:3px; }
+  .s3 .foot { position:relative; margin-top:40px; font-size:22px; color:rgba(242,241,234,0.75); }
+  .s3 .foot b { color:#7ee0af; }
+</style>
+</head>
+<body>
+
+<div class="slide s1" id="s1">
+  <div class="logo">ZED<em>STUDIO</em></div>
+  <div>
+    <div class="eyebrow">Custom Website Development</div>
+    <h1>A website as good as<br/>the <span class="accent">big brands.</span></h1>
+    <p class="sub">Fully custom design + your own admin dashboard — mobile-first, bilingual, built to win customers.</p>
+    <div class="tags"><span class="tag">100% Custom</span><span class="tag">Admin Panel</span><span class="tag">Mobile-First</span><span class="tag">SEO Ready</span></div>
+  </div>
+  <div class="logo" style="font-size:20px; color:rgba(242,241,234,0.5)">Real working demos inside →</div>
+</div>
+
+<div class="slide s2" id="s2">
+  <h2 class="disp">What you get</h2>
+  <div class="grid">
+    <div class="item"><div class="check">✓</div><div><h3>100% Custom Design</h3><p>No templates — designed around your brand only</p></div></div>
+    <div class="item"><div class="check">✓</div><div><h3>Your Own Admin Panel</h3><p>Update prices, photos &amp; menus yourself</p></div></div>
+    <div class="item"><div class="check">✓</div><div><h3>Fast on Every Phone</h3><p>Loads in under a second, perfect on mobile</p></div></div>
+    <div class="item"><div class="check">✓</div><div><h3>Bilingual Ready</h3><p>English + Bahasa Malaysia, or your languages</p></div></div>
+    <div class="item"><div class="check">✓</div><div><h3>Built for Enquiries</h3><p>Contact &amp; WhatsApp buttons that convert</p></div></div>
+    <div class="item"><div class="check">✓</div><div><h3>SEO Basics Done</h3><p>Clean structure so Google can find you</p></div></div>
+  </div>
+</div>
+
+<div class="slide s3" id="s3">
+  <h2 class="disp">Real working websites — not mockups</h2>
+  <p class="subh">Every project comes with a live admin dashboard you control.</p>
+  <div class="shots">
+    <figure><img src="../../images/lorong-coffee.png" alt="Cafe"/><figcaption><b>Café</b><span>Menu + loyalty rewards</span></figcaption></figure>
+    <figure><img src="../../images/brek-laju.png" alt="Restaurant"/><figcaption><b>Restaurant</b><span>Menu + analytics</span></figcaption></figure>
+    <figure><img src="../../images/medicmesir.png" alt="Agency"/><figcaption><b>Agency</b><span>Programmes + enquiries</span></figcaption></figure>
+  </div>
+  <p class="foot"><b>Try them live</b> — every demo is a complete site with a working admin panel.</p>
+</div>
+
+</body>
+</html>
