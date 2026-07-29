@@ -26,7 +26,7 @@ From live search for "website":
 - The "From $30–100" is the **Basic anchor** — their real money is in Standard/Premium ($200–800). Don't panic at the low numbers.
 - **Most sell by platform** (WordPress, Shopify, Squarespace) — huge search terms but brutally crowded with 200+ review veterans. **You compete in the less-crowded "custom code" lane** and turn it into a benefit: *faster, lighter, no monthly plugin fees, no WordPress bloat.*
 - You **can't out-review veterans** yet, so you win on: sharper thumbnail, honest custom work, real admin-panel demos they can't show, and fast replies.
-- **Your pricing ($55/$145/$295) deliberately undercuts the $200–800 premium tier** while sitting above the $30 template floor — the affordable-volume sweet spot.
+- **Your pricing ($80/$150/$300) deliberately undercuts the $200–800 premium tier** while sitting near the category's $80 floor — the affordable-volume sweet spot. ($80 is Fiverr's minimum for Website Development — you can't go lower here.)
 
 ## GIG 1 — Custom Business Website (your main gig)
 
@@ -68,7 +68,7 @@ landing page
 | | **BASIC** — Starter Site | **STANDARD** — Business Site | **PREMIUM** — Custom System |
 |---|---|---|---|
 | **Package name** | Landing Page | Business Website | Custom + Admin Panel |
-| **Price** | **US$55** (net ≈ $44) | **US$145** (net ≈ $116) | **US$295** (net ≈ $236) |
+| **Price** | **US$80** (net ≈ $64) | **US$150** (net ≈ $120) | **US$300** (net ≈ $240) |
 | **Short description** *(max ~100 char)* | 1-page custom-designed site to turn visitors into customers. | Up to 5 custom pages — the complete online presence for your business. | Website + database + admin dashboard you control yourself. |
 | **Delivery time** | 4 days | 7 days | 14 days |
 | **Revisions** | 2 | 3 | 5 |
@@ -215,11 +215,11 @@ for a review — it means a lot to a growing studio. Thank you!
 ---
 
 ## YOUR PLAN — affordable volume (the numbers)
-Goal: **RM 500–1,500/month.** Capacity: **2–3 sites/week (~8–12/month).** Entry price $55.
+Goal: **RM 500–1,500/month.** Capacity: **2–3 sites/week (~8–12/month).** Entry price $80 (Fiverr's category minimum).
 
-- One Basic sale nets ≈ $44 ≈ **RM 180**. So **3 basic sites = ~RM 540**, **8 = ~RM 1,440** — your goal is hit at well under full capacity. Any Standard/Premium or extras push it higher fast.
+- One Basic sale nets ≈ $64 ≈ **RM 260**. So **2 basic sites ≈ RM 520**, **6 ≈ RM 1,560** — your goal is hit at well under full capacity. Any Standard/Premium or extras push it higher fast.
 - **You do NOT need to overload.** Cap yourself at ~2–3 orders in progress at once. Fiverr punishes late delivery and cancellations harder than anything — one blown deadline costs more than three extra orders earn. Quality + on-time = reviews = ranking = more orders. That's the real volume engine.
-- **First 3–5 orders = reviews, not profit.** Overdeliver on them (throw in an extra section free, deliver a day early). Five 5-star reviews changes everything; after that your $55 gig converts on its own.
+- **First 3–5 orders = reviews, not profit.** Overdeliver on them (throw in an extra section free, deliver a day early). Five 5-star reviews changes everything; after that your $80 gig converts on its own.
 - Turn on Fiverr's "Out of Office" if you're at capacity — better to pause than deliver late.
 
 ## Ranking tips (Fiverr Success Score)
