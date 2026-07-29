@@ -11,18 +11,36 @@ Your beatbox gig and this can live on the **same account** (Fiverr allows up to 
 
 ---
 
+## Competitor analysis — who you're up against (July 2026)
+From live search for "website":
+
+| Competitor | Angle | "From" | Reviews |
+|---|---|---|---|
+| Yeasir Arafat | Full-stack PHP/Laravel dev | $100 | 266 ⭐5.0 |
+| Abdul Motin | WordPress (design/build/redesign/clone) | $85 | 290 ⭐4.9 |
+| Roman | Shopify store + dropshipping | $80 | 78 ⭐4.9 |
+| Shohaib Alam | WordPress + Elementor | $50 | 214 ⭐5.0 |
+| Brittney P | Squarespace design | $30 | 25 (Fiverr's Choice) |
+
+**What it means for you:**
+- The "From $30–100" is the **Basic anchor** — their real money is in Standard/Premium ($200–800). Don't panic at the low numbers.
+- **Most sell by platform** (WordPress, Shopify, Squarespace) — huge search terms but brutally crowded with 200+ review veterans. **You compete in the less-crowded "custom code" lane** and turn it into a benefit: *faster, lighter, no monthly plugin fees, no WordPress bloat.*
+- You **can't out-review veterans** yet, so you win on: sharper thumbnail, honest custom work, real admin-panel demos they can't show, and fast replies.
+- **Your pricing ($55/$145/$295) deliberately undercuts the $200–800 premium tier** while sitting above the $30 template floor — the affordable-volume sweet spot.
+
 ## GIG 1 — Custom Business Website (your main gig)
 
 ### Gig title  *(field: "I will ___", max 80 characters)*
+Competitors keyword-stuff their titles ("design, build, redesign, develop…") for search coverage — do the same. Recommended:
 ```
-I will design and develop a modern custom business website with admin panel
+I will design, build or redesign a fast custom business website
 ```
-Alternatives if you want to test:
+Alternatives to test:
 ```
-I will build a custom responsive business website that gets you customers
+I will develop a modern custom website with admin panel for your business
 ```
 ```
-I will create a professional bilingual website for your small business
+I will build a responsive business website that gets you more customers
 ```
 
 ### Category
@@ -138,13 +156,21 @@ A: I design your homepage first and refine it with your feedback before building
 
 ---
 
-## Making your gig images (already generated for you)
-Fiverr shows 3 gallery images. Upload these from `sales/fiverr/`:
-1. `fiverr-cover.png` — the main cover (hook + brand)
-2. `fiverr-what-you-get.png` — features / what's included
-3. `fiverr-demos.png` — your 3 real demo sites as proof
+## Your gig images (already generated for you)
+Fiverr specs: **1280 × 769 px**, JPG/PNG, keep key text/faces near the centre. Upload these from `sales/fiverr/` in this order:
+1. `fiverr-cover.png` — bold hook + a real website shown in a browser frame (this is the thumbnail buyers see in search — it must earn the click)
+2. `fiverr-what-you-get.png` — the 6 things included
+3. `fiverr-demos.png` — your 3 real sites as proof
 
-Tip: a short gig **video** (even 20s screen-recording of you scrolling a demo + editing the admin panel) can lift orders a lot — record it on your phone later.
+### The one upgrade that beats every competitor: add your face
+Research is clear — on Fiverr, a **cover with a real human face + ≤5 words of bold text gets roughly double the clicks**; "beautiful but faceless" designs lose. Every top competitor in your screenshot uses a headshot. Two easy options:
+- **Best:** send me a clear photo of you (plain background, looking slightly toward the left) and I'll composite it into the cover's right side beside the text. Free, 10 minutes.
+- **DIY:** open the cover in Canva, drop your photo on the right, keep the bold text on the left.
+
+Even without a face, the current cover is strong — but the face is the single highest-ROI change, so do it before you scale.
+
+### Gig video (do this after your first order)
+A 20–40s screen-recording — scroll a demo, then edit a price in the admin panel and show it change live — can lift orders a lot. Record it on your phone; no fancy editing needed.
 
 ---
 

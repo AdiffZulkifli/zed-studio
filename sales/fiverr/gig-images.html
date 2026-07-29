@@ -8,7 +8,7 @@
   body { font-family:'Inter',sans-serif; }
   .slide {
     width:1280px; height:769px; background:#0c0e0d; color:#f2f1ea;
-    position:relative; overflow:hidden; padding:70px 80px;
+    position:relative; overflow:hidden; padding:64px 72px;
   }
   .slide::before {
     content:''; position:absolute; inset:0;
@@ -16,25 +16,33 @@
       linear-gradient(rgba(242,241,234,0.055) 1px, transparent 1px),
       linear-gradient(90deg, rgba(242,241,234,0.055) 1px, transparent 1px);
     background-size:60px 60px;
-    -webkit-mask-image:radial-gradient(ellipse 75% 75% at 80% 15%, #000, transparent 72%);
-    mask-image:radial-gradient(ellipse 75% 75% at 80% 15%, #000, transparent 72%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 80% at 78% 20%, #000, transparent 72%);
+    mask-image:radial-gradient(ellipse 80% 80% at 78% 20%, #000, transparent 72%);
   }
   .slide::after {
-    content:''; position:absolute; top:-160px; right:-140px; width:600px; height:600px; border-radius:50%;
-    background:radial-gradient(circle, rgba(126,224,175,0.16), transparent 68%);
+    content:''; position:absolute; top:-160px; right:-120px; width:620px; height:620px; border-radius:50%;
+    background:radial-gradient(circle, rgba(126,224,175,0.18), transparent 66%);
   }
-  .logo { position:relative; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; letter-spacing:1.5px; }
+  .logo { position:relative; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:28px; letter-spacing:1.5px; }
   .logo em { font-style:normal; color:#7ee0af; }
   .disp { font-family:'Space Grotesk',sans-serif; letter-spacing:-1px; }
   .accent { color:#7ee0af; }
 
-  /* Slide 1 — cover */
-  .s1 { display:flex; flex-direction:column; justify-content:space-between; }
-  .s1 .eyebrow { position:relative; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; letter-spacing:5px; text-transform:uppercase; color:#7ee0af; }
-  .s1 h1 { position:relative; font-size:82px; font-weight:700; line-height:1.04; margin-top:22px; }
-  .s1 .sub { position:relative; font-size:29px; color:rgba(242,241,234,0.72); margin-top:26px; max-width:900px; }
-  .s1 .tags { position:relative; display:flex; gap:16px; margin-top:38px; }
-  .s1 .tag { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; border:1.5px solid rgba(126,224,175,0.4); color:#7ee0af; padding:9px 22px; border-radius:99px; }
+  /* Slide 1 — COVER (bold, high-contrast, proof mockup) */
+  .s1 { display:flex; align-items:center; }
+  .s1logo { position:absolute; top:52px; left:72px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:26px; letter-spacing:1.5px; z-index:3; }
+  .s1logo em { font-style:normal; color:#7ee0af; }
+  .s1grid { position:relative; z-index:2; display:grid; grid-template-columns:1.02fr 0.98fr; gap:52px; width:100%; align-items:center; }
+  .s1 .eyebrow { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; letter-spacing:3.5px; text-transform:uppercase; color:#7ee0af; margin-bottom:20px; }
+  .s1 h1 { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:70px; line-height:1.02; letter-spacing:-1.5px; }
+  .s1 .sub { font-size:23px; color:rgba(242,241,234,0.82); margin-top:22px; font-weight:500; }
+  .s1 .tags { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+  .s1 .tag { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; background:rgba(126,224,175,0.12); border:1.5px solid rgba(126,224,175,0.45); color:#7ee0af; padding:8px 18px; border-radius:99px; }
+  .mock { border-radius:16px; overflow:hidden; border:1px solid rgba(242,241,234,0.18); box-shadow:0 30px 70px rgba(0,0,0,0.5); background:#141918; }
+  .mockbar { height:38px; background:#1c2320; display:flex; align-items:center; gap:9px; padding:0 16px; }
+  .mockbar span { width:12px; height:12px; border-radius:50%; background:rgba(242,241,234,0.3); }
+  .mockbar .url { margin-left:14px; font-size:14px; color:rgba(242,241,234,0.5); font-family:'Space Grotesk',sans-serif; }
+  .mock img { width:100%; height:420px; object-fit:cover; object-position:top; display:block; }
 
   /* Slide 2 — what you get */
   .s2 h2 { position:relative; font-size:56px; font-weight:700; }
@@ -60,14 +68,19 @@
 <body>
 
 <div class="slide s1" id="s1">
-  <div class="logo">ZED<em>STUDIO</em></div>
-  <div>
-    <div class="eyebrow">Custom Website Development</div>
-    <h1>A website as good as<br/>the <span class="accent">big brands.</span></h1>
-    <p class="sub">Fully custom design + your own admin dashboard — mobile-first, bilingual, built to win customers.</p>
-    <div class="tags"><span class="tag">100% Custom</span><span class="tag">Admin Panel</span><span class="tag">Mobile-First</span><span class="tag">SEO Ready</span></div>
+  <span class="s1logo">ZED<em>STUDIO</em></span>
+  <div class="s1grid">
+    <div class="s1text">
+      <div class="eyebrow">Custom Website Development</div>
+      <h1>Websites that<br/>win <span class="accent">customers.</span></h1>
+      <p class="sub">Custom-built · Your own admin panel · Mobile-first</p>
+      <div class="tags"><span class="tag">100% Custom Code</span><span class="tag">Faster than WordPress</span><span class="tag">SEO Ready</span></div>
+    </div>
+    <div class="mock">
+      <div class="mockbar"><span></span><span></span><span></span><span class="url">yourbusiness.com</span></div>
+      <img src="../../images/lorong-coffee.png" alt="Website example"/>
+    </div>
   </div>
-  <div class="logo" style="font-size:20px; color:rgba(242,241,234,0.5)">Real working demos inside →</div>
 </div>
 
 <div class="slide s2" id="s2">
