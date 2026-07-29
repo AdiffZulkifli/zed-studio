@@ -45,32 +45,32 @@ landing page
 
 ### PACKAGES
 
-> Prices are in USD (reaches the most buyers). Fiverr takes **20%**, so your net is shown in brackets. These are set so your take-home roughly matches your Zed Studio rates. You can switch the gig to MYR in settings, but USD is recommended.
+> Prices are in USD (reaches the most global buyers — Fiverr is your international channel). Fiverr takes **20%**, so your net is shown in brackets. **Strategy: affordable, high volume** — priced to win lots of orders and beat premium sellers, while still charging more than the $30 template crowd because your work is custom.
 
 | | **BASIC** — Starter Site | **STANDARD** — Business Site | **PREMIUM** — Custom System |
 |---|---|---|---|
 | **Package name** | Landing Page | Business Website | Custom + Admin Panel |
-| **Price** | **US$150** (net ≈ $120) | **US$350** (net ≈ $280) | **US$750** (net ≈ $600) |
-| **Short description** *(max ~100 char)* | 1-page custom-designed site to turn visitors into enquiries. | Up to 6 custom pages — the complete online presence for your business. | Website + database + admin dashboard you control yourself. |
-| **Delivery time** | 5 days | 10 days | 21 days |
+| **Price** | **US$55** (net ≈ $44) | **US$145** (net ≈ $116) | **US$295** (net ≈ $236) |
+| **Short description** *(max ~100 char)* | 1-page custom-designed site to turn visitors into customers. | Up to 5 custom pages — the complete online presence for your business. | Website + database + admin dashboard you control yourself. |
+| **Delivery time** | 4 days | 7 days | 14 days |
 | **Revisions** | 2 | 3 | 5 |
-| **Pages / sections** | 1 | 6 | 8 |
+| **Pages / sections** | 1 | 5 | 8 |
 | Responsive design | ✓ | ✓ | ✓ |
 | Content upload | ✓ | ✓ | ✓ |
 | Contact form / WhatsApp button | ✓ | ✓ | ✓ |
 | Speed optimized | ✓ | ✓ | ✓ |
 | SEO basics (meta, structure) | ✓ | ✓ | ✓ |
-| Bilingual (English + Bahasa) | — | ✓ | ✓ |
+| Multilingual (any 2 languages) | — | ✓ | ✓ |
 | E-commerce / booking / rewards | — | — | ✓ |
 | Database + admin dashboard | — | — | ✓ |
 
-### Gig Extras  *(add-ons buyers can tick — extra income)*
-- **Extra fast delivery** — Basic +$40 (2 days) · Standard +$80 (5 days)
-- **Additional page** — +$45 each
-- **Bilingual add-on** (for Basic) — +$60
-- **1 month care & updates** — +$40 (backups, small changes, monitoring)
-- **Custom domain setup** — +$50 (you register in the buyer's name)
-- **Extra revision** — +$25
+### Gig Extras  *(add-ons buyers can tick — extra income on top of the low base price)*
+- **Extra fast delivery** — Basic +$25 (2 days) · Standard +$50 (4 days)
+- **Additional page** — +$25 each
+- **Multilingual add-on** (for Basic) — +$35
+- **1 month care & updates** — +$30 (backups, small changes, monitoring)
+- **Custom domain setup** — +$40 (you register in the buyer's name)
+- **Extra revision** — +$15
 
 ---
 
@@ -87,12 +87,13 @@ builders, no recycled themes.
 • Loads in under a second, perfect on mobile
 • Your own admin dashboard (Business & Custom) — update prices, photos and menus
   yourself, no developer needed
-• Bilingual ready (English + Bahasa Malaysia, or your languages)
+• Multilingual ready — any two languages your audience needs
 • SEO basics done right so Google can find you
 
 ★ WHAT I CAN BUILD
-Cafés & restaurants (menu + loyalty), clinics & barbers (booking), gyms, homestays,
-online shops, agencies, and more — each designed for how YOUR customers actually buy.
+Cafés & restaurants (menu + loyalty), clinics & salons (booking), gyms, hotels,
+online shops, agencies, portfolios and more — each designed for how YOUR customers
+actually buy.
 
 ★ SEE REAL WORK
 Check my gig gallery — every screenshot is a complete working website with a live
@@ -165,16 +166,22 @@ for a review — it means a lot to a growing studio. Thank you!
 
 ---
 
+## YOUR PLAN — affordable volume (the numbers)
+Goal: **RM 500–1,500/month.** Capacity: **2–3 sites/week (~8–12/month).** Entry price $55.
+
+- One Basic sale nets ≈ $44 ≈ **RM 180**. So **3 basic sites = ~RM 540**, **8 = ~RM 1,440** — your goal is hit at well under full capacity. Any Standard/Premium or extras push it higher fast.
+- **You do NOT need to overload.** Cap yourself at ~2–3 orders in progress at once. Fiverr punishes late delivery and cancellations harder than anything — one blown deadline costs more than three extra orders earn. Quality + on-time = reviews = ranking = more orders. That's the real volume engine.
+- **First 3–5 orders = reviews, not profit.** Overdeliver on them (throw in an extra section free, deliver a day early). Five 5-star reviews changes everything; after that your $55 gig converts on its own.
+- Turn on Fiverr's "Out of Office" if you're at capacity — better to pause than deliver late.
+
 ## Ranking tips (Fiverr Success Score)
 - Reply to every message in under 1 hour (turn on Fiverr mobile app notifications)
 - Never cancel an order if you can avoid it — cancellations hurt most
 - Deliver a little early when you can
 - Ask every happy buyer for a review (politely, in the delivery message)
-- Your first few orders matter most — consider pricing Basic slightly lower for the
-  first 2–3 reviews, then raise it. Reviews are everything on Fiverr.
 
 ## Later: two more gigs to add (same account)
-Once this ranks, add separate gigs (more gigs = more search coverage):
+Once this ranks, add separate gigs (more gigs = more search coverage, more volume):
 - "I will redesign your outdated website into a modern fast one" (Redesign)
-- "I will build a bilingual English + Malay website for your business" (targets local buyers)
+- "I will build a fast custom landing page that converts" (targets a hot search term)
 I can write these kits when you're ready.
