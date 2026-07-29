@@ -82,13 +82,35 @@ landing page
 | E-commerce / booking / rewards | — | — | ✓ |
 | Database + admin dashboard | — | — | ✓ |
 
-### Gig Extras  *(add-ons buyers can tick — extra income on top of the low base price)*
-- **Extra fast delivery** — Basic +$25 (2 days) · Standard +$50 (4 days)
-- **Additional page** — +$25 each
-- **Multilingual add-on** (for Basic) — +$35
-- **1 month care & updates** — +$30 (backups, small changes, monitoring)
-- **Custom domain setup** — +$40 (you register in the buyer's name)
-- **Extra revision** — +$15
+### Fiverr preset FEATURES (per package — tick = included in that tier)
+Fiverr's Website Development category shows a fixed checkbox list. Many assume WordPress — map them like this:
+
+| Feature | Basic | Standard | Premium | Note |
+|---|:--:|:--:|:--:|---|
+| Plugins/extensions installation | ✗ | ✗ | ✗ | Custom code — no plugins |
+| Payment Integration | ✗ | ✗ | ✗ | Sell as paid extra |
+| Opt-in form | ✗ | ✓ | ✓ | Easy email signup |
+| Autoresponder integration | ✗ | ✗ | ✗ | Paid extra |
+| Hosting setup | ✓ | ✓ | ✓ | You deploy free on Vercel — include as a differentiator |
+| Social media icons | ✓ | ✓ | ✓ | Trivial — include |
+
+### Fiverr preset EXTRAS (turn on + price — Fiverr takes 20%)
+| Extra | On? | Price |
+|---|:--:|---|
+| Extra fast delivery | ✓ | Basic +$25 (2d) · Standard +$40 (4d) |
+| Additional page | ✓ | +$25 each |
+| Additional revision | ✓ | +$15 |
+| Payment Integration | ✓ | +$60 |
+| Opt-in form | ✓ | +$25 |
+| Autoresponder integration | ✓ | +$35 |
+| E-commerce functionality | optional | +$120 (only if confident building a shop) |
+| Additional product | ✗ | off (needs e-commerce) |
+| Additional plugin installation | ✗ | off (custom code) |
+| Hosting setup | ✗ | off (already included in packages) |
+| Social media icons | ✗ | off (already included) |
+
+Rule: assumes WordPress/plugins → skip. Real feature you can build → offer as a paid extra so the extra work is paid work.
+Multilingual, care plans and custom domains aren't Fiverr presets here — mention them in the description and quote them with a **Custom Offer** when a buyer asks.
 
 ---
 
